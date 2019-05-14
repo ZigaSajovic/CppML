@@ -2,6 +2,10 @@
 
 A composable Meta Language for C++
 
+**CppML** is a meta language I use when developing libraries. It comes equipped with various metafunctions, that are building blocks for writing metaprograms.
+
+Note that it is an evolving project, that grows in parallel with the work I do.
+
 ## Outline
 
 A MetaFunction in **CppML** is a *template struct* with a *template alias* `f`. Each MetaFunction has a *template parameter* `Pipe`, into which the result of its invocation is piped (think Bash pipes). Note that Pipe usually defaults to `ml::ListT`, meaning it return a list of types.
@@ -9,9 +13,9 @@ A MetaFunction in **CppML** is a *template struct* with a *template alias* `f`. 
 This roughly translates into the following:
 
 ```c++
-template <typename PossibleArg_i,     // could be many of them, depends on the
+template <typename PossibleArg_i,     // could be 0 or more of them, depends on the
                                       // metafunction
-          typename Pipe = ml::ToList> // default pipe is to wrap the parameter
+          typename Pipe = ml::ToList> // default Pipe is to wrap the parameter
                                       // pack in a type list
 struct MetaFunction {
   template <typename... Args>
@@ -71,3 +75,7 @@ using U2 = ml::ListT<Tag<ml::Int<0>, Element<int>>,
 static_assert(std::is_same_v<TaggedElements, U2>);
 ```
 Again, we observe the correct result using `static_assert`.
+
+#### Going further
+
+The reader could continue by writing a metaprogram that **permutes** the `Element`s in such a way, that their layout in memory would minimize the size of the object holding them (think of a tuple). Or, if the types wrapped by `Element` were classes, he/she could enforce a partial ordering on the list, as dictated by their *inheritance hierarchy*.

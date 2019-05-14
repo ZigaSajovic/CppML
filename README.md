@@ -79,3 +79,5 @@ Again, we observe the correct result using `static_assert`.
 #### Going further
 
 The reader could continue by writing a metaprogram that **permutes** the `Element`s in such a way, that their layout in memory would minimize the size of the object holding them (think of a tuple). Or, if the types wrapped by `Element` were classes, he/she could enforce a partial ordering on the list, as dictated by their *inheritance hierarchy*.
+
+MetaProgramming in C++ offers a unique experience, as one can implement **monads** and **functors**, while controlling how the resulting types are mapped onto hardware.

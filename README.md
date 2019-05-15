@@ -10,7 +10,7 @@ Metaprogramming in C++ offers a unique experience, as one can implement **monads
 
 ## Outline
 
-A MetaFunction in **CppML** is a *template struct* with a *template alias* `f`. Each MetaFunction has a *template parameter* `Pipe`, into which the result of its invocation is piped (think Bash pipes). Note that Pipe usually defaults to `ml::ListT`, meaning it return a list of types.
+A MetaFunction in **CppML** is a *template struct* with a *template alias* `f`. Each MetaFunction has a *template parameter* `Pipe`, into which the result of its invocation is piped (think Bash pipes). Note that Pipe either defaults to `ml::Identity` (i.e. it effectively returns the result of `f`) or it defaults to `ml::ListT`(i.e. it returns the resulting parameter pack in a list of types).
 
 This roughly translates into the following:
 

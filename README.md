@@ -2,7 +2,7 @@
 
 A Meta Language for C++
 
-**CppML** is a meta language I use when developing libraries. It comes equipped with various metafunctions, that are building blocks for writing metaprograms. Such metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation*, usually operating on parameter packs and type-lists.
+**CppML** is a meta language I use when developing libraries. It comes equipped with various metafunctions, that are building blocks for writing metaprograms. Such metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation* and *composition*, usually operating on parameter packs and type-lists.
 
 
 Note that it is an evolving project, that grows in parallel with the work I do.

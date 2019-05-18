@@ -2,7 +2,7 @@
 
 A Meta Language for C++
 
-**CppML** is a meta language I use when developing libraries. It comes equipped with various metafunctions, that are building blocks for writing metaprograms. Such metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation* and *composition*, usually operating on parameter packs and type-lists.
+**CppML** is a meta language I use when developing libraries. It comes equipped with various metafunctions, that are building blocks for writing metaprograms. Such metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation* and *pipe chaining*, usually operating on parameter packs and type-lists.
 
 
 Note that it is an evolving project, that grows in parallel with the work I do.
@@ -28,13 +28,21 @@ struct MetaFunction {
                                             Args...>>;
 };
 ```
-Note that we have omitted possible details, which can be observed in implementations.
-These metafunctions can be conveniently invoked by (assuming existence of  types `U`, `T1`, `T2`, `T2`)
+As such, the composition three metafunctions `mF1`, `mF2` and `mF3` (assuming each of them has Pipe as their only parameter) is defined by
+```c++
+using MF = mf1<mf2<mf3<>>>;
+```
+which is now a metafunction like any other, and it too is invokable through the `f` alias.
+```c++
+using Result = MF::template f<T1, T2 /*... Tn*/ >
+```
+Note that metafunctions can be conveniently invoked by using
 ```c++
 using Result =
-        ml::Invoke< // invokes the specified metafunction (f alias)
-            MetaFunction<U>, T1, T2, T3>; // on these parameters
+        ml::Invoke< // invokes the MF metafunction (f alias)
+            MF, T1, T2 /*... Tn*/; // on these parameters
 ```
+the `ml::Invoke` alias.
 
 ### Example: Generate a list of Tagged Elements from a parameter pack
 

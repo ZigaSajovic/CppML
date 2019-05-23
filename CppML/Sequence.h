@@ -4,12 +4,12 @@
 
 #ifndef CPPML_SEQUENCE_H
 #define CPPML_SEQUENCE_H
-#include "CppML/Const.h"
-#include "CppML/ControlFlow.h"
-#include "CppML/Functional.h"
-#include "CppML/Identity.h"
-#include "CppML/List.h"
-#include "CppML/Range.h"
+#include "Const.h"
+#include "ControlFlow.h"
+#include "Functional.h"
+#include "Identity.h"
+#include "List.h"
+#include "Range.h"
 namespace ml {
 /*
  * Append:

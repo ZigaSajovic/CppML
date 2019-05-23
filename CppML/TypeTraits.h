@@ -4,9 +4,9 @@
 
 #ifndef CPPML_TYPE_TRAITS_H
 #define CPPML_TYPE_TRAITS_H
-#include "CppML/Const.h"
-#include "CppML/ControlFlow.h"
-#include "CppML/Identity.h"
+#include "Const.h"
+#include "ControlFlow.h"
+#include "Identity.h"
 #include <type_traits>
 
 namespace ml {

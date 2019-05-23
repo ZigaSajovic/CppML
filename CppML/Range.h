@@ -4,10 +4,10 @@
 
 #ifndef CPPML_XRANGE_H
 #define CPPML_XRANGE_H
-#include "CppML/Const.h"
-#include "CppML/ControlFlow.h"
-#include "CppML/Functional.h"
-#include "CppML/List.h"
+#include "Const.h"
+#include "ControlFlow.h"
+#include "Functional.h"
+#include "List.h"
 namespace ml {
 namespace TypeRangeDetail {
 template <bool shouldContinue, typename Pipe> struct TypeRangeBase;

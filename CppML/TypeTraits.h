@@ -85,28 +85,35 @@ struct InheritsFromTemplateBase<
  * InheritsFromTemplate:
  * Checks if a class inherits from a template.
  */
-template <typename T, template <class...> class Template>
-struct InheritsFromTemplate
-    : InheritsFromTemplateDetail::InheritsFromTemplateBase<T, Template> {};
-
-namespace BaseConstructableDetail {
-template <typename Base> struct T : Base {
-  template <typename... Args>
-  T(Args &&... args) : Base{static_cast<Args &&>(args)...} {};
+struct InheritsFromTemplate {
+  template <typename T, template <class...> class Template>
+  using f = InheritsFromTemplateDetail::InheritsFromTemplateBase<T, Template>;
 };
-}; // namespace BaseConstructableDetail
+
+namespace TraitsDetail {
+template <class T, class = void> struct HasArrow_impl : ml::Bool<false> {};
+template <class T>
+struct HasArrow_impl<T, std::void_t<decltype(std::declval<T>().operator->())>>
+    : ml::Bool<true> {};
+template <class T, class = void> struct HasBracket_impl : ml::Bool<false> {};
+template <class T>
+struct HasBracket_impl<T, std::void_t<decltype(std::declval<T>().operator[](3))>>
+    : ml::Bool<true> {};
+}; // namespace TraitsDetail
 
 /*
- * BaseConstructable:
- * Checks if a class with a proctected destructor (that can only be
- * a base class) is constructable from arguments.
+ * HasArrow:
+ * Checks if T defines the arrow operator.
  */
-template <typename T> struct BaseConstructable {
-  template <typename... Args>
-  using f =
-      std::is_constructible<typename ml::IfElse<std::is_class_v<T>>::template f<
-                                BaseConstructableDetail::T<T>, T>,
-                            Args...>;
+struct HasArrow {
+  template <typename T> using f = TraitsDetail::HasArrow_impl<T, void>;
+};
+/*
+ * HasBracket:
+ * Checks if T defines the arrow operator.
+ */
+struct HasBracket {
+  template <typename T> using f = TraitsDetail::HasBracket_impl<T, void>;
 };
 }; // namespace ml
 #endif

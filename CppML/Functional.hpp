@@ -4,10 +4,10 @@
 
 #ifndef CPPML_FUNCTIONAL_H
 #define CPPML_FUNCTIONAL_H
-#include "Const.h"
-#include "ControlFlow.h"
-#include "Identity.h"
-#include "List.h"
+#include "Const.hpp"
+#include "ControlFlow.hpp"
+#include "Identity.hpp"
+#include "List.hpp"
 #include <type_traits>
 namespace ml {
 namespace UnListDetail {

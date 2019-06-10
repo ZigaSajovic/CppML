@@ -2,8 +2,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML_CONST_H
-#define CPPML_CONST_H
+#ifndef CPPML_CONST_HPP
+#define CPPML_CONST_HPP
 namespace ml {
 /*
  * Const:

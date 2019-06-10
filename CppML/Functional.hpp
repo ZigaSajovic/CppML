@@ -2,8 +2,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML_FUNCTIONAL_H
-#define CPPML_FUNCTIONAL_H
+#ifndef CPPML_FUNCTIONAL_HPP
+#define CPPML_FUNCTIONAL_HPP
 #include "Const.hpp"
 #include "ControlFlow.hpp"
 #include "Identity.hpp"

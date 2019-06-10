@@ -2,8 +2,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML_XRANGE_H
-#define CPPML_XRANGE_H
+#ifndef CPPML_XRANGE_HPP
+#define CPPML_XRANGE_HPP
 #include "Const.hpp"
 #include "ControlFlow.hpp"
 #include "Functional.hpp"

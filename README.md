@@ -70,7 +70,7 @@ static_assert(std::is_same_v<ElementList, U>);
 By `static_assert`, we see what the result is. Next, we tag each `Element`, by zipping them in a `Tag`, alongside their index.
 
 ```c++
-template <class ...> struct Tag {};
+template <class, class> struct Tag {};
 
 using TaggedElements =
     ml::Invoke<ml::ZipWith<Tag>, // Zip the following two list with Tag

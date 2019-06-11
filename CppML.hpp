@@ -12,4 +12,5 @@
 #include "CppML/Range.hpp"
 #include "CppML/Sequence.hpp"
 #include "CppML/TypeTraits.hpp"
+#include "CppML/Types.hpp"
 #endif

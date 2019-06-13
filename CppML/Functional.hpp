@@ -25,6 +25,38 @@ template <template <class...> class F_> struct F {
 template <class... Ts> struct InvokeWith {
   template <typename F> using f = typename F::template f<Ts...>;
 };
+/*
+ * Invoke:
+ * Invokes a meta function
+ */
+template <typename Pipe, typename... Ts>
+using Invoke = typename Pipe::template f<Ts...>;
+/*
+ * InvokeA:
+ * Invokes a meta function
+ */
+template <typename Pipe, auto... Ts>
+using InvokeA = typename Pipe::template f<Ts...>;
+
+namespace ComposeDetail {
+template <typename Result, int N> struct Compose_impl {
+  template <typename T, typename... Ts>
+  using f = typename Result::template f<
+      typename Compose_impl<T, N - 1>::template f<Ts...>>;
+};
+template <typename Result> struct Compose_impl<Result, 1> {
+  template <typename... Ts> using f = typename Result::template f<Ts...>;
+};
+}; // namespace ComposeDetail
+/*
+ * Compose:
+ * Composes one or more metafunctions.
+ */
+template <typename T, typename... Ts> struct Compose {
+  template <typename... Us>
+  using f = ml::Invoke<ComposeDetail::Compose_impl<T, sizeof...(Ts) + 1>, Ts...,
+                       Us...>;
+};
 namespace UnListDetail {
 template <typename...> struct UnListImpl;
 template <typename Pipe, template <class...> class List, typename... Es>
@@ -40,18 +72,6 @@ template <typename Pipe> struct UnList {
   template <typename... Ls>
   using f = typename UnListDetail::UnListImpl<Pipe, Ls...>::type;
 };
-/*
- * Invoke:
- * Invokes a meta function
- */
-template <typename Pipe, typename... Ts>
-using Invoke = typename Pipe::template f<Ts...>;
-/*
- * InvokeA:
- * Invokes a meta function
- */
-template <typename Pipe, auto... Ts>
-using InvokeA = typename Pipe::template f<Ts...>;
 /*
  * WrapIn:
  * Wraps a type in a wrapper

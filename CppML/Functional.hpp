@@ -10,6 +10,13 @@
 #include "List.hpp"
 #include <type_traits>
 namespace ml {
+/*
+ * F:
+ * Creates a metafunction out of a template
+ */
+template <template <class...> class F_> struct F {
+  template <typename... Args> using f = F_<Args...>;
+};
 namespace UnListDetail {
 template <typename...> struct UnListImpl;
 template <typename Pipe, template <class...> class List, typename... Es>

@@ -17,6 +17,14 @@ namespace ml {
 template <template <class...> class F_> struct F {
   template <typename... Args> using f = F_<Args...>;
 };
+/*
+ * InvokeWith:
+ * A metafunction that will invoke the metafunction it is passed,
+ * with the arguments Ts
+ */
+template <class... Ts> struct InvokeWith {
+  template <typename F> using f = typename F::template f<Ts...>;
+};
 namespace UnListDetail {
 template <typename...> struct UnListImpl;
 template <typename Pipe, template <class...> class List, typename... Es>

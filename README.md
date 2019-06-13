@@ -136,15 +136,13 @@ First, we show how to transform a template into a metafunction:
 ```c++
 using MF0 = ml::F<Policy0>;
 static_assert(std::is_same_v<MF0::template f<T0, T1>, //
-                             Policy0<T0, T1>>,        //
-              "Equal");
+                             Policy0<T0, T1>>);
 ```
 The created metafunction can be partially evaluated:
 ```c++
 using MF0partial = ml::PrePartial<MF0, T0>;
 static_assert(std::is_same_v<MF0partial::template f<T1>, //
-                             Policy0<T0, T1>>,           //
-              "Equal");
+                             Policy0<T0, T1>>);
 ```
 We can go further, and create a metafuntion, that will take a policy metafunction like `MF0`, and partially evaluate it at `TopType`. In the bellow, note that `Partial`is like `PrePartial`, but it partially evaluates the trailing arguments (where as the `PrePartial` does so for the preceding arguments).
 ```c++
@@ -159,8 +157,7 @@ We can now use the `PartialEvaluator` to create metafunction like `MF0partial`:
 using MF0partial = ml::PrePartial<MF0, TopType>;
 using MF0partialMapped = PartialEvaluator::template f<MF0>;
 static_assert(std::is_same_v<MF0partialMapped,
-                             MF0partial>,
-              "Equal");
+                             MF0partial>);
 ```
 #### MakeBase metafunction
 
@@ -188,8 +185,7 @@ using Base = MakeBase<Policiy0,
                       /* ... */
                       PolicyN>::template f<Bottom>
 static_assert(std::is_same_v<WantedBase,
-                             Base>,
-              "Equal");
+                             Base>);
 
 ```
 where `WantedBase` is as defined in the beginning of this section. We can now define the `TopType` as specified.

@@ -47,7 +47,7 @@ Note that **CppML** also possesses the mechanics needed to compose metafunctions
 
 ## Examples
 
-In this section we provide two demonstrations of metaprogramming using **CppML**. In the first example we will first create a *tagged element list*, and in the second design a metaprogram for creating *linear hierarchies of Policy Classes from flat parameter packs*. Note that both examples are taken from real-life usage of the author.
+In this section we provide two demonstrations of metaprogramming using **CppML**. In the first example we will first create a *tagged element list*, which will demonstrate basic functionality and working with lists. In the second example, we will design a metaprogram for creating *linear hierarchies of Policy Classes from flat parameter packs*, which will demonstrate more advance notions of metaprogramming in **CppML**. Note that both examples are taken from real-life usage of the author.
 
 ### Generate a list of Tagged Elements from a parameter pack
 
@@ -105,7 +105,7 @@ struct Policy0 : Tail {
 ```
 This is used in *Policy Based Design*, where a user can specify a variadic collection of policies, which endow his class with additional functionality he selects.
 
-To that purpose, we need a metaprogram, that takes a variadic sequence of such policies, and generates the linear hierarchy that can be used as a base class:
+To that purpose, we need a metaprogram, that takes a variadic sequence of such policies, and generates a linear hierarchy that can be used as a base class:
 ```c++
 using WantedBase = Policy0<TopType,
                            Policy1<TopType,
@@ -114,6 +114,7 @@ using WantedBase = Policy0<TopType,
                                            PolicyN<TopType, Bottom>>>>;
 ```
 This is achieved as follows:
+
 We start with a variadic parameter pack of policy classes. First we transform each policy  into a metafunction. Than we partially evaluate each of them on `TopType` (now each of them takes only one parameter, namely the `Tail`). We finish by composing all these partially evaluated metafunctions. This will result in a metafunction taking one parameter, `Bottom`, which will map it to the `WantedBase`, as above.
 
 This will result in a `MakeBase` metaprogram, which we can use when coding the `TopType` that users can customize using mentioned policies.
@@ -201,4 +202,4 @@ struct TopType : MakeBase<Policies...>::template f<Bottom> {
 The user is able to instantiate the `TopType` by listing the wanted policies, instead of manually nesting them
 ```c++
 TopType<Policy0, Policy1, Policy2, /* ... */ PolicyN> myInstance;
-``` 
+```

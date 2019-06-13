@@ -2,7 +2,12 @@
 
 A Meta Language for C++
 
-**CppML** is a meta language I use when developing libraries. It was designed to allow seamless transitions between *templates*, *metafunctions* and *composable transformations* they afford us. As such, metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation* and *pipe chaining*, usually operating on parameter packs and type-lists.
+**CppML** is a meta language I use when developing libraries. It was designed to allow seamless transitions between *templates*, *metafunctions* and *composable variadic transformations* they afford us. As such, metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation* and *pipe chaining*, usually operating on parameter packs and type-lists.
+See [Examples](#examples) bellow for a demonstration of 
+[basic](#generate-a-list-of-tagged-elements-from-a-parameter-pack)
+and
+[advance](#creating-a-linear-hiearchy-of-policy-classes-from-a-flat-parameter-pack)
+usage.
 
 Note that it is an evolving project, that grows in parallel with the work I do.
 Metaprogramming in C++ offers a unique experience, as one can implement **monads** and **functors**, while controlling how the resulting types are *mapped onto hardware*.
@@ -43,11 +48,12 @@ using Result =
 ```
 the `ml::Invoke` alias.
 
-Note that **CppML** also possesses the mechanics needed to compose metafunctions, that do not define the convenient `Pipe` template parameter (see the second example below).
+Note that **CppML** also possesses the mechanics needed to compose metafunctions, that do not define the convenient `Pipe` template parameter (see the [second](#creating-a-linear-hiearchy-of-policy-classes-from-a-flat-parameter-pack) example below).
+
 
 ## Examples
 
-In this section we provide two demonstrations of metaprogramming using **CppML**. In the first example we will first create a *tagged element list*, which will demonstrate basic functionality and working with lists. In the second example, we will design a metaprogram for creating *linear hierarchies of Policy Classes from flat parameter packs*, which will demonstrate more advance notions of metaprogramming in **CppML**. Note that both examples are taken from real-life usage of the author.
+In this section we provide two demonstrations of metaprogramming using **CppML**. In the first example we will first create a *tagged element list*, which will demonstrate basic functionality and working with lists. In the second example, we will design a metaprogram for creating *linear CRTP hierarchies of Policy Classes from flat parameter packs*, which will demonstrate more advance notions of metaprogramming in **CppML**, such as variadic compositions of partial evaluations. Note that both examples are taken from real-life usage of the author.
 
 ### Generate a list of Tagged Elements from a parameter pack
 
@@ -95,6 +101,7 @@ The reader could continue by writing a metaprogram that **permutes** the `Elemen
 
 ### Creating a linear hiearchy of Policy classes from a flat parameter pack
 
+In this section we demonstrate more advance notions of metaprogramming in **CppML**, such as variadic compositions of partial evaluations.
 Suppose we have a collection of policy classes of the form:
 
 ```c++

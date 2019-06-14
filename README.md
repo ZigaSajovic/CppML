@@ -53,7 +53,7 @@ Note that **CppML** also possesses the mechanics needed to compose metafunctions
 
 ## Examples
 
-In this section we provide two demonstrations of metaprogramming using **CppML**. In the first example we will first create a *tagged element list*, which will demonstrate basic functionality and working with lists. In the second example, we will design a metaprogram for creating *linear CRTP hierarchies of Policy Classes from flat parameter packs*, which will demonstrate more advance notions of metaprogramming in **CppML**, such as variadic compositions of partial evaluations. Note that both examples are taken from real-life usage of the author.
+In this section we provide two demonstrations of metaprogramming using **CppML**. In the [first](#generate-a-list-of-tagged-elements-from-a-parameter-pack) example we will first create a *tagged element list*, which will demonstrate basic functionality and working with lists. In the [second](#creating-a-linear-hierarchy-of-policy-classes-from-a-flat-parameter-pack) example, we will design a metaprogram for creating *linear CRTP hierarchies of Policy Classes from flat parameter packs*, which will demonstrate more advance notions of metaprogramming in **CppML**, such as variadic compositions of partial evaluations. Note that both examples are taken from real-life usage of the author.
 
 ### Generate a list of Tagged Elements from a parameter pack
 
@@ -137,7 +137,7 @@ were `MakeBase<Policies...>::template f<Bottom>` is equivalent to `WantedBase` a
 Class<Policy0, Policy1, Policy2, /* ... */ PolicyN> myInstance;
 ```
 
-We will first implement the `MakeBase` metafunction for our specific case, and than generalize it to a `CRTPLinearHierarchy` that can be used in a general setting.
+We will first implement the `MakeBase` metafunction for our specific case, and than generalize it to a `CRTPLinearHierarchy` that can be used in a general setting (skip to [there](#general-crtplinearhierarchy-metafunction)). Note that [CRTP](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern) stands for *curiously recurring template pattern*.
 
 #### Creating the needed tools
 

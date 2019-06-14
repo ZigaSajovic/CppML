@@ -6,7 +6,7 @@ A Meta Language for C++
 See [Examples](#examples) bellow for a demonstration of
 [basic](#generate-a-list-of-tagged-elements-from-a-parameter-pack)
 and
-[advance](#creating-a-linear-hiearchy-of-policy-classes-from-a-flat-parameter-pack)
+[advance](#creating-a-linear-hierarchy-of-policy-classes-from-a-flat-parameter-pack)
 usage.
 
 Note that it is an evolving project, that grows in parallel with the work I do.
@@ -48,7 +48,7 @@ using Result =
 ```
 the `ml::Invoke` alias.
 
-Note that **CppML** also possesses the mechanics needed to compose metafunctions, that do not define the convenient `Pipe` template parameter (see the [second](#creating-a-linear-hiearchy-of-policy-classes-from-a-flat-parameter-pack) example below).
+Note that **CppML** also possesses the mechanics needed to compose metafunctions, that do not define the convenient `Pipe` template parameter (see the [second](#creating-a-linear-hierarchy-of-policy-classes-from-a-flat-parameter-pack) example below).
 
 
 ## Examples
@@ -99,7 +99,7 @@ Again, we observe the correct result using `static_assert`.
 
 The reader could continue by writing a metaprogram that **permutes** the `Element`s in such a way, that their layout in memory would minimize the size of the object holding them (think of a tuple). Or, if the types wrapped by `Element` were classes, he/she could enforce a partial ordering on the list, as dictated by their *inheritance hierarchy*.
 
-### Creating a linear hiearchy of Policy classes from a flat parameter pack
+### Creating a linear hierarchy of Policy classes from a flat parameter pack
 
 In this section we demonstrate more advance notions of metaprogramming in **CppML**, such as variadic compositions of partial evaluations.
 Suppose we have a collection of policy classes of the form:
@@ -137,7 +137,7 @@ were `MakeBase<Policies...>::template f<Bottom>` is equivalent to `WantedBase` a
 Class<Policy0, Policy1, Policy2, /* ... */ PolicyN> myInstance;
 ```
 
-We will first implement the `MakeBase` metafunction for our specific case, and than generalize it to a `CRTPLinearHiearchy` that can be used in a general setting.
+We will first implement the `MakeBase` metafunction for our specific case, and than generalize it to a `CRTPLinearHierarchy` that can be used in a general setting.
 
 #### Creating the needed tools
 
@@ -209,9 +209,9 @@ struct Class : MakeBase<Policies...>::template f<Bottom> {
 Class<Policy0, Policy1, Policy2, /* ... */ PolicyN> myInstance;
 ```
 
-### General CRTPLinearHiearchy metafunction
+### General CRTPLinearHierarchy metafunction
 
-The above code can be cleaned up, and be made ready for general use. We write a `PrePartialEvaluator` that will Partially evaluate on arbitrary arguments, and `CRTPLinearHiearchy`, which will create the linear hierarchy for an arbitrary `Derived` type, with arbitrary `Policies`.
+The above code can be cleaned up, and be made ready for general use. We write a `PrePartialEvaluator` that will Partially evaluate on arbitrary arguments, and `CRTPLinearHierarchy`, which will create the linear hierarchy for an arbitrary `Derived` type, with arbitrary `Policies`.
 
 ```c++
 template <typename... Args>
@@ -219,7 +219,7 @@ using PrePartialEvaluator = ml::Partial< // Partially evaluate
     ml::F<ml::PrePartial>, // the metafunction created from PrePartial
     Args...>;
 
-template <typename Derived> struct CRTPLinearHiearchy {
+template <typename Derived> struct CRTPLinearHierarchy {
   template <class... PolicyMetafunctions>
   using f = typename ml::Apply<     // Apply the
       PrePartialEvaluator<Derived>, // partial evaluator on Derived on the
@@ -230,9 +230,9 @@ template <typename Derived> struct CRTPLinearHiearchy {
       >::template f<PolicyMetafunctions...>;
 };
 ```
-We can use the `CRTPLinearHiearchy` metafunction to reproduce `MakeBase`above. Note that we create metafunction from Policies before passing them to `CRTPLinearHiearchy` (using `ml::F`).
+We can use the `CRTPLinearHierarchy` metafunction to reproduce `MakeBase`above. Note that we create metafunction from Policies before passing them to `CRTPLinearHierarchy` (using `ml::F`).
 ```c++
-using Base = ml::Invoke<meta::CRTPLinearHiearchy<Class>,
+using Base = ml::Invoke<meta::CRTPLinearHierarchy<Class>,
                         mf::F<Policy0>, //
                         mf::F<Policy1>, //
                         /* ... */
@@ -242,10 +242,10 @@ static_assert(std::is_same_v<WantedBase,
                              Base>);
 
 ```
-The `Class` can now be implemented using the `CRTPLinearHiearchy` metafunction.
+The `Class` can now be implemented using the `CRTPLinearHierarchy` metafunction.
 ```c++
 template <template <class, class> class... Policies>
-struct Class : ml::Invoke<CRTPLinearHiearchy<Class>,
+struct Class : ml::Invoke<CRTPLinearHierarchy<Class>,
                           ml::F<Policies>...>::template f<Bottom> {
   /* Implementation */
 };

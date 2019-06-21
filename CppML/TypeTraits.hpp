@@ -90,17 +90,6 @@ struct InheritsFromTemplate {
   using f = InheritsFromTemplateDetail::InheritsFromTemplateBase<T, Template>;
 };
 
-namespace TraitsDetail {
-template <class T, class = void> struct HasArrow_impl : ml::Bool<false> {};
-template <class T>
-struct HasArrow_impl<T, std::void_t<decltype(std::declval<T>().operator->())>>
-    : ml::Bool<true> {};
-template <class T, class = void> struct HasBracket_impl : ml::Bool<false> {};
-template <class T>
-struct HasBracket_impl<T, std::void_t<decltype(std::declval<T>().operator[](3))>>
-    : ml::Bool<true> {};
-}; // namespace TraitsDetail
-
 namespace IsValidDetail {
 template <typename, template <typename...> class T, class... Ts>
 struct IsValidT_impl : ml::Bool<false> {};

@@ -115,5 +115,42 @@ struct HasArrow {
 struct HasBracket {
   template <typename T> using f = TraitsDetail::HasBracket_impl<T, void>;
 };
+
+namespace IsValidDetail {
+template <typename, template <typename...> class T, class... Ts>
+struct IsValidT_impl : ml::Bool<false> {};
+
+template <template <typename...> class T, typename... Ts>
+struct IsValidT_impl<std::void_t<T<Ts...>>, T, Ts...> : ml::Bool<true> {};
+
+template <typename, class T, class... Ts>
+struct IsValid_impl : ml::Bool<false> {};
+
+template <class T, typename... Ts>
+struct IsValid_impl<std::void_t<typename T::template f<Ts...>>, T, Ts...>
+    : ml::Bool<true> {};
+}; // namespace IsValidDetail
+
+/*
+ * IsValidT:
+ * Checks is a template T is instantiable with Ts.
+ * Can be used like:
+ * template <typename T, typename U>
+ * using Check = decltype(std::declval<T>().foo(std::declval<U>()));
+ * constexpr bool test = IsValidT<Check, SomeType, int>::value;
+ */
+struct IsValidT {
+  template <template <typename...> class T, class... Ts>
+  using f = IsValidDetail::IsValidT_impl<void, T, Ts...>;
+};
+
+/*
+ * IsValid:
+ * See IsValidT. This is equivalent, but T is a metafunction.
+ */
+struct IsValid {
+  template <class T, class... Ts>
+  using f = IsValidDetail::IsValid_impl<void, T, Ts...>;
+};
 }; // namespace ml
 #endif

@@ -101,21 +101,6 @@ struct HasBracket_impl<T, std::void_t<decltype(std::declval<T>().operator[](3))>
     : ml::Bool<true> {};
 }; // namespace TraitsDetail
 
-/*
- * HasArrow:
- * Checks if T defines the arrow operator.
- */
-struct HasArrow {
-  template <typename T> using f = TraitsDetail::HasArrow_impl<T, void>;
-};
-/*
- * HasBracket:
- * Checks if T defines the arrow operator.
- */
-struct HasBracket {
-  template <typename T> using f = TraitsDetail::HasBracket_impl<T, void>;
-};
-
 namespace IsValidDetail {
 template <typename, template <typename...> class T, class... Ts>
 struct IsValidT_impl : ml::Bool<false> {};
@@ -151,6 +136,29 @@ struct IsValidT {
 struct IsValid {
   template <class T, class... Ts>
   using f = IsValidDetail::IsValid_impl<void, T, Ts...>;
+};
+namespace Types {
+template <typename T, typename I = int>
+using BracketType = decltype(std::declval<T>()[std::declval<I>()]);
+
+template <typename T>
+using ArrowOperatorType = decltype(std::declval<T>().operator->());
+};
+/*
+ * HasBracket:
+ * Checks if T defines the arrow operator.
+ */
+struct HasBracket {
+  template <typename T, typename I = int>
+  using f = IsValidT::template f<Types::BracketType, T, I>;
+};
+/*
+ * HasArrow:
+ * Checks if T defines the arrow operator.
+ */
+struct HasArrow {
+  template <typename T>
+  using f = IsValidT::template f<Types::ArrowOperatorType, T>;
 };
 }; // namespace ml
 #endif

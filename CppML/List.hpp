@@ -15,6 +15,8 @@ template <typename... Ts> struct ListT {};
  * ListA:
  * Represents a list of auto (values)
  */
+#ifdef __cpp_nontype_template_parameter_auto
 template <auto... As> struct ListA {};
+#endif
 };
 #endif

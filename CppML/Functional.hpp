@@ -35,8 +35,10 @@ using Invoke = typename Pipe::template f<Ts...>;
  * InvokeA:
  * Invokes a meta function
  */
+#ifdef __cpp_nontype_template_parameter_auto
 template <typename Pipe, auto... Ts>
 using InvokeA = typename Pipe::template f<Ts...>;
+#endif
 
 namespace ComposeDetail {
 template <typename Result, int N> struct Compose_impl {
@@ -103,28 +105,34 @@ template <template <class...> class Template> struct MakeMetaFunction {
  * ToValue:
  * Returns an auto list of underlying values
  */
+#ifdef __cpp_nontype_template_parameter_auto
 struct ToValue {
   template <typename... Ts> using f = ListA<Ts::value...>;
 };
+#endif
 /*
  * All:
  * Checks if all values satisfy the predicate
  */
+#ifdef __cpp_fold_expressions	
 template <typename Predicate, typename Pipe = Identity> struct All {
   template <typename... Ts>
   using f = typename Pipe::template f<
       Bool<(Predicate::template f<Ts>::value && ...)>>;
 };
+#endif
 
 /*
  * Any:
  * Checks if any value satisfies the predicate
  */
+#ifdef __cpp_fold_expressions	
 template <typename Predicate, typename Pipe = Identity> struct Any {
   template <typename... Ts>
   using f = typename Pipe::template f<
       Bool<(Predicate::template f<Ts>::value || ...)>>;
 };
+#endif
 
 /*
  * Apply:
@@ -164,9 +172,11 @@ template <typename Pipe, typename... Ts> struct PrePartial {
  * PartialA:
  * Partial evaluation of a metafunction
  */
+#ifdef __cpp_nontype_template_parameter_auto
 template <typename Pipe, auto... Ts> struct PartialA {
   template <typename... Us> using f = typename Pipe::template f<Us..., Ts...>;
 };
+#endif
 
 namespace ReplaceDetail {
 template <typename T, typename U, typename Pipe = Identity>

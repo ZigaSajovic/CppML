@@ -61,9 +61,9 @@ template <typename Pipe = Identity> struct AligmentOf {
  */
 struct CopyRefness {
   template <typename From, typename To>
-  using f = typename IfElse<!std::is_reference_v<From>>::template f<
+  using f = typename IfElse<!std::is_reference<From>::value>::template f<
       std::remove_reference_t<To>,
-      typename IfElse<std::is_rvalue_reference_v<From>>::template f<
+      typename IfElse<std::is_rvalue_reference<From>::value>::template f<
           std::remove_reference_t<To> &&, To &>>;
 };
 namespace HasCRTPAsBaseDetail {

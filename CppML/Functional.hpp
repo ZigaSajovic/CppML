@@ -114,23 +114,84 @@ struct ToValue {
  * All:
  * Checks if all values satisfy the predicate
  */
-#ifdef __cpp_fold_expressions	
+#ifdef __cpp_fold_expressions
 template <typename Predicate, typename Pipe = Identity> struct All {
   template <typename... Ts>
   using f = typename Pipe::template f<
       Bool<(Predicate::template f<Ts>::value && ...)>>;
 };
+#else
+namespace Implementations {
+template <bool Continue, typename Predicate, typename Pipe = ml::Identity>
+struct AllImpl {
+  template <typename T>
+  using f =
+      typename Pipe::template f<ml::Bool<Predicate::template f<T>::value>>;
+};
+template <typename Predicate, typename Pipe>
+struct AllImpl<true, Predicate, Pipe> {
+  template <typename T, typename... Ts>
+  using f = typename Pipe::template f<
+      typename ml::IfElse<!Predicate::template f<T>::value>::template f<
+          ml::Bool<false>, typename AllImpl<(sizeof...(Ts) > 1), Predicate,
+                                            Pipe>::template f<Ts...>>>;
+};
+template <bool Zero, typename Predicate, typename Pipe = ml::Identity>
+struct AllBase {
+  template <typename... Ts>
+  using f =
+      typename AllImpl<(sizeof...(Ts) > 1), Predicate, Pipe>::template f<Ts...>;
+};
+template <typename Predicate, typename Pipe>
+struct AllBase<true, Predicate, Pipe> {
+  template <typename... Ts> using f = ml::Bool<true>;
+};
+}; // namespace Implementations
+
 #endif
 
 /*
  * Any:
  * Checks if any value satisfies the predicate
  */
-#ifdef __cpp_fold_expressions	
+#ifdef __cpp_fold_expressions
 template <typename Predicate, typename Pipe = Identity> struct Any {
   template <typename... Ts>
   using f = typename Pipe::template f<
       Bool<(Predicate::template f<Ts>::value || ...)>>;
+};
+#else
+namespace Implementations {
+template <bool Continue, typename Predicate, typename Pipe = ml::Identity>
+struct AnyImpl {
+  template <typename T>
+  using f =
+      typename Pipe::template f<ml::Bool<Predicate::template f<T>::value>>;
+};
+template <typename Predicate, typename Pipe>
+struct AnyImpl<true, Predicate, Pipe> {
+  template <typename T, typename... Ts>
+  using f = typename Pipe::template f<
+      typename ml::IfElse<Predicate::template f<T>::value>::template f<
+          ml::Bool<true>, typename AnyImpl<(sizeof...(Ts) > 1), Predicate,
+                                           Pipe>::template f<Ts...>>>;
+};
+template <bool Zero, typename Predicate, typename Pipe = ml::Identity>
+struct AnyBase {
+  template <typename... Ts>
+  using f =
+      typename AnyImpl<(sizeof...(Ts) > 1), Predicate, Pipe>::template f<Ts...>;
+};
+template <typename Predicate, typename Pipe>
+struct AnyBase<true, Predicate, Pipe> {
+  template <typename... Ts> using f = ml::Bool<true>;
+};
+}; // namespace Implementations
+
+template <typename Predicate, typename Pipe = ml::Identity> struct Any {
+  template <typename... Ts>
+  using f = typename Implementations::AnyBase<sizeof...(Ts) == 0, Predicate,
+                                              Pipe>::template f<Ts...>;
 };
 #endif
 

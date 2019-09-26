@@ -66,28 +66,6 @@ struct CopyRefness {
       typename IfElse<std::is_rvalue_reference<From>::value>::template f<
           std::remove_reference_t<To> &&, To &>>;
 };
-namespace HasCRTPAsBaseDetail {
-template <typename Derived, template <class...> class Template, class... Ts>
-void test(Template<Derived, Ts...> *);
-
-template <typename T, template <class...> class Template, typename = void>
-struct InheritsFromTemplateBase : Bool<false> {};
-
-template <typename Derived, template <class...> class Template>
-struct InheritsFromTemplateBase<
-    Derived, Template,
-    std::void_t<decltype(test<Derived, Template>(std::declval<Derived *>()))>>
-    : Bool<true> {};
-
-}; // namespace HasCRTPAsBaseDetail
-/*
- * HasCRTPAsBase:
- * Checks if a class inherits from a template.
- */
-struct HasCRTPAsBase {
-  template <typename Derived, template <class...> class Template>
-  using f = HasCRTPAsBaseDetail::InheritsFromTemplateBase<Derived, Template>;
-};
 
 namespace IsValidDetail {
 template <typename, template <typename...> class T, class... Ts>

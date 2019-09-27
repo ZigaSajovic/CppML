@@ -80,6 +80,13 @@ struct IsValid_impl : ml::Bool<false> {};
 template <class T, typename... Ts>
 struct IsValid_impl<std::void_t<typename T::template f<Ts...>>, T, Ts...>
     : ml::Bool<true> {};
+
+template <typename, class U, class T, class... Ts>
+struct IfValidOr_impl : U {};
+
+template <class U, class T, typename... Ts>
+struct IfValidOr_impl<std::void_t<typename T::template f<Ts...>>, U, T, Ts...>
+    : T::template f<Ts...> {};
 }; // namespace IsValidDetail
 
 /*
@@ -103,6 +110,16 @@ struct IsValid {
   template <class T, class... Ts>
   using f = IsValidDetail::IsValid_impl<void, T, Ts...>;
 };
+/*
+ * IfValidOr:
+ * If the metafunction T is valid, evaluate to its result,
+ * else evaluate to U.
+ */
+struct IfValidOr {
+  template <class U, class T, class... Ts>
+  using f = IsValidDetail::IfValidOr_impl<void, U, T, Ts...>;
+};
+
 namespace Types {
 template <typename T, typename I = int>
 using BracketType = decltype(std::declval<T>()[std::declval<I>()]);

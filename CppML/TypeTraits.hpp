@@ -16,14 +16,6 @@ namespace ml {
  */
 template <template <class...> class...> using void_tt = void;
 /*
- * IsSame:
- * Checks if two types are equivalent
- */
-template <typename Pipe = Identity> struct IsSame {
-  template <typename T, typename U>
-  using f = typename Pipe::template f<Bool<std::is_same<T, U>::value>>;
-};
-/*
  * IsClass:
  * Checks if a type is a class
  */
@@ -66,6 +58,24 @@ struct CopyRefness {
       typename IfElse<std::is_rvalue_reference<From>::value>::template f<
           std::remove_reference_t<To> &&, To &>>;
 };
+namespace TypeTraitsImplementations {
+template <typename T> struct IsSameHelper {
+  static ml::Bool<true> test(const volatile IsSameHelper<T> *);
+  static ml::Bool<false> test(const volatile void *);
+  template <typename U>
+  using f = decltype(IsSameHelper<T>::test(std::declval<IsSameHelper<U> *>()));
+};
+} // namespace TypeTraitsImplementations
+/*
+ * IsSame:
+ * Check if two types are equal. Note that this creates linear number
+ * of types, not quadratic, like std::is_same.
+ */
+struct IsSame {
+  template <typename T1, typename T2>
+  using f =
+      typename TypeTraitsImplementations::IsSameHelper<T1>::template f<T2>;
+};
 
 namespace IsValidDetail {
 template <typename, template <typename...> class T, class... Ts>
@@ -81,8 +91,7 @@ template <class T, typename... Ts>
 struct IsValid_impl<std::void_t<typename T::template f<Ts...>>, T, Ts...>
     : ml::Bool<true> {};
 
-template <typename, class U, class T, class... Ts>
-struct IfValidOr_impl : U {};
+template <typename, class U, class T, class... Ts> struct IfValidOr_impl : U {};
 
 template <class U, class T, typename... Ts>
 struct IfValidOr_impl<std::void_t<typename T::template f<Ts...>>, U, T, Ts...>

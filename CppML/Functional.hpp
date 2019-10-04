@@ -95,13 +95,6 @@ template <template <class...> class Wrapper> struct WrapInSingle {
  */
 using ToList = WrapIn<ListT>;
 /*
- * MakeMetaFunction:
- * Creates a MetaFunction from a template
- */
-template <template <class...> class Template> struct MakeMetaFunction {
-  template <typename... Args> using f = Template<Args...>;
-};
-/*
  * ToValue:
  * Returns an auto list of underlying values
  */

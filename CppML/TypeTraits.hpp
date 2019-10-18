@@ -91,11 +91,14 @@ template <class T, typename... Ts>
 struct IsValid_impl<std::void_t<typename T::template f<Ts...>>, T, Ts...>
     : ml::Bool<true> {};
 
-template <typename, class U, class T, class... Ts> struct IfValidOr_impl : U {};
+template <typename T> struct R { using f = T; };
+
+template <typename, class U, class T, class... Ts>
+struct IfValidOr_impl : R<U> {};
 
 template <class U, class T, typename... Ts>
 struct IfValidOr_impl<std::void_t<typename T::template f<Ts...>>, U, T, Ts...>
-    : T::template f<Ts...> {};
+    : R<typename T::template f<Ts...>> {};
 }; // namespace IsValidDetail
 
 /*
@@ -126,7 +129,7 @@ struct IsValid {
  */
 struct IfValidOr {
   template <class U, class T, class... Ts>
-  using f = IsValidDetail::IfValidOr_impl<void, U, T, Ts...>;
+  using f = typename IsValidDetail::IfValidOr_impl<void, U, T, Ts...>::f;
 };
 
 namespace Types {

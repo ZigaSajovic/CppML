@@ -73,7 +73,7 @@ struct ZipBase {
  * It is implemented as it is, because the Zipper of ZipBase
  * is used to construct the zip, by appending. If user provided
  * Zipper needs foe example exactly 2 arguments, than you cannot
- * treat it as a list and append to it. So, to amend this, we 
+ * treat it as a list and append to it. So, to amend this, we
  * first zip using the ml::ListT, and than change the zipper
  * to the user provided one.
  * If your zipper is a variadic template, than you can use
@@ -84,9 +84,10 @@ template <template <class...> class Zipper, typename Pipe = ml::ToList>
 struct ZipWith {
   template <typename... Fs>
   using f = typename ml::UnList<ml::Apply< // Unlist and apply to each element
-      ml::UnList<ml::WrapIn<Zipper>>>>::   // Unlist and wrap in the provided
-                                           // Zipper
-      template f<typename ml::ZipDetail::ZipBase<ml::ListT, Pipe, Fs...>::f>;
+      ml::UnList<ml::WrapIn<Zipper>>, Pipe>>:: // Unlist and wrap in the
+                                               // provided Zipper, and Pipe to
+                                               // Pipe
+      template f<typename ml::ZipDetail::ZipBase<ml::ListT, ml::ToList, Fs...>::f>;
 };
 
 /*
@@ -181,7 +182,7 @@ template <typename Pipe = ToList> struct Tag {
   using f = ml::Invoke<
       ml::UnList<Pipe>,
       ml::Zip<>::f<typename ml::TypeRange<>::template f<0, sizeof...(Ts)>,
-                    ml::ListT<Ts...>>>;
+                   ml::ListT<Ts...>>>;
 };
 }; // namespace ml
 #endif

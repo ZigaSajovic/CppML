@@ -12,6 +12,13 @@
 #include "Range.hpp"
 namespace ml {
 /*
+ * Length:
+ * Length of a List-like
+ */
+template <typename List> struct Length;
+template <template <class...> class List, typename... Args>
+struct Length<List<Args...>> : ml::Int<sizeof...(Args)> {};
+/*
  * Append:
  * Appends elements to a list-like structure
  */
@@ -87,7 +94,8 @@ struct ZipWith {
       ml::UnList<ml::WrapIn<Zipper>>, Pipe>>:: // Unlist and wrap in the
                                                // provided Zipper, and Pipe to
                                                // Pipe
-      template f<typename ml::ZipDetail::ZipBase<ml::ListT, ml::ToList, Fs...>::f>;
+      template f<
+          typename ml::ZipDetail::ZipBase<ml::ListT, ml::ToList, Fs...>::f>;
 };
 
 /*

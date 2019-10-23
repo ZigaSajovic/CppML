@@ -101,6 +101,34 @@ template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
           0, ml::ListT<>, Predicate>::template f<T, Ts...>>;
 };
 
+namespace Implementations {
+template <typename, typename, typename Pipe = ml::ToList> struct Merge2;
+template <template <class...> class List, typename... Ts, typename... Us,
+          typename Pipe>
+struct Merge2<List<Ts...>, List<Us...>, Pipe> {
+  using f = ml::Invoke<Pipe, Ts..., Us...>;
+};
+
+template <bool Continue> struct Merge_impl {
+  template <typename T, typename U, typename... Ts>
+  using f = typename Merge_impl<(
+      sizeof...(Ts) > 1)>::template f<typename Merge2<T, U>::f, Ts...>;
+};
+
+template <> struct Merge_impl<false> { template <typename T> using f = T; };
+}; // namespace Implementations
+
+/*
+ * # Merge:
+ * Merges `n` **List**-like types.
+ */
+struct Merge {
+  template <typename T, typename... Ts>
+  using f =
+      typename Implementations::Merge_impl<(sizeof...(Ts))>::template f<T,
+                                                                        Ts...>;
+};
+
 namespace ZipDetail {
 template <typename Pipe, typename Result, typename...> struct ZipImpl {
   using f = Invoke<UnList<Pipe>, Result>;

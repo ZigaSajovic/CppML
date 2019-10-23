@@ -52,6 +52,41 @@ template <typename Pipe> struct GetN<0, Pipe> {
   template <typename T, typename... Ts> using f = typename Pipe::template f<T>;
 };
 
+namespace Implementations {
+template <int i, typename KeepList, typename Predicate> struct Filter {
+  template <typename T, typename... Ts>
+  using f =
+      typename Filter <
+      i<sizeof...(Ts) ? i + 1 : -1,
+        typename ml::IfElse<Predicate::template f<
+            typename ml::GetN<i>::template f<T, Ts...>>::value>::
+            template f<typename ml::Append<KeepList>::template f<ml::Int<i>>,
+                       KeepList>,
+        Predicate>::template f<T, Ts...>;
+};
+
+template <typename KeepList, typename Predicate>
+struct Filter<-1, KeepList, Predicate> {
+  template <typename T, typename... Ts> using f = KeepList;
+};
+
+template <typename... Ts> struct PackExtractor {
+  template <typename T>
+  using f = typename ml::GetN<T::value>::template f<Ts...>;
+};
+
+}; // namespace Implementations
+/*
+ * FilterIds:
+ * Returns list of indexes of elements satifying the predicate.
+ */
+template <typename Predicate, typename Pipe = ml::ToList> struct FilterIds {
+  template <typename T, typename... Ts>
+  using f =
+      typename ml::UnList<Pipe>::template f<typename Implementations::Filter<
+          0, ml::ListT<>, Predicate>::template f<T, Ts...>>;
+};
+
 namespace ZipDetail {
 template <typename Pipe, typename Result, typename...> struct ZipImpl {
   using f = Invoke<UnList<Pipe>, Result>;

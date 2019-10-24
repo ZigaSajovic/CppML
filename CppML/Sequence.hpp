@@ -249,19 +249,18 @@ struct ZipWithVar {
  */
 template <typename Pipe = ToList> using Zip = ZipWith<ListT, Pipe>;
 
-namespace MaxElementDetail {
-template <bool Done, typename Compare> struct MaxEementImpl {
-  template <typename T0, typename T1, typename... Ts>
-  using f = typename IfElse<(sizeof...(Ts) < 10000)>::template f<
-      MaxEementImpl<static_cast<bool>(sizeof...(Ts)), Compare>,
-      void>::template f<typename IfElse<Compare::template f<T0, T1>::value>::
-                            template f<T0, T1>,
-                        Ts...>;
+namespace Implementations {
+template <bool Done> struct MaxEement {
+  template <typename Compare, typename T0, typename T1, typename... Ts>
+  using f = typename IfElse<(sizeof...(Ts) < 10000)>::
+      template f<MaxEement<static_cast<bool>(sizeof...(Ts))>, void>::template f<
+          Compare,
+          typename IfElse<Compare::template f<T0, T1>::value>::template f<T0,
+                                                                          T1>,
+          Ts...>;
 };
-template <typename Compare> struct MaxEementImpl<false, Compare> {
-  template <typename T> using f = T;
-};
-}; // namespace MaxElementDetail
+template <> struct MaxEement<false> { template <typename T> using f = T; };
+}; // namespace Implementations
 
 /*
  * MaxEement:
@@ -269,9 +268,8 @@ template <typename Compare> struct MaxEementImpl<false, Compare> {
  */
 template <typename Compare> struct MaxEement {
   template <typename... Ts>
-  using f =
-      typename MaxElementDetail::MaxEementImpl<(sizeof...(Ts) > 1),
-                                               Compare>::template f<Ts...>;
+  using f = typename Implementations::MaxEement<(
+      sizeof...(Ts) > 1)>::template f<Compare, Ts...>;
 };
 
 namespace SortDetail {

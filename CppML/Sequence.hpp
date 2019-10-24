@@ -39,19 +39,32 @@ struct Prepend<List<Ts...>> {
 };
 
 /*
- * GetN:
- * Retrives the N-th element in a pack
+ * Implementation of GetN. It only ever instantiates two types.
+ * This means that it will not instantiate a type for each N. So
+ * One can use this, when needed.
  */
-template <int N, typename Pipe = Identity> struct GetN {
-  template <typename T, typename... Ts>
-  using f = typename IfElse<sizeof...(Ts)>::template f<GetN<N - 1, Pipe>,
-                                                       void>::template f<Ts...>;
+namespace Implementations {
+template <bool Continue> struct GetN {
+  template <int i, typename T, typename... Ts>
+  using f = typename ml::IfElse<static_cast<bool>(sizeof...(
+      Ts))>::template f<GetN<(i > 1)>, void>::template f<i - 1, Ts...>;
 };
 
-template <typename Pipe> struct GetN<0, Pipe> {
-  template <typename T, typename... Ts> using f = typename Pipe::template f<T>;
+template <> struct GetN<false> {
+  template <int i, typename T, typename... Ts> using f = T;
 };
+}; // namespace Implementations
 
+/*
+ * GetN:
+ * Retrives the N-th element in a pack. Instantiates a type
+ * for each N.
+ */
+template <int N, typename Pipe = ml::Identity> struct GetN {
+  template <typename... Ts>
+  using f = typename Implementations::GetN<(sizeof...(Ts) >= 0) &&
+                                           N != 0>::template f<N, Ts...>;
+};
 namespace Implementations {
 template <int i, typename KeepList, typename Predicate> struct Filter {
   template <typename T, typename... Ts>

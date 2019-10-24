@@ -10,6 +10,7 @@
 #include "Identity.hpp"
 #include "List.hpp"
 #include "Range.hpp"
+#include "TypeTraits.hpp"
 namespace ml {
 /*
  * Length:
@@ -145,6 +146,16 @@ struct FindIfOr {
   using f = ml::Invoke<
       Pipe, typename Implementations::FindIfOr<static_cast<bool>(
                 sizeof...(Ts) > 1)>::template f<Default, Predicate, Ts...>>;
+};
+
+/*
+ * # Contains:
+ * Checks if a parameter pack contains T
+ */
+template <typename T, typename Pipe = ml::ToList> struct Contains {
+  template <typename... Ts>
+  using f =
+      typename ml::Any<ml::PrePartial<ml::IsSame, T>, Pipe>::template f<Ts...>;
 };
 
 namespace Implementations {

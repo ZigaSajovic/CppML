@@ -40,25 +40,30 @@ template <typename Pipe, auto... Ts>
 using InvokeA = typename Pipe::template f<Ts...>;
 #endif
 
-namespace ComposeDetail {
-template <typename Result, int N> struct Compose_impl {
-  template <typename T, typename... Ts>
-  using f = typename Result::template f<
-      typename Compose_impl<T, N - 1>::template f<Ts...>>;
-};
-template <typename Result> struct Compose_impl<Result, 1> {
-  template <typename... Ts> using f = typename Result::template f<Ts...>;
-};
-}; // namespace ComposeDetail
 /*
- * Compose:
+ * Implementation of Compose. Only ever instantiates two types.
+ */
+namespace Implementations {
+template <bool Continue> struct Compose_impl {
+  template <int i, typename Result, typename... Ts>
+  using f = typename Result::template f<typename Compose_impl<
+      (sizeof...(Ts) >= 0) && (i > 2)>::template f<i - 1, Ts...>>;
+};
+template <> struct Compose_impl<false> {
+  template <int i, typename Result, typename... Us>
+  using f = typename Result::template f<Us...>;
+};
+}; // namespace Implementations
+/*
+ * # Compose:
  * Composes one or more metafunctions.
  */
 template <typename T, typename... Ts> struct Compose {
   template <typename... Us>
-  using f = ml::Invoke<ComposeDetail::Compose_impl<T, sizeof...(Ts) + 1>, Ts...,
-                       Us...>;
+  using f = typename Implementations::Compose_impl<(
+      sizeof...(Ts) > 0)>::template f<sizeof...(Ts) + 1, T, Ts..., Us...>;
 };
+
 namespace UnListDetail {
 template <typename...> struct UnListImpl;
 template <typename Pipe, template <class...> class List, typename... Es>

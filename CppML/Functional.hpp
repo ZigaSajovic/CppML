@@ -189,6 +189,31 @@ template <typename Predicate, typename Pipe = ml::Identity> struct Any {
 #endif
 
 /*
+ * Implementation of CountIf. Only ever instantiates two types.
+ */
+namespace Implementations {
+template <bool Continue> struct CountIf {
+  template <int i, typename Predicate, typename T, typename... Ts>
+  using f = typename Implementations::CountIf<static_cast<bool>(sizeof...(
+      Ts))>::template f<i + ml::Invoke<Predicate, T>::value, Predicate, Ts...>;
+};
+template <> struct CountIf<false> {
+  template <int i, typename Predicate, typename... Ts> using f = ml::Int<i>;
+};
+} // namespace Implementations
+
+/*
+ * # CountIf:
+ * Counts the number of elements satisfying a predicate.
+ */
+template <typename Predicate, typename Pipe = ml::Identity> struct CountIf {
+  template <typename... Ts>
+  using f =
+      ml::Invoke<Pipe, typename Implementations::CountIf<static_cast<bool>(
+                           sizeof...(Ts))>::template f<0, Predicate, Ts...>>;
+};
+
+/*
  * Apply:
  * Applies the function to all types
  */

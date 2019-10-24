@@ -119,6 +119,32 @@ template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
       template f<typename Implementations::Filter<true>::template f<
           0, ml::ListT<>, Predicate, T, Ts...>>;
 };
+/*
+ * Implementation of Reduce. Only ever instantiates two types.
+ */
+namespace Implementations {
+template <bool Continue> struct Reduce {
+  template <typename Result, typename F, typename T, typename... Ts>
+  using f = typename Reduce<static_cast<bool>(
+      sizeof...(Ts))>::template f<typename F::template f<Result, T>, F, Ts...>;
+};
+template <> struct Reduce<false> {
+  template <typename Result, typename F> using f = Result;
+};
+} // namespace Implementations
+
+/*
+ * # Reduce:
+ * Reduces the parameter pack, as dictated by F, where
+ *  * Init: initial type
+ *  * F: maps (Init, T) -> Init
+ *  * Ts... : parameter pack to execute on
+ */
+template <typename Pipe = ml::Identity> struct Reduce {
+  template <typename Init, typename F, typename... Ts>
+  using f = typename Pipe::template f<typename Implementations::Reduce<
+      static_cast<bool>(sizeof...(Ts))>::template f<Init, F, Ts...>>;
+};
 
 namespace Implementations {
 template <bool Continue> struct FindIfOr {

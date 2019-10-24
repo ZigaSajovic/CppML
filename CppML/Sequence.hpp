@@ -109,17 +109,14 @@ template <typename Predicate, typename Pipe = ml::ToList> struct FilterIds {
 };
 /*
  * Filter:
- * Filters elements, given a predicate. The reason it is implemented in terms
- * of indexes is that, given a predicate, it is as if only **Filter** for one
- * list is ever instantiated because only indexes take part in the type
- * signature.
+ * Filters elements, given a predicate.
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
   template <typename T, typename... Ts>
   using f = typename ml::UnList<
       ml::Apply<Implementations::PackExtractor<T, Ts...>, Pipe>>::
-      template f<typename Implementations::Filter<
-          0, ml::ListT<>, Predicate>::template f<T, Ts...>>;
+      template f<typename Implementations::Filter<true>::template f<
+          0, ml::ListT<>, Predicate, T, Ts...>>;
 };
 
 namespace Implementations {

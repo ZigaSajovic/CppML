@@ -114,32 +114,38 @@ template <typename Predicate, typename Pipe = Identity> struct All {
       Bool<(Predicate::template f<Ts>::value && ...)>>;
 };
 #else
+/*
+ * Implementation of All. It only ever instantiates 4 types.
+ */
 namespace Implementations {
-template <bool Continue, typename Predicate, typename Pipe = ml::Identity>
-struct AllImpl {
-  template <typename T>
-  using f =
-      typename Pipe::template f<ml::Bool<Predicate::template f<T>::value>>;
+template <bool Continue> struct AllImpl {
+  template <typename Predicate, typename T>
+  using f = ml::Bool<Predicate::template f<T>::value>;
 };
-template <typename Predicate, typename Pipe>
-struct AllImpl<true, Predicate, Pipe> {
-  template <typename T, typename... Ts>
-  using f = typename Pipe::template f<
-      typename ml::IfElse<!Predicate::template f<T>::value>::template f<
-          ml::Bool<false>, typename AllImpl<(sizeof...(Ts) > 1), Predicate,
-                                            Pipe>::template f<Ts...>>>;
+template <> struct AllImpl<true> {
+  template <typename Predicate, typename T, typename... Ts>
+  using f = typename ml::IfElse<!Predicate::template f<T>::value>::template f<
+      ml::Bool<false>,
+      typename AllImpl<(sizeof...(Ts) > 1)>::template f<Predicate, Ts...>>;
 };
-template <bool Zero, typename Predicate, typename Pipe = ml::Identity>
-struct AllBase {
-  template <typename... Ts>
-  using f =
-      typename AllImpl<(sizeof...(Ts) > 1), Predicate, Pipe>::template f<Ts...>;
+template <bool Zero> struct AllBase {
+  template <typename Predicate, typename... Ts>
+  using f = typename AllImpl<(sizeof...(Ts) > 1)>::template f<Predicate, Ts...>;
 };
-template <typename Predicate, typename Pipe>
-struct AllBase<true, Predicate, Pipe> {
-  template <typename... Ts> using f = ml::Bool<true>;
+template <> struct AllBase<true> {
+  template <typename Predicate, typename... Ts> using f = ml::Bool<true>;
 };
 }; // namespace Implementations
+/*
+ * # All
+ * Checks if all elements of the parameter pack satisfy a predicate
+ */
+template <typename Predicate, typename Pipe = ml::Identity> struct All {
+  template <typename... Ts>
+  using f =
+      ml::Invoke<Pipe, typename Implementations::AllBase<!static_cast<bool>(
+                           sizeof...(Ts))>::template f<Predicate, Ts...>>;
+};
 
 #endif
 

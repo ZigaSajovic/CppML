@@ -329,5 +329,12 @@ template <typename Pipe = Identity> struct Less {
   template <typename T1, typename T2>
   using f = typename Pipe::template f<Bool<(T1::value < T2::value)>>;
 };
+/*
+ * # Not
+ * Negates
+ */
+struct Not {
+  template <typename T> using f = ml::Bool<!static_cast<bool>(T::value)>;
+};
 }; // namespace ml
 #endif

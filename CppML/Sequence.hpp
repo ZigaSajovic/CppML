@@ -65,27 +65,35 @@ template <int N, typename Pipe = ml::Identity> struct GetN {
   using f = typename Implementations::GetN<(sizeof...(Ts) >= 0) &&
                                            N != 0>::template f<N, Ts...>;
 };
+/*
+ * Implementation of Filter. It only ever instantiates two types.
+ */
 namespace Implementations {
-template <int i, typename KeepList, typename Predicate> struct Filter {
-  template <typename T, typename... Ts>
+template <bool Continue> struct Filter {
+  template <int i, typename KeepList, typename Predicate, typename T,
+            typename... Ts>
   using f =
       typename Filter <
-      i<sizeof...(Ts) ? i + 1 : -1,
-        typename ml::IfElse<Predicate::template f<
-            typename ml::GetN<i>::template f<T, Ts...>>::value>::
-            template f<typename ml::Append<KeepList>::template f<ml::Int<i>>,
-                       KeepList>,
-        Predicate>::template f<T, Ts...>;
+      i<sizeof...(Ts)>::template f<
+          i + 1,
+          typename ml::IfElse<
+              Predicate::template f<typename ml::Implementations::GetN<(
+                  i > 0)>::template f<i, T, Ts...>>::value>::
+              template f<typename ml::Append<KeepList>::template f<ml::Int<i>>,
+                         KeepList>,
+          Predicate, T, Ts...>;
 };
 
-template <typename KeepList, typename Predicate>
-struct Filter<-1, KeepList, Predicate> {
-  template <typename T, typename... Ts> using f = KeepList;
+template <> struct Filter<false> {
+  template <int i, typename KeepList, typename Predicate, typename T,
+            typename... Ts>
+  using f = KeepList;
 };
 
 template <typename... Ts> struct PackExtractor {
   template <typename T>
-  using f = typename ml::GetN<T::value>::template f<Ts...>;
+  using f = typename ml::Implementations::GetN<T::value !=
+                                               0>::template f<T::value, Ts...>;
 };
 
 }; // namespace Implementations
@@ -97,7 +105,7 @@ template <typename Predicate, typename Pipe = ml::ToList> struct FilterIds {
   template <typename T, typename... Ts>
   using f =
       typename ml::UnList<Pipe>::template f<typename Implementations::Filter<
-          0, ml::ListT<>, Predicate>::template f<T, Ts...>>;
+          true>::template f<0, ml::ListT<>, Predicate, T, Ts...>>;
 };
 /*
  * Filter:

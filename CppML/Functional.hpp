@@ -284,16 +284,27 @@ template <typename T, typename U, typename Pipe = ToList> struct Replace {
 };
 
 /*
+ * Implementation of PipeN. Only ever instantiates two types.
+ */
+namespace Implementations {
+template <bool Continue> struct PipeN {
+  template <int i, typename Result, typename Pipe>
+  using f = typename PipeN<(
+      i > 1)>::template f<i - 1, typename Pipe::template f<Result>, Pipe>;
+};
+template <> struct PipeN<false> {
+  template <int i, typename Result, typename Pipe> using f = Result;
+};
+} // namespace Implementations
+
+/*
  * PipeN:
  * Applies Pipe to Result N times.
  */
 template <int N> struct PipeN {
   template <typename Result, typename Pipe>
-  using f = typename PipeN<N - 1>::template f<typename Pipe::template f<Result>,
-                                              Pipe>;
-};
-template <> struct PipeN<0> {
-  template <typename Result, typename Pipe> using f = Result;
+  using f =
+      typename Implementations::PipeN<(N > 1)>::template f<N, Result, Pipe>;
 };
 
 /*

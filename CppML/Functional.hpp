@@ -39,7 +39,15 @@ using Invoke = typename Pipe::template f<Ts...>;
 template <typename Pipe, auto... Ts>
 using InvokeA = typename Pipe::template f<Ts...>;
 #endif
-
+/*
+ * # DelayedEval:
+ * Delays a call, so compiler knows the number of arguments.
+ */
+struct DelayedEval {
+  template <typename F, typename... Ts>
+  using f = typename ml::IfElse<(
+      sizeof...(Ts) < 10000)>::template f<F, void>::template f<Ts...>;
+};
 /*
  * Implementation of Compose. Only ever instantiates two types.
  */

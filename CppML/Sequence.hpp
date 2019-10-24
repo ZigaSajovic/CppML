@@ -102,6 +102,34 @@ template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
 };
 
 namespace Implementations {
+template <bool Continue> struct FindIfOr {
+  template <typename Default, typename Predicate, typename T, typename... Ts>
+  using f = typename ml::IfElse<Predicate::template f<T>::value>::template f<
+      T, typename FindIfOr<static_cast<bool>(
+             sizeof...(Ts) > 1)>::template f<Default, Predicate, Ts...>>;
+};
+
+template <> struct FindIfOr<false> {
+  template <typename Default, typename Predicate, typename T>
+  using f =
+      typename ml::IfElse<Predicate::template f<T>::value>::template f<T,
+                                                                       Default>;
+};
+}; // namespace Implementations
+
+/*
+ * # FindIfOr:
+ * Find Element or return Default
+ */
+template <typename Default, typename Predicate, typename Pipe = ml::Identity>
+struct FindIfOr {
+  template <typename... Ts>
+  using f = ml::Invoke<
+      Pipe, typename Implementations::FindIfOr<static_cast<bool>(
+                sizeof...(Ts) > 1)>::template f<Default, Predicate, Ts...>>;
+};
+
+namespace Implementations {
 template <typename, typename, typename Pipe = ml::ToList> struct Merge2;
 template <template <class...> class List, typename... Ts, typename... Us,
           typename Pipe>

@@ -73,22 +73,15 @@ namespace Implementations {
 template <bool Continue> struct Filter {
   template <int i, typename KeepList, typename Predicate, typename T,
             typename... Ts>
-  using f =
-      typename Filter <
-      i<sizeof...(Ts)>::template f<
-          i + 1,
-          typename ml::IfElse<
-              Predicate::template f<typename ml::Implementations::GetN<(
-                  i > 0)>::template f<i, T, Ts...>>::value>::
-              template f<typename ml::Append<KeepList>::template f<ml::Int<i>>,
-                         KeepList>,
-          Predicate, T, Ts...>;
+  using f = typename Filter<static_cast<bool>(sizeof...(Ts))>::template f<
+      i + 1,
+      typename ml::IfElse<Predicate::template f<T>::value>::template f<
+          typename ml::Append<KeepList>::template f<ml::Int<i>>, KeepList>,
+      Predicate, Ts...>;
 };
 
 template <> struct Filter<false> {
-  template <int i, typename KeepList, typename Predicate, typename T,
-            typename... Ts>
-  using f = KeepList;
+  template <int i, typename KeepList, typename Predicate> using f = KeepList;
 };
 
 template <typename... Ts> struct PackExtractor {

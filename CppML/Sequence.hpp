@@ -120,6 +120,29 @@ template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
           0, ml::ListT<>, Predicate, T, Ts...>>;
 };
 /*
+ * Implementation of Drop. Only ever instantiates two types.
+ */
+namespace Implementations {
+template <bool Countinue> struct Drop {
+  template <int i, typename Pipe, typename T, typename... Ts>
+  using f = typename Drop<static_cast<bool>(sizeof...(Ts)) &&
+                          (i > 1)>::template f<i - 1, Pipe, Ts...>;
+};
+template <> struct Drop<false> {
+  template <int i, typename Pipe, typename... Ts>
+  using f = typename Pipe::template f<Ts...>;
+};
+} // namespace Implementations
+/*
+ * # Drop:
+ * Drop first N elements of a parameter pack.
+ */
+template <int N, typename Pipe = ml::ToList> struct Drop {
+  template <typename... Ts>
+  using f = typename Implementations::Drop<static_cast<bool>(sizeof...(Ts)) &&
+                                           (N > 0)>::template f<N, Pipe, Ts...>;
+};
+/*
  * Implementation of Reduce. Only ever instantiates two types.
  */
 namespace Implementations {

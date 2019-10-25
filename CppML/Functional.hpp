@@ -248,7 +248,8 @@ template <typename F, typename Pipe = ToList> struct Apply {
  * Partial evaluation of a metafunction
  */
 template <typename Pipe, typename... Ts> struct Partial {
-  template <typename... Us> using f = typename Pipe::template f<Us..., Ts...>;
+  template <typename... Us>
+  using f = ml::DelayedEval::template f<Pipe, Us..., Ts...>;
 };
 
 /*
@@ -264,7 +265,8 @@ template <template <class...> class Pipe, typename... Ts> struct lPartial {
  * Partial evaluation of a metafunction
  */
 template <typename Pipe, typename... Ts> struct PrePartial {
-  template <typename... Us> using f = typename Pipe::template f<Ts..., Us...>;
+  template <typename... Us>
+  using f = typename DelayedEval::template f<Pipe, Ts..., Us...>;
 };
 
 /*
@@ -273,7 +275,10 @@ template <typename Pipe, typename... Ts> struct PrePartial {
  */
 #ifdef __cpp_nontype_template_parameter_auto
 template <typename Pipe, auto... Ts> struct PartialA {
-  template <typename... Us> using f = typename Pipe::template f<Us..., Ts...>;
+  template <typename... Us>
+  using f =
+      typename ml::IfElse<(sizeof...(Ts) < 10000 && sizeof...(Us) < 10000)>::
+          template f<Pipe, void>::template f<Us..., Ts...>;
 };
 #endif
 

@@ -103,21 +103,21 @@ template <typename... Ts> struct PackExtractor {
  * Returns list of indexes of elements satifying the predicate.
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct FilterIds {
-  template <typename T, typename... Ts>
-  using f =
-      typename ml::UnList<Pipe>::template f<typename Implementations::Filter<
-          true>::template f<0, ml::ListT<>, Predicate, T, Ts...>>;
+  template <typename... Ts>
+  using f = typename ml::UnList<Pipe>::template f<
+      typename Implementations::Filter<(sizeof...(Ts) < 100000)>::template f<
+          0, ml::ListT<>, Predicate, Ts...>>;
 };
 /*
  * Filter:
  * Filters elements, given a predicate.
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
-  template <typename T, typename... Ts>
+  template <typename... Ts>
   using f = typename ml::UnList<
-      ml::Apply<Implementations::PackExtractor<T, Ts...>, Pipe>>::
-      template f<typename Implementations::Filter<true>::template f<
-          0, ml::ListT<>, Predicate, T, Ts...>>;
+      ml::Apply<Implementations::PackExtractor<Ts...>, Pipe>>::
+      template f<typename Implementations::Filter<(sizeof...(Ts) < 100000)>::
+                     template f<0, ml::ListT<>, Predicate, Ts...>>;
 };
 /*
  * Implementation of Drop. Only ever instantiates two types.

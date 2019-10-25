@@ -113,6 +113,58 @@ template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
       template f<typename Implementations::Filter<(sizeof...(Ts) < 100000)>::
                      template f<0, ml::ListT<>, Predicate, Ts...>>;
 };
+
+/*
+ * # Contains:
+ * Checks if a parameter pack contains T
+ */
+template <typename T, typename Pipe = ml::Identity> struct Contains {
+  template <typename... Ts>
+  using f =
+      typename ml::Any<ml::PrePartial<ml::IsSame, T>, Pipe>::template f<Ts...>;
+};
+
+/*
+ * Implementation of Unique. Only ever instantiates two types.
+ * **NOTE** that it works with indexes instead of elements.
+ */
+namespace Implementations {
+template <bool Continue> struct Unique {
+  template <int i, typename KeepList, typename T, typename... Ts>
+  using f = typename Unique<static_cast<bool>(sizeof...(Ts))>::template f<
+      i + 1,
+      typename ml::IfElse<!ml::Invoke<ml::Contains<T>, Ts...>::value>::
+          template f<typename ml::Append<KeepList>::template f<ml::Int<i>>,
+                     KeepList>,
+      Ts...>;
+};
+
+template <> struct Unique<false> {
+  template <int i, typename KeepList> using f = KeepList;
+};
+} // namespace Implementations
+/*
+ * # UniqueIds:
+ * Returns Ids of unique elements
+ */
+template <typename Pipe = ml::ToList> struct UniqueIds {
+  template <typename... Ts>
+  using f =
+      typename ml::UnList<Pipe>::template f<typename Implementations::Unique<(
+          sizeof...(Ts) < 100000)>::template f<0, ml::ListT<>, Ts...>>;
+};
+/*
+ * # Unique:
+ * Returns unique elements
+ */
+template <typename Pipe = ml::ToList> struct Unique {
+  template <typename... Ts>
+  using f = typename ml::UnList<
+      ml::Apply<ml::Implementations::PackExtractor<Ts...>, Pipe>>::
+      template f<typename Implementations::Unique<(
+          sizeof...(Ts) < 100000)>::template f<0, ml::ListT<>, Ts...>>;
+};
+
 /*
  * Implementation of Drop. Only ever instantiates two types.
  */
@@ -191,16 +243,6 @@ template <typename Predicate, typename Pipe = ml::Identity> struct FindIf {
       ml::Invoke<Pipe,
                  typename Implementations::FindIf<static_cast<bool>(
                      sizeof...(Ts) > 1)>::template f<0, Predicate, Ts...>>;
-};
-
-/*
- * # Contains:
- * Checks if a parameter pack contains T
- */
-template <typename T, typename Pipe = ml::Identity> struct Contains {
-  template <typename... Ts>
-  using f =
-      typename ml::Any<ml::PrePartial<ml::IsSame, T>, Pipe>::template f<Ts...>;
 };
 
 namespace Implementations {

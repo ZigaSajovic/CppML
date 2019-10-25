@@ -94,6 +94,7 @@ template <typename... Ts> struct PackExtractor {
 /*
  * FilterIds:
  * Returns list of indexes of elements satifying the predicate.
+ * **NOTE** that it works with indexes instead of elements.
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct FilterIds {
   template <typename... Ts>
@@ -196,7 +197,7 @@ template <typename Predicate, typename Pipe = ml::Identity> struct FindIf {
  * # Contains:
  * Checks if a parameter pack contains T
  */
-template <typename T, typename Pipe = ml::ToList> struct Contains {
+template <typename T, typename Pipe = ml::Identity> struct Contains {
   template <typename... Ts>
   using f =
       typename ml::Any<ml::PrePartial<ml::IsSame, T>, Pipe>::template f<Ts...>;

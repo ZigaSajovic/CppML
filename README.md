@@ -12,6 +12,14 @@ usage.
 Note that it is an evolving project, that grows in parallel with the work I do.
 Metaprogramming in C++ offers a unique experience, as one can implement **monads** and **functors**, while controlling how the resulting types are *mapped onto hardware*.
 
+### 3 Design principles
+
+**Idiomacy**: we view templates as *functors* that map objects of the **C++** category. As such we try to be idiomatic with respect to category theory.
+
+**Performance**: we instantiate *as few types as possible*, which is in direct correlation with compilation speed. This leads to few design choices, such as using transparent aliases in meta-computations where-ever possible , as they do not instantiate types.
+
+**Composability**: we design all *meta-objects* to be composable, through pipe chaining.
+
 ## Outline
 
 A MetaFunction in **CppML** is a *template struct* with a *template alias* `f`. Most MetaFunctions have a *template parameter* `Pipe`, into which the result of its invocation is piped (think Bash pipes). Note that Pipe either defaults to `ml::Identity` (i.e. it effectively returns the result of `f`) or it defaults to `ml::ListT`(i.e. it returns the resulting parameter pack in a list of types).

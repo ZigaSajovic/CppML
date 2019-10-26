@@ -268,7 +268,26 @@ template <typename Pipe, typename... Ts> struct PrePartial {
   template <typename... Us>
   using f = typename DelayedEval::template f<Pipe, Ts..., Us...>;
 };
-
+/*
+ * # PartialEvaluator:
+ * Creates an metafunction, that will partially evaluate F on the
+ * arguments it is invoked on. Example:
+ * using F = PartialEvaluator<ml::IsSame>;
+ * using Comp = ml::Invoke<F, int>;
+ * ml::Invoke<Comp, int> == true;
+ */
+template <typename F>
+using PartialEvaluator = ml::PrePartial<ml::F<ml::Partial>, F>;
+/*
+ * # PrePartialEvaluator:
+ * Creates an metafunction, that will prepartially evaluate F on the
+ * arguments it is invoked on. Example:
+ * using F = PartialEvaluator<ml::IsSame>;
+ * using Comp = ml::Invoke<F, int>;
+ * ml::Invoke<Comp, int> == true;
+ */
+template <typename F>
+using PrePartialEvaluator = ml::PrePartial<ml::F<ml::PrePartial>, F>;
 /*
  * PartialA:
  * Partial evaluation of a metafunction

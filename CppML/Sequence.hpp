@@ -130,28 +130,53 @@ template <typename T, typename Pipe = ml::Identity> struct Contains {
  */
 namespace Implementations {
 template <bool Continue> struct Unique {
-  template <int i, typename KeepList, typename T, typename... Ts>
+  template <int i, typename ComparatorFactory, typename KeepList, typename T,
+            typename... Ts>
   using f = typename Unique<static_cast<bool>(sizeof...(Ts))>::template f<
-      i + 1,
-      typename ml::IfElse<!ml::Invoke<ml::Contains<T>, Ts...>::value>::
+      i + 1, ComparatorFactory,
+      typename ml::IfElse<!ml::Invoke<ml::Any<ml::Invoke<ComparatorFactory, T>>,
+                                      Ts...>::value>::
           template f<typename ml::Append<KeepList>::template f<ml::Int<i>>,
                      KeepList>,
       Ts...>;
 };
 
 template <> struct Unique<false> {
-  template <int i, typename KeepList> using f = KeepList;
+  template <int i, typename ComparatorFactory, typename KeepList>
+  using f = KeepList;
 };
 } // namespace Implementations
+/*
+ * # UniqueIdsComp:
+ * Returns Ids of unique elements, given a ComparatorFactory
+ */
+template <typename ComparatorFactory, typename Pipe = ml::ToList>
+struct UniqueIdsComp {
+  template <typename... Ts>
+  using f = typename ml::UnList<Pipe>::template f<
+      typename Implementations::Unique<static_cast<bool>(sizeof...(
+          Ts))>::template f<0, ComparatorFactory, ml::ListT<>, Ts...>>;
+};
 /*
  * # UniqueIds:
  * Returns Ids of unique elements
  */
 template <typename Pipe = ml::ToList> struct UniqueIds {
   template <typename... Ts>
-  using f =
-      typename ml::UnList<Pipe>::template f<typename Implementations::Unique<(
-          sizeof...(Ts) < 100000)>::template f<0, ml::ListT<>, Ts...>>;
+  using f = typename ml::UnList<Pipe>::template f<
+      typename Implementations::Unique<static_cast<bool>(sizeof...(Ts))>::
+          template f<0, ml::PartialEvaluator<ml::IsSame>, ml::ListT<>, Ts...>>;
+};
+/*
+ * # UniqueComp:
+ * Returns unique elements, given a ComparatorFactory
+ */
+template <typename Pipe = ml::ToList> struct UniqueComp {
+  template <typename ComparatorFactory, typename... Ts>
+  using f = typename ml::UnList<
+      ml::Apply<ml::Implementations::PackExtractor<Ts...>, Pipe>>::
+      template f<typename Implementations::Unique<static_cast<bool>(sizeof...(
+          Ts))>::template f<0, ComparatorFactory, ml::ListT<>, Ts...>>;
 };
 /*
  * # Unique:
@@ -161,8 +186,9 @@ template <typename Pipe = ml::ToList> struct Unique {
   template <typename... Ts>
   using f = typename ml::UnList<
       ml::Apply<ml::Implementations::PackExtractor<Ts...>, Pipe>>::
-      template f<typename Implementations::Unique<(
-          sizeof...(Ts) < 100000)>::template f<0, ml::ListT<>, Ts...>>;
+      template f<typename Implementations::Unique<static_cast<bool>(
+          sizeof...(Ts))>::template f<0, ml::PartialEvaluator<ml::IsSame>,
+                                      ml::ListT<>, Ts...>>;
 };
 
 /*

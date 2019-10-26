@@ -84,8 +84,8 @@ struct UnListImpl<Pipe, List<Es...>> {
  * Pipes the un-wrapped elements of a list like type
  */
 template <typename Pipe> struct UnList {
-  template <typename... Ls>
-  using f = typename UnListDetail::UnListImpl<Pipe, Ls...>::type;
+  template <typename Ls>
+  using f = typename UnListDetail::UnListImpl<Pipe, Ls>::type;
 };
 /*
  * WrapIn:
@@ -99,7 +99,7 @@ template <template <class...> class Wrapper> struct WrapIn {
  * Wraps a type in a wrapper. We need it because WrapIn (above) only
  * works for parameter pack aliases.
  */
-template <template <class...> class Wrapper> struct WrapInSingle {
+template <template <class> class Wrapper> struct WrapInSingle {
   template <typename T> using f = Wrapper<T>;
 };
 /*

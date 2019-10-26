@@ -192,7 +192,7 @@ template <bool Zero> struct AnyBase {
   using f = typename AnyImpl<(sizeof...(Ts) > 1)>::template f<Predicate, Ts...>;
 };
 template <> struct AnyBase<true> {
-  template <typename Predicate, typename... Ts> using f = ml::Bool<true>;
+  template <typename Predicate, typename... Ts> using f = ml::Bool<false>;
 };
 }; // namespace Implementations
 

@@ -171,8 +171,9 @@ template <typename Pipe = ml::ToList> struct UniqueIds {
  * # UniqueComp:
  * Returns unique elements, given a ComparatorFactory
  */
-template <typename Pipe = ml::ToList> struct UniqueComp {
-  template <typename ComparatorFactory, typename... Ts>
+template <typename ComparatorFactory, typename Pipe = ml::ToList>
+struct UniqueComp {
+  template <typename... Ts>
   using f = typename ml::UnList<
       ml::Apply<ml::Implementations::PackExtractor<Ts...>, Pipe>>::
       template f<typename Implementations::Unique<static_cast<bool>(sizeof...(

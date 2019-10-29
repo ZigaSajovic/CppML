@@ -130,32 +130,31 @@ template <typename T, typename Pipe = ml::Identity> struct Contains {
  */
 namespace Implementations {
 template <bool Continue> struct Unique {
-  template <int i, typename ComparatorFactory, typename KeepList, typename T,
+  template <int i, typename Comparator, typename KeepList, typename T,
             typename... Ts>
   using f = typename Unique<static_cast<bool>(sizeof...(Ts))>::template f<
-      i + 1, ComparatorFactory,
-      typename ml::IfElse<!ml::Invoke<ml::Any<ml::Invoke<ComparatorFactory, T>>,
-                                      Ts...>::value>::
+      i + 1, Comparator,
+      typename ml::IfElse<
+          !ml::Invoke<ml::Any<ml::Partial<Comparator, T>>, Ts...>::value>::
           template f<typename ml::Append<KeepList>::template f<ml::Int<i>>,
                      KeepList>,
       Ts...>;
 };
 
 template <> struct Unique<false> {
-  template <int i, typename ComparatorFactory, typename KeepList>
-  using f = KeepList;
+  template <int i, typename Comparator, typename KeepList> using f = KeepList;
 };
 } // namespace Implementations
 /*
  * # UniqueIdsComp:
- * Returns Ids of unique elements, given a ComparatorFactory
+ * Returns Ids of unique elements, given a Comparator
  */
-template <typename ComparatorFactory, typename Pipe = ml::ToList>
+template <typename Comparator, typename Pipe = ml::ToList>
 struct UniqueIdsComp {
   template <typename... Ts>
   using f = typename ml::UnList<Pipe>::template f<
-      typename Implementations::Unique<static_cast<bool>(sizeof...(
-          Ts))>::template f<0, ComparatorFactory, ml::ListT<>, Ts...>>;
+      typename Implementations::Unique<static_cast<bool>(
+          sizeof...(Ts))>::template f<0, Comparator, ml::ListT<>, Ts...>>;
 };
 /*
  * # UniqueIds:
@@ -164,20 +163,19 @@ struct UniqueIdsComp {
 template <typename Pipe = ml::ToList> struct UniqueIds {
   template <typename... Ts>
   using f = typename ml::UnList<Pipe>::template f<
-      typename Implementations::Unique<static_cast<bool>(sizeof...(Ts))>::
-          template f<0, ml::PartialEvaluator<ml::IsSame>, ml::ListT<>, Ts...>>;
+      typename Implementations::Unique<static_cast<bool>(
+          sizeof...(Ts))>::template f<0, ml::IsSame, ml::ListT<>, Ts...>>;
 };
 /*
  * # UniqueComp:
- * Returns unique elements, given a ComparatorFactory
+ * Returns unique elements, given a Comparator
  */
-template <typename ComparatorFactory, typename Pipe = ml::ToList>
-struct UniqueComp {
+template <typename Comparator, typename Pipe = ml::ToList> struct UniqueComp {
   template <typename... Ts>
   using f = typename ml::UnList<
       ml::Apply<ml::Implementations::PackExtractor<Ts...>, Pipe>>::
-      template f<typename Implementations::Unique<static_cast<bool>(sizeof...(
-          Ts))>::template f<0, ComparatorFactory, ml::ListT<>, Ts...>>;
+      template f<typename Implementations::Unique<static_cast<bool>(
+          sizeof...(Ts))>::template f<0, Comparator, ml::ListT<>, Ts...>>;
 };
 /*
  * # Unique:
@@ -188,8 +186,7 @@ template <typename Pipe = ml::ToList> struct Unique {
   using f = typename ml::UnList<
       ml::Apply<ml::Implementations::PackExtractor<Ts...>, Pipe>>::
       template f<typename Implementations::Unique<static_cast<bool>(
-          sizeof...(Ts))>::template f<0, ml::PartialEvaluator<ml::IsSame>,
-                                      ml::ListT<>, Ts...>>;
+          sizeof...(Ts))>::template f<0, ml::IsSame, ml::ListT<>, Ts...>>;
 };
 
 /*
@@ -274,30 +271,26 @@ template <typename Predicate, typename Pipe = ml::Identity> struct FindIf {
 
 /*
  * # GroupByIdPred:
- * GroupBy given a predicate factory. It returns Indexes of elements.
+ * GroupBy given a predicate factory. It returns lists of Indexes of elements.
  */
-template <typename PredicateFactory, typename Pipe = ml::ToList>
-struct GroupByIdPred {
+template <typename By, typename Pipe = ml::ToList> struct GroupByIdPred {
   template <typename... Ts>
   using f = typename ml::UniqueComp<
-      PredicateFactory,
-      ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::FilterIds>,
-                            PredicateFactory>,
-                Pipe>>::template f<Ts...>;
+      By, ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::FilterIds>,
+                                ml::PartialEvaluator<By>>,
+                    Pipe>>::template f<Ts...>;
 };
 
 /*
  * # GroupByPred:
- * GroupBy given a predicate factory. It returns Indexes of elements.
+ * GroupBy given a predicate factory. It returns lists of elements.
  */
-template <typename PredicateFactory, typename Pipe = ml::ToList>
-struct GroupByPred {
+template <typename By, typename Pipe = ml::ToList> struct GroupByPred {
   template <typename... Ts>
   using f = typename ml::UniqueComp<
-      PredicateFactory,
-      ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::Filter>,
-                            PredicateFactory>,
-                Pipe>>::template f<Ts...>;
+      By, ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::Filter>,
+                                ml::PartialEvaluator<By>>,
+                    Pipe>>::template f<Ts...>;
 };
 
 namespace Implementations {

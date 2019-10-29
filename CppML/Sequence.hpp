@@ -272,6 +272,20 @@ template <typename Predicate, typename Pipe = ml::Identity> struct FindIf {
                      sizeof...(Ts) > 1)>::template f<0, Predicate, Ts...>>;
 };
 
+/*
+ * # GroupByIdPred:
+ * GroupBy given a predicate factory. It returns Indexes of elements.
+ */
+template <typename PredicateFactory, typename Pipe = ml::ToList>
+struct GroupByIdPred {
+  template <typename... Ts>
+  using f = typename ml::UniqueComp<
+      PredicateFactory,
+      ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::FilterIds>,
+                            PredicateFactory>,
+                Pipe>>::template f<Ts...>;
+};
+
 namespace Implementations {
 template <typename, typename, typename Pipe = ml::ToList> struct Merge2;
 template <template <class...> class List, typename... Ts, typename... Us,

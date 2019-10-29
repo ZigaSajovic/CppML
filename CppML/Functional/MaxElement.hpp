@@ -3,7 +3,7 @@
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef CPPML_MAX_ELEMENT_HPP
-#define CPPML_MAX__ELEMENTHPP
+#define CPPML_MAX_ELEMENT_HPP
 #include "../Functional/Identity.hpp"
 #include "../Vocabulary/IfElse.hpp"
 

@@ -3,7 +3,7 @@
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef CPPML_COUNT_IF_HPP
-#define CPPMLCOUNT_IF__HPP
+#define CPPML_COUNT_IF_HPP
 #include "../Functional/Identity.hpp"
 #include "../Functional/Invoke.hpp"
 #include "../Vocabulary/Const.hpp"

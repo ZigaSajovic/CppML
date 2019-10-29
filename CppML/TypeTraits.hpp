@@ -77,6 +77,29 @@ struct IsSame {
       typename TypeTraitsImplementations::IsSameHelper<T1>::template f<T2>;
 };
 
+namespace Implementations {
+template <class> struct IsSameTemplateHelper {
+  template <typename T> using f = ml::Bool<false>;
+};
+template <template <class> class Template, typename... Us>
+struct IsSameTemplateHelper<Template<Us...>> {
+  template <typename... Ts>
+  static ml::Bool<true> test(const volatile Template<Ts...> *);
+  static ml::Bool<false> test(const volatile void *);
+  template <typename U>
+  using f = decltype(
+      IsSameTemplateHelper<Template<Us...>>::test(std::declval<U *>()));
+};
+} // namespace Implementations
+/*
+ * IsSameTemplate:
+ * Check if two types are wrapped in the same template.
+ */
+struct IsSameTemplate {
+  template <typename T1, typename T2>
+  using f = typename Implementations::IsSameTemplateHelper<T1>::template f<T2>;
+};
+
 namespace IsValidDetail {
 template <typename, template <typename...> class T, class... Ts>
 struct IsValidT_impl : ml::Bool<false> {};

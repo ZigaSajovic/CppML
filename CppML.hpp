@@ -4,13 +4,10 @@
 
 #ifndef CPPML_HPP
 #define CPPML_HPP
-#include "CppML/Const.hpp"
-#include "CppML/ControlFlow.hpp"
+#include "CppML/Algorithm.hpp"
+#include "CppML/Arithmetic.hpp"
 #include "CppML/Functional.hpp"
-#include "CppML/Identity.hpp"
-#include "CppML/List.hpp"
-#include "CppML/Range.hpp"
 #include "CppML/Sequence.hpp"
 #include "CppML/TypeTraits.hpp"
-#include "CppML/Types.hpp"
+#include "CppML/Vocabulary.hpp"
 #endif

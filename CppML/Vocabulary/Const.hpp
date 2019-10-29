@@ -7,7 +7,7 @@
 namespace ml {
 /*
  * Const:
- * Represents a typed whole number value
+ * Represents a typed value
  *
  */
 template <typename T, T t> struct Const {

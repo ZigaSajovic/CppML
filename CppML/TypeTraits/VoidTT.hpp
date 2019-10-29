@@ -2,18 +2,14 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML_TYPES_HPP
-#define CPPML_TYPES_HPP
+#ifndef CPPML_VOID_TT_HPP
+#define CPPML_VOID_TT_HPP
+
 namespace ml {
 /*
- * None:
- * Represents a "nothing" type
+ * void_tt:
+ * void_t for template templates
  */
-struct None {};
-/*
- * _:
- * Represent a wild card, or Any
- */
-struct _ {};
-}; // namespace ml
+template <template <class...> class...> using void_tt = void;
+}
 #endif

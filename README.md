@@ -3,11 +3,7 @@
 A Meta Language for C++
 
 **CppML** is a meta language I use when developing libraries. It was designed to allow seamless transitions between *templates*, *metafunctions* and *composable variadic transformations* they afford us. As such, metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation* and *pipe chaining*, usually operating on parameter packs and type-lists.
-See [Examples](#examples) bellow for a demonstration of
-[basic](#generate-a-list-of-tagged-elements-from-a-parameter-pack)
-and
-[advance](#creating-a-linear-hierarchy-of-policy-classes-from-a-flat-parameter-pack)
-usage.
+See [Examples](#examples) bellow for a few demonstration.
 
 Note that it is an evolving project, that grows in parallel with the work I do.
 Metaprogramming in C++ offers a unique experience, as one can implement **monads** and **functors**, while controlling how the resulting types are *mapped onto hardware*.
@@ -22,7 +18,8 @@ Metaprogramming in C++ offers a unique experience, as one can implement **monads
 
 ## Outline
 
-A MetaFunction in **CppML** is a *template struct* with a *template alias* `f`. Most MetaFunctions have a *template parameter* `Pipe`, into which the result of its invocation is piped (think Bash pipes). Note that Pipe either defaults to `ml::Identity` (i.e. it effectively returns the result of `f`) or it defaults to `ml::ListT`(i.e. it returns the resulting parameter pack in a list of types).
+A MetaFunction in **CppML** is a *template struct* with a *template alias* `f`.
+All MetaFunctions have a *template parameter* `Pipe`, into which the result of its invocation is piped (think Bash pipes). Note that Pipe either defaults to `ml::Identity` (i.e. it effectively returns the result of `f`) or it defaults to `ml::ToList`(i.e. it returns the resulting parameter pack in a list of types).
 
 This roughly translates into the following:
 
@@ -30,7 +27,7 @@ This roughly translates into the following:
 template <typename PossibleArg_i,     // could be 0 or more of them, depends on the
                                       // metafunction
           typename Pipe = ml::ToList> // default Pipe is to wrap the parameter
-                                      // pack in a type list
+                                      // pack in a type list (or Identity)
 struct MetaFunction {
   template <typename... Args>
   using f = typename Pipe::template f< // Result of MetFunctionImplementation
@@ -59,57 +56,58 @@ the `ml::Invoke` alias.
 Note that **CppML** also possesses the mechanics needed to compose metafunctions, that do not define the convenient `Pipe` template parameter (see the [second](#creating-a-linear-hierarchy-of-policy-classes-from-a-flat-parameter-pack) example below).
 
 
+
 ## Examples
 
-In this section we provide two demonstrations of metaprogramming using **CppML**. In the [first](#generate-a-list-of-tagged-elements-from-a-parameter-pack) example we will first create a *tagged element list*, which will demonstrate basic functionality and working with lists. In the [second](#creating-a-linear-hierarchy-of-policy-classes-from-a-flat-parameter-pack) example, we will design a metaprogram for creating *linear CRTP hierarchies of Policy Classes from flat parameter packs*, which will demonstrate more advance notions of metaprogramming in **CppML**, such as variadic compositions of partial evaluations. Note that both examples are taken from real-life usage of the author.
 
-### Generate a list of Tagged Elements from a parameter pack
+In this section we provide two demonstrations of metaprogramming using **CppML**. The [first](#generating-a-permutation-of-elements,-that-minimizes-the-needed-padding-in-a-tuple) will demonstrate a few algorithms on type-lists and how to compose actions on them. The [second](#creating-a-linear-hierarchy-of-policy-classes-from-a-flat-parameter-pack) will demonstrate notions such as variadic compositions of partial evaluations.
 
-Using **CppML** one can easily manipulate types and compose them into complex metaprograms. To demonstrate, we will take types `int`, `double` and `char`, and wrap each of them in a template `Element`, than Tag each of them with an index (similarly how `std::tuple`s elements are tagged to make them unique).
+### Generating a permutation of elements, that minimizes the needed padding in a tuple
 
-First we wrap each of them in `Element`.
+Tuple is usually implemented by *inheriting* from each (adorned) element, as this allows one to exploit the *empty base* case *optimization*. One thing to consider is, that the order in which you inherit from these elements, defines the memory layout of the tuple. And because memory locations need to be aligned, different permutations give rise to different sizes.
 
-```c++
-template <typename> struct Element {};
+Our goal is two fold. We wish to **permute** the order of elements, so as to **minimize** the object **size**. But, elements need to be accessible in the same order user specified them; i.e. the element that was specified in slot `2`, must be accessible through `2`. In other words, from the users perspective, it is **as if** nothing was done.
 
-using ElementList = ml::Invoke< // Invoke the metafunction that follows
-    ml::Apply<                  // Apply the metafunction to all arguments
-        ml::WrapIn<             // Wrap the input type
-            Element>>,          // In the Element
-    int, double, char>;         // Arguments to Invoke Apply on.
+We will achieve this by first marking each element with its starting number. Than, we will use **sorting** on the **aligment** as a heuristic solution to the packing problem.
 
-using U = ml::ListT<
-  Element<int>,
-  Element<double>,
-  Element<char>>;
-
-static_assert(std::is_same_v<ElementList, U>);
-```
-
-By `static_assert`, we see what the result is. Next, we tag each `Element`, by zipping them in a `Tag`, alongside their index.
 
 ```c++
-template <class, class> struct Tag {};
+template <typename _Tag, typename T> struct Tag : T{};
 
-using TaggedElements =
-    ml::Invoke<ml::ZipWith<Tag>, // Zip the following two list with Tag
-               ml::InvokeA<ml::TypeRange<>, 0, 3>, // Create a list of
-                                                   // ml::Int<i>
-               ElementList>;                       // List of elements
+template <typename... Ts>
+using PermuteAlign = ml::Invoke<
+    ml::ZipWith<Tag,           // Zip the input lists with Tag and pipe into
+                ml::Sort<      // sort, whith the comparator
+                    ml::Apply< // that applies (to the two comparing elements):
+                        ml::UnList<    // remove outer Tag, and pipe into
+                            ml::Get<1, // getting the second element, and pipe
+                                       // into
+                                    ml::AligmentOf<>>>, // computing their
+                                                        // aligment
+                        ml::Greater<>>>>, // than compare the generated elements
+                                          // (pipe-ing from the Apply)
+                                          // using Greater
+    typename ml::TypeRange<>::template f<0, sizeof...(Ts)>, // generate a range
+                                                            // from [0,
 
-using U2 = ml::ListT<Tag<ml::Int<0>, Element<int>>,
-                     Tag<ml::Int<1>, Element<double>>,
-                     Tag<ml::Int<2>, Element<char>>>;
-
-static_assert(std::is_same_v<TaggedElements, U2>);
 ```
-Again, we observe the correct result using `static_assert`.
 
-The reader could continue by writing a metaprogram that **permutes** the `Element`s in such a way, that their layout in memory would minimize the size of the object holding them (think of a tuple). Or, if the types wrapped by `Element` were classes, he/she could enforce a partial ordering on the list, as dictated by their *inheritance hierarchy*.
+On a concrete example, this meta program outputs
+
+```c++
+using T1 = PermuteAlign<char, int, char, int, char, double, char>;
+using List =
+    ml::ListT<Tag<ml::Const<int, 5>, double>, Tag<ml::Const<int, 3>, int>,
+              Tag<ml::Const<int, 1>, int>, Tag<ml::Const<int, 6>, char>,
+              Tag<ml::Const<int, 2>, char>, Tag<ml::Const<int, 4>, char>,
+              Tag<ml::Const<int, 0>, char>>
+static_assert(
+              std::is_same_v<T1, List>);
+```
+which can now be used to design a base class for the tuple. Because our elements are tagged, we can locate them in the layout (and return the one tagged by `2`, when the user requests the `2` element).
 
 ### Creating a linear hierarchy of Policy classes from a flat parameter pack
 
-In this section we demonstrate more advance notions of metaprogramming in **CppML**, such as variadic compositions of partial evaluations.
 Suppose we have a collection of policy classes of the form:
 
 ```c++
@@ -118,7 +116,7 @@ struct Policy0 : Tail {
   /* Implementation */
 };
 ```
-This is used in *Policy Based Design*, where a user can specify a variadic collection of policies, which endow his class with additional functionality he selects.
+This is used in *Policy Based Design*, where a user can specify a variadic collection of policies, which endow his class with additional functionality he selects. Note the **Derived** parameter, which serves for **CRPTP**.
 
 To that purpose, we need a metaprogram, that takes a variadic sequence of such policies, and generates a linear hierarchy that can be used as a base class:
 ```c++
@@ -219,7 +217,7 @@ Class<Policy0, Policy1, Policy2, /* ... */ PolicyN> myInstance;
 
 ### General CRTPLinearHierarchy metafunction
 
-The above code can be cleaned up, and be made ready for general use. We write a `PrePartialEvaluator` that will Partially evaluate on arbitrary arguments, and `CRTPLinearHierarchy`, which will create the linear hierarchy for an arbitrary `Derived` type, with arbitrary `Policies`.
+Now we generalize the above. We write a `PrePartialEvaluator` that will Partially evaluate on arbitrary arguments, and `CRTPLinearHierarchy`, which will create the linear hierarchy for an arbitrary `Derived` type, with arbitrary `Policies`.
 
 ```c++
 template <typename... Args>

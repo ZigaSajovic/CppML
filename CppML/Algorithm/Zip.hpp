@@ -41,7 +41,7 @@ struct ZipStart {
  * NOTE:
  * It is implemented as it is, because the Zipper of ZipBase
  * is used to construct the zip, by appending. If user provided
- * Zipper needs foe example exactly 2 arguments, than you cannot
+ * Zipper needs for example exactly 2 arguments, than you cannot
  * treat it as a list and append to it. So, to amend this, we
  * first zip using the ml::ListT, and than change the zipper
  * to the user provided one.

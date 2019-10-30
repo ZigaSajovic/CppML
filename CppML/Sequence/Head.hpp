@@ -2,8 +2,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML_TAIL_HPP
-#define CPPML_TAIL_HPP
+#ifndef CPPML_HEAD_HPP
+#define CPPML_HEAD_HPP
 #include "../Algorithm/Apply.hpp"
 #include "../Functional/ToList.hpp"
 #include "PackExtractor.hpp"

@@ -5,32 +5,35 @@
 #ifndef CPPML_ZIP_HPP
 #define CPPML_ZIP_HPP
 #include "../Algorithm/Apply.hpp"
-#include "../Functional/Invoke.hpp"
+#include "../Functional/F.hpp"
 #include "../Functional/UnList.hpp"
 #include "../Sequence/Append.hpp"
 #include "../Vocabulary/List.hpp"
 
 namespace ml {
 namespace Implementations {
-template <typename Pipe, typename Result, typename...> struct ZipImpl {
-  using f = Invoke<UnList<Pipe>, Result>;
-};
+template <typename...> struct Zip;
 
+template <typename Pipe, template <class...> class Result, typename... Rs>
+struct Zip<Pipe, Result<Rs...>> {
+  using f = typename Pipe::template f<Rs...>;
+};
 template <typename Pipe, template <class...> class Result, typename... Rs,
           template <class...> class Next, typename... Ns, typename... Rest>
-struct ZipImpl<Pipe, Result<Rs...>, Next<Ns...>, Rest...> {
+struct Zip<Pipe, Result<Rs...>, Next<Ns...>, Rest...> {
   using f =
-      typename ZipImpl<Pipe, ListT<typename Append<Rs>::template f<Ns>...>,
-                       Rest...>::f;
+      typename Zip<Pipe, Result<typename ml::Append<Rs>::template f<Ns>...>,
+                   Rest...>::f;
 };
 
-template <template <class...> class Zipper, typename Pipe, typename T,
-          typename... Ts>
-struct ZipBase {
-  using f = typename ZipImpl<Pipe, Invoke<UnList<Apply<WrapIn<Zipper>>>, T>,
-                             Ts...>::f;
+struct ZipStart {
+  template <typename Pipe, template <class...> class With, typename T,
+            typename... Ts>
+  using f = typename Zip<
+      Pipe, typename ml::UnList<ml::Apply<ml::WrapIn<With>>>::template f<T>,
+      Ts...>::f;
 };
-}; // namespace Implementations
+} // namespace Implementations
 
 /*
  * ZipWith:
@@ -46,15 +49,12 @@ struct ZipBase {
  * ml::ZipWithVar, which is more efficient (as it uses the
  * Zipper directly to construct the result).
  */
-template <template <class...> class Zipper, typename Pipe = ml::ToList>
+template <template <class...> class With, typename Pipe = ml::ToList>
 struct ZipWith {
-  template <typename... Fs>
-  using f = typename ml::UnList<ml::Apply< // Unlist and apply to each element
-      ml::UnList<ml::WrapIn<Zipper>>, Pipe>>:: // Unlist and wrap in the
-                                               // provided Zipper, and Pipe to
-                                               // Pipe
-      template f<typename ml::Implementations::ZipBase<ml::ListT, ml::ToList,
-                                                       Fs...>::f>;
+  template <typename... Ts>
+  using f = typename ml::IfElse<(
+      sizeof...(Ts) < 10000)>::template f<Implementations::ZipStart, void>::
+      template f<ml::Apply<ml::UnList<ml::F<With>>, Pipe>, ml::ListT, Ts...>;
 };
 
 /*
@@ -63,16 +63,17 @@ struct ZipWith {
  * Note:
  * Zipper needs to be a variadic template.
  */
-template <template <class...> class Zipper, typename Pipe = ToList>
+template <template <class...> class With, typename Pipe = ml::ToList>
 struct ZipWithVar {
-  template <typename... Fs>
-  using f = typename Implementations::ZipBase<Zipper, Pipe, Fs...>::f;
+  template <typename... Ts>
+  using f = typename ml::IfElse<(sizeof...(Ts) < 10000)>::template f<
+      Implementations::ZipStart, void>::template f<Pipe, With, Ts...>;
 };
-
 /*
  * Zip:
  * Zips a pack of types in a ListT
  */
-template <typename Pipe = ToList> using Zip = ZipWith<ListT, Pipe>;
+template <typename Pipe = ml::ToList> using Zip = ZipWith<ml::ListT, Pipe>;
+
 } // namespace ml
 #endif

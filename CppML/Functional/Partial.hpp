@@ -13,7 +13,7 @@ namespace ml {
  */
 template <typename Pipe, typename... Ts> struct Partial {
   template <typename... Us>
-  using f = ml::DelayedEval::template f<Pipe, Us..., Ts...>;
+  using f = ml::DelayedEval<Pipe, (sizeof...(Us)+ sizeof...(Ts)), Us..., Ts...>;
 };
 
 /*
@@ -30,7 +30,7 @@ template <template <class...> class Pipe, typename... Ts> struct lPartial {
  */
 template <typename Pipe, typename... Ts> struct PrePartial {
   template <typename... Us>
-  using f = typename DelayedEval::template f<Pipe, Ts..., Us...>;
+  using f = DelayedEval<Pipe, (sizeof...(Us)+ sizeof...(Ts)), Ts..., Us...>;
 };
 /*
  * # PartialEvaluator:

@@ -32,8 +32,8 @@ template <> struct Get<false> {
  */
 template <int N, typename Pipe = ml::Identity> struct Get {
   template <typename... Ts>
-  using f = typename Implementations::Get<(sizeof...(Ts) >= 0) &&
-                                          N != 0>::template f<N, Ts...>;
+  using f = typename Pipe::template f<typename Implementations::Get<
+      (sizeof...(Ts) >= 0) && N != 0>::template f<N, Ts...>>;
 };
 } // namespace ml
 #endif

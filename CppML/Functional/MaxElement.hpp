@@ -9,25 +9,27 @@
 
 namespace ml {
 namespace Implementations {
-template <bool Done> struct MaxEement {
+template <bool Done> struct MaxElement {
   template <typename Compare, typename T0, typename T1, typename... Ts>
-  using f = typename IfElse<(sizeof...(Ts) < 10000)>::
-      template f<MaxEement<static_cast<bool>(sizeof...(Ts))>, void>::template f<
-          Compare,
-          typename IfElse<Compare::template f<T0, T1>::value>::template f<T0,
-                                                                          T1>,
-          Ts...>;
+  using f = typename IfElse<(sizeof...(Ts) < 10000)>::template f<
+      MaxElement<static_cast<bool>(sizeof...(Ts))>,
+      void>::template f<Compare,
+                        typename IfElse<Compare::template f<T0, T1>::value>::
+                            template f<T0, T1>,
+                        Ts...>;
 };
-template <> struct MaxEement<false> { template <typename T> using f = T; };
+template <> struct MaxElement<false> {
+  template <typename Compare, typename T> using f = T;
+};
 }; // namespace Implementations
 
 /*
- * MaxEement:
+ * MaxElement:
  * Max element in a pack, given a comparison operator
  */
-template <typename Compare, typename Pipe = ml::Identity> struct MaxEement {
+template <typename Compare, typename Pipe = ml::Identity> struct MaxElement {
   template <typename... Ts>
-  using f = typename Pipe::template f<typename Implementations::MaxEement<(
+  using f = typename Pipe::template f<typename Implementations::MaxElement<(
       sizeof...(Ts) > 1)>::template f<Compare, Ts...>>;
 };
 } // namespace ml

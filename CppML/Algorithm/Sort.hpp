@@ -15,44 +15,36 @@
 
 namespace ml {
 namespace Implementations {
-template <typename T, typename U, typename Pipe = ToList>
-struct ReplaceAndPrepend {
-  template <typename... Ts>
-  using f = typename Prepend<typename ml::ReplaceIf<
+template <typename Pipe = ml::ToList> struct ReplaceAndPrepend {
+  template <typename T, typename U, typename... Ts>
+  using f = typename ml::Prepend<typename ml::ReplaceIf<
       ml::Partial<ml::IsSame<>, T>, U, Pipe>::template f<Ts...>>::template f<T>;
 };
 
-template <bool, typename Compare> struct SortImpl {
-  template <typename T, typename... Ts>
-  using f = typename ReplaceAndPrepend<
-      typename ml::MaxEement<Compare>::template f<Ts...>, T,
-      SortImpl<(sizeof...(Ts) != 1), Compare>>::template f<Ts...>;
-};
-
-template <typename Compare> struct SortImpl<false, Compare> {
-  template <typename T> using f = ListT<T>;
-};
-
-template <bool, typename Compare, typename Pipe> struct SortBase {
-  template <typename... Ts>
+template <bool Continue> struct Sort {
+  template <typename Compare, typename T, typename... Ts>
   using f =
-      Invoke<UnList<Pipe>,
-             typename SortImpl<sizeof...(Ts) != 1, Compare>::template f<Ts...>>;
+      typename ReplaceAndPrepend<Sort<static_cast<bool>(sizeof...(Ts) != 1)>> //
+      ::template f<typename ml::MaxElement<Compare>::template f<Ts...>,       //
+                   T,                                                         //
+                   Compare,                                                   //
+                   Ts...>;
 };
-
-template <typename Compare, typename Pipe>
-struct SortBase<false, Compare, Pipe> {
-  template <typename... Ts> using f = typename Pipe::template f<Ts...>;
+template <> struct Sort<false> {
+  template <typename Compare, typename T> using f = ml::ListT<T>;
 };
-}; // namespace Implementations
-/*
- * Sort:
- * Sorts a unique list of types
- */
-template <typename Compare, typename Pipe = ToList> struct Sort {
+template <bool Zero> struct SortBase {
+  template <typename Compare, typename... Ts>
+  using f = typename Sort<(sizeof...(Ts) > 1)>::template f<Compare, Ts...>;
+};
+template <> struct SortBase<true> {
+  template <typename Compare> using f = ml::ListT<>;
+};
+} // namespace Implementations
+template <typename Compare, typename Pipe = ml::ToList> struct Sort {
   template <typename... Ts>
-  using f = typename Implementations::SortBase<sizeof...(Ts) != 0, Compare,
-                                               Pipe>::template f<Ts...>;
+  using f = typename Implementations::SortBase<sizeof...(Ts) ==
+                                               0>::template f<Compare, Ts...>;
 };
 } // namespace ml
 #endif

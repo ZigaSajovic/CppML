@@ -27,12 +27,16 @@ template <bool Continue> struct SwapImpl {
 };
 
 template <> struct SwapImpl<false> {
-
   template <typename M, typename N, typename start, typename end, typename Pipe,
             typename Getter, typename... Ts>
   using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
 };
-
+struct Swap {
+  template <int M, int N, typename Pipe, typename... Ts>
+  using f = typename Implementations::SwapImpl<static_cast<bool>(sizeof...(
+      Ts))>::template f<ml::Int<M>, ml::Int<N>, ml::Int<0>,
+                        ml::Int<sizeof...(Ts)>, Pipe, ml::PackExtractor<Ts...>>;
+};
 }; // namespace Implementations
 /*
  * # Swap:

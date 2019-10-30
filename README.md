@@ -6,7 +6,7 @@ A Meta Language for C++
 See [Examples](#examples) bellow for a few demonstration.
 
 Note that it is an evolving project, that grows in parallel with the work I do.
-Metaprogramming in C++ offers a unique experience, as one can implement **monads** and **functors**, while controlling how the resulting types are *mapped onto hardware*.
+Metaprogramming in C++ offers a unique experience, as one can implement **categorical concepts** (e.g. *monads* and *functors*), while controlling how the resulting types are **mapped onto hardware**.
 
 ### 3 Design principles
 

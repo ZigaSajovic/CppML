@@ -5,6 +5,7 @@
 #ifndef CPPML_SWAP_HPP
 #define CPPML_SWAP_HPP
 #include "../Functional/DelayedEval.hpp"
+#include "../Functional/Invoke.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Vocabulary/Const.hpp"
 #include "PackExtractor.hpp"
@@ -19,11 +20,11 @@ template <bool Continue> struct SwapImpl {
   using f = typename ml::DelayedEval<
       SwapImpl<(start::value + 1 < end::value)>, sizeof...(Ts), M, N,
       ml::Int<start::value + 1>, end, Pipe, Getter, Ts...,
-      typename Getter::template f<
-          ml::Int<(start::value != M::value && start::value != N::value) *
-                      start::value +
-                  (start::value == N::value) * M::value +
-                  (start::value == M::value) * N::value>>>;
+      typename Getter::template f<ml::Invoke< //
+          ml::IfElse<start::value != M::value && start::value != N::value>,
+          start,
+          ml::Invoke< //
+              ml::IfElse<start::value == N::value>, M, N>>>>;
 };
 
 template <> struct SwapImpl<false> {
@@ -33,9 +34,13 @@ template <> struct SwapImpl<false> {
 };
 struct Swap {
   template <int M, int N, typename Pipe, typename... Ts>
-  using f = typename Implementations::SwapImpl<static_cast<bool>(sizeof...(
-      Ts))>::template f<ml::Int<M>, ml::Int<N>, ml::Int<0>,
-                        ml::Int<sizeof...(Ts)>, Pipe, ml::PackExtractor<Ts...>>;
+  using f =
+      ml::Invoke<ml::IfElse<M != N>,
+                 typename Implementations::SwapImpl<static_cast<bool>(sizeof...(
+                     Ts))>::template f<ml::Int<M>, ml::Int<N>, ml::Int<0>,
+                                       ml::Int<sizeof...(Ts)>, Pipe,
+                                       ml::PackExtractor<Ts...>>,
+                 ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>>;
 };
 }; // namespace Implementations
 /*
@@ -44,9 +49,7 @@ struct Swap {
  */
 template <int M, int N, typename Pipe = ml::ToList> struct Swap {
   template <typename... Ts>
-  using f = typename Implementations::SwapImpl<static_cast<bool>(sizeof...(
-      Ts))>::template f<ml::Int<M>, ml::Int<N>, ml::Int<0>,
-                        ml::Int<sizeof...(Ts)>, Pipe, ml::PackExtractor<Ts...>>;
+  using f = ml::Implementations::Swap::template f<M, N, Pipe, Ts...>;
 };
 } // namespace ml
 #endif

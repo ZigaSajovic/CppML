@@ -12,15 +12,20 @@ namespace ml {
  * Implementation of Tail. Only ever instantiates two types.
  */
 namespace Implementations {
-template <bool Continue> struct Tail {
+template <bool Continue> struct TailImpl {
   template <int N, typename Pipe, typename T, typename... Ts>
-  using f = typename Tail<(sizeof...(Ts) > N)>::template f<N, Pipe, Ts...>;
+  using f = typename TailImpl<(sizeof...(Ts) > N)>::template f<N, Pipe, Ts...>;
 };
 
-template <> struct Tail<false> {
+template <> struct TailImpl<false> {
   template <int N, typename Pipe, typename... Ts>
   using f = typename ml::IfElse<(
       sizeof...(Ts) < 100000)>::template f<Pipe, void>::template f<Ts...>;
+};
+struct Tail {
+  template <int N, typename Pipe, typename... Ts>
+  using f = typename Implementations::TailImpl<(sizeof...(Ts) >
+                                                N)>::template f<N, Pipe, Ts...>;
 };
 }; // namespace Implementations
 
@@ -30,9 +35,8 @@ template <> struct Tail<false> {
  */
 template <int N, typename Pipe = ml::ToList> struct Tail {
   template <typename... Ts>
-  using f =
-      typename Implementations::Tail<(sizeof...(Ts) > N)>::template f<N, Pipe,
-                                                                      Ts...>;
+  using f = typename Implementations::TailImpl<(sizeof...(Ts) >
+                                                N)>::template f<N, Pipe, Ts...>;
 };
 } // namespace ml
 #endif

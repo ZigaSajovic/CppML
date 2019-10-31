@@ -88,3 +88,4 @@ template <int i, typename Pipe = ml::ToList> struct Pivot {
       sizeof...(Ts), Pipe, ml::Int<i>, Ts...>;
 };
 } // namespace ml
+#endif

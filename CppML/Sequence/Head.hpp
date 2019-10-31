@@ -4,31 +4,19 @@
 
 #ifndef CPPML_HEAD_HPP
 #define CPPML_HEAD_HPP
-#include "../Algorithm/Apply.hpp"
+#include "../Algorithm/Pivot.hpp"
 #include "../Functional/ToList.hpp"
-#include "PackExtractor.hpp"
-#include "Range.hpp"
-
-/*
- * Implementation of Head. It only ever instantiates one type
- * (the pack extractor).
- */
+#include "../Sequence/Drop.hpp"
 namespace ml {
-namespace Implementations {
-struct Head {
-  template <int N, typename Pipe, typename... Ts>
-  using f = typename ml::TypeRange<
-      ml::Apply<ml::PackExtractor<Ts...>, Pipe>>::template f<0, N>;
-};
-} // namespace Implementations
-
 /*
  * # Head:
  * Returns the first N elements
  */
 template <int N, typename Pipe = ml::ToList> struct Head {
   template <typename... Ts>
-  using f = Implementations::Head::template f<N, Pipe, Ts...>;
+  using f =
+      typename ml::Pivot<N,
+                         ml::Drop<sizeof...(Ts) - N, Pipe>>::template f<Ts...>;
 };
 } // namespace ml
 #endif

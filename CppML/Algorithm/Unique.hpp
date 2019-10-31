@@ -54,7 +54,7 @@ template <typename Pipe = ml::ToList> struct UniqueIds {
   template <typename... Ts>
   using f = typename ml::UnList<Pipe>::template f<
       typename Implementations::Unique<static_cast<bool>(
-          sizeof...(Ts))>::template f<0, ml::IsSame, ml::ListT<>, Ts...>>;
+          sizeof...(Ts))>::template f<0, ml::IsSame<>, ml::ListT<>, Ts...>>;
 };
 /*
  * # UniqueComp:
@@ -74,7 +74,7 @@ template <typename Pipe = ml::ToList> struct Unique {
   template <typename... Ts>
   using f = typename ml::UnList<ml::Apply<ml::PackExtractor<Ts...>, Pipe>>::
       template f<typename Implementations::Unique<static_cast<bool>(
-          sizeof...(Ts))>::template f<0, ml::IsSame, ml::ListT<>, Ts...>>;
+          sizeof...(Ts))>::template f<0, ml::IsSame<>, ml::ListT<>, Ts...>>;
 };
 
 } // namespace ml

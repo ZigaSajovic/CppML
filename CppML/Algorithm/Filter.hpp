@@ -25,7 +25,10 @@ template <bool Continue> struct Filter {
   using f = typename Filter<static_cast<bool>(sizeof...(Ts))>::template f<
       i + 1,
       typename ml::IfElse<Predicate::template f<T>::value>::template f<
-          typename ml::Append<KeepList>::template f<ml::Int<i>>, KeepList>,
+          typename 
+          ml::UnList<ml::Append<ml::Int<i>>>::template f<KeepList>,
+          //ml::Append<KeepList>::template f<ml::Int<i>>,
+      KeepList>,
       Predicate, Ts...>;
 };
 

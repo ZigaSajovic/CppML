@@ -4,20 +4,16 @@
 
 #ifndef CPPML_INSERT_HPP
 #define CPPML_INSERT_HPP
-#include "../Functional/DelayedEval.hpp"
+#include "../Algorithm/Pivot.hpp"
 #include "../Functional/Invoke.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Sequence/Append.hpp"
-#include "../Sequence/Drop.hpp"
-#include "../Sequence/Head.hpp"
+#include "../Sequence/Prepend.hpp"
 namespace ml {
 template <int I, typename T, typename Pipe = ml::ToList> struct Insert {
   template <typename... Ts>
-  using f = ml::Invoke<
-      ml::Drop<I, ml::Append<ml::Invoke<ml::Append<ml::DelayedEval<
-                                            ml::Head<I>, sizeof...(Ts), Ts...>>,
-                                        T>>>,
-      Ts...>;
+  using f =
+      ml::Invoke<ml::Pivot<I, ml::Prepend<T, ml::Pivot<sizeof...(Ts) - I + 1>>>,
+                 Ts...>;
 };
 } // namespace ml
 #endif

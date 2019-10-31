@@ -26,8 +26,9 @@ template <bool Continue> struct Unique {
       i + 1, Comparator,
       typename ml::IfElse<
           !ml::Invoke<ml::Any<ml::Partial<Comparator, T>>, Ts...>::value>::
-          template f<typename ml::Append<KeepList>::template f<ml::Int<i>>,
-                     KeepList>,
+          template f<
+              typename ml::UnList<ml::Append<ml::Int<i>>>::template f<KeepList>,
+              KeepList>,
       Ts...>;
 };
 

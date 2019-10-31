@@ -12,7 +12,7 @@
 namespace ml {
 namespace Implementations {
 /*
- * Implementation of Swap. It only ever instantiates 2 types.
+ * Implementation of Swap.
  */
 template <bool Continue> struct SwapImpl {
   template <typename M, typename N, typename start, typename end, typename Pipe,

@@ -2,8 +2,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML__HPP
-#define CPPML__HPP
+#ifndef CPPML_PACK_EXTRACTOR_HPP
+#define CPPML_PACK_EXTRACTOR_HPP
 #include "Get.hpp"
 namespace ml {
 

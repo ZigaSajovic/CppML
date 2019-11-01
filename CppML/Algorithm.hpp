@@ -12,6 +12,7 @@
 #include "Algorithm/Filter.hpp"
 #include "Algorithm/FindIf.hpp"
 #include "Algorithm/GroupBy.hpp"
+#include "Algorithm/Pivot.hpp"
 #include "Algorithm/Reduce.hpp"
 #include "Algorithm/ReplaceIf.hpp"
 #include "Algorithm/Sort.hpp"

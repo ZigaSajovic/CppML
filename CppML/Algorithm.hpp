@@ -15,6 +15,7 @@
 #include "Algorithm/Pivot.hpp"
 #include "Algorithm/Reduce.hpp"
 #include "Algorithm/ReplaceIf.hpp"
+#include "Algorithm/Rotate.hpp"
 #include "Algorithm/Sort.hpp"
 #include "Algorithm/Unique.hpp"
 #include "Algorithm/Zip.hpp"

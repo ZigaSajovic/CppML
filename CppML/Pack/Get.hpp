@@ -4,36 +4,18 @@
 
 #ifndef CPPML_GET_HPP
 #define CPPML_GET_HPP
+#include "../Functional/DelayedEval.hpp"
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/IfElse.hpp"
-
+#include "Drop.hpp"
+#include "Head.hpp"
 namespace ml {
 /*
- * Implementation of Get. It only ever instantiates two types.
- * This means that it will not instantiate a type for each N. So
- * One can use this, when needed.
- */
-namespace Implementations {
-template <bool Continue> struct Get {
-  template <int i, typename T, typename... Ts>
-  using f = typename ml::IfElse<static_cast<bool>(
-      sizeof...(Ts))>::template f<Get<(i > 1)>, void>::template f<i - 1, Ts...>;
-};
-
-template <> struct Get<false> {
-  template <int i, typename T, typename... Ts> using f = T;
-};
-}; // namespace Implementations
-
-/*
  * Get:
- * Retrives the N-th element in a pack. Instantiates a type
- * for each N.
+ * Retrives the N-th element in a pack.
  */
 template <int N, typename Pipe = ml::Identity> struct Get {
   template <typename... Ts>
-  using f = typename Pipe::template f<typename Implementations::Get<
-      (sizeof...(Ts) >= 0) && N != 0>::template f<N, Ts...>>;
+  using f = ml::DelayedEval<ml::Pivot<N, ml::Head<1>>, sizeof...(Ts), Ts...>;
 };
 } // namespace ml
 #endif

@@ -8,9 +8,7 @@
 namespace ml {
 
 template <typename... Ts> struct PackExtractor {
-  template <typename T>
-  using f = typename ml::Implementations::Get<T::value !=
-                                              0>::template f<T::value, Ts...>;
+  template <typename T> using f = typename ml::Get<T::value>::template f<Ts...>;
 };
 } // namespace ml
 #endif

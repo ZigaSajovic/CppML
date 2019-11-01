@@ -4,36 +4,54 @@
 
 #ifndef CPPML_SORT_HPP
 #define CPPML_SORT_HPP
-#include "../Functional/MaxElement.hpp"
+#include "../Algorithm/FindIf.hpp"
+#include "../Arithmetic/Not.hpp"
+#include "../Functional/Compose.hpp"
+#include "../Functional/Invoke.hpp"
 #include "../Functional/Partial.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Sequence/Prepend.hpp"
-#include "../TypeTraits/IsSame.hpp"
-#include "ReplaceIf.hpp"
+#include "../Pack/Get.hpp"
+#include "Rotate.hpp"
 
 namespace ml {
+/*
+ * Implementation of sort.
+ */
 namespace Implementations {
-template <typename Pipe = ml::ToList> struct ReplaceAndPrepend {
-  template <typename T, typename U, typename... Ts>
-  using f = typename ml::Prepend<typename ml::ReplaceIf<
-      ml::Partial<ml::IsSame<>, T>, U, Pipe>::template f<Ts...>>::template f<T>;
+template <bool Continue> struct Sort {
+  template <typename I, typename Pipe, typename Compare, typename... Ts>
+  using f =
+      ml::Invoke<ml::Rotate<                            //
+                     ml::Invoke<                        //
+                         ml::FindIf<                    //
+                             ml::Partial<               //
+                                 Compare,               //
+                                 ml::DelayedEval<       //
+                                     ml::Get<I::value>, //
+                                     sizeof...(Ts),     //
+                                     Ts...>>>,          //
+                         Ts...                          //
+                         >::value +
+                         3,
+                     I::value + 3, I::value + 4,
+                     Implementations::Sort<(I::value + 1 < sizeof...(Ts))>>,
+                 ml::Int<I::value + 1>, Pipe, Compare, Ts...>;
 };
 
-template <bool Continue> struct Sort {
-  template <typename Compare, typename T, typename... Ts>
-  using f =
-      typename ReplaceAndPrepend<Sort<static_cast<bool>(sizeof...(Ts) > 0)>>::
-          template f<typename ml::MaxElement<Compare>::template f<T, Ts...>, T,
-                     Compare, Ts...>;
-};
 template <> struct Sort<false> {
-  template <typename Compare> using f = ml::ListT<>;
+  template <typename I, typename Pipe, typename Compare, typename... Ts>
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
 };
-} // namespace Implementations
+}; // namespace Implementations
+/*
+ * # Sort:
+ * Sorts a parameter pack, given a comparator
+ */
 template <typename Compare, typename Pipe = ml::ToList> struct Sort {
   template <typename... Ts>
-  using f = typename Implementations::Sort<sizeof...(Ts) !=
-                                           0>::template f<Compare, Ts...>;
+  using f = ml::Invoke<Implementations::Sort<(sizeof...(Ts) > 1)>, ml::Int<1>,
+                       Pipe, ml::Compose<ml::Not<>, Compare>, Ts...>;
 };
+
 } // namespace ml
 #endif

@@ -12,12 +12,12 @@
 namespace ml {
 /*
  * # Rotate:
- * Rotates a pack, so that the subpack `(First, Last)`, is pivoted around
+ * Rotates a pack, so that the subpack `[First, Last)`, is pivoted around
  * Middle.
  * ```
- * (Start, ..., First, ..., M',  Middle, ..., Last, ... End)
+ * (Start, ..., First, ..., M',  Middle, ..., L', Last, ... End)
  * ->
- *  (Start, ..., Middle, ..., Last, First, ... M', ...End)
+ *  (Start, ..., Middle, ..., L', First, ... M', Last, ...End)
  *  ```
  */
 template <int First, int Middle, int Last, typename Pipe = ml::ToList>
@@ -37,6 +37,11 @@ struct Rotate {
                                    sizeof...(Ts), Ts...>>>,
                       sizeof...(Ts), Ts...>>>>,
       sizeof...(Ts), Ts...>;
+};
+
+template <int N, typename Pipe> struct Rotate<N, N, N + 1, Pipe> {
+  template <typename... Ts>
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
 };
 } // namespace ml
 #endif

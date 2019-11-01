@@ -39,3 +39,4 @@ struct Rotate {
       sizeof...(Ts), Ts...>;
 };
 } // namespace ml
+#endif

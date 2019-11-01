@@ -4,10 +4,11 @@
 
 #ifndef CPPML_GET_HPP
 #define CPPML_GET_HPP
+#include "../Algorithm/Pivot.hpp"
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/Identity.hpp"
 #include "Drop.hpp"
-#include "Head.hpp"
+#include "Front.hpp"
 namespace ml {
 /*
  * Get:
@@ -15,7 +16,8 @@ namespace ml {
  */
 template <int N, typename Pipe = ml::Identity> struct Get {
   template <typename... Ts>
-  using f = ml::DelayedEval<ml::Pivot<N, ml::Head<1>>, sizeof...(Ts), Ts...>;
+  using f =
+      ml::DelayedEval<ml::Pivot<N, ml::Front<Pipe>>, sizeof...(Ts), Ts...>;
 };
 } // namespace ml
 #endif

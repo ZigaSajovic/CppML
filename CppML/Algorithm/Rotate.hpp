@@ -31,10 +31,10 @@ struct Rotate {
               ml::Pivot<
                   Middle - First,
                   ml::DelayedEval<
-                      ml::Head<First, ml::PrePartialEvaluator<ml::DelayedEval<
-                                          ml::Drop<Last, ml::PartialEvaluator<
-                                                             ml::ToList>>,
-                                          sizeof...(Ts), Ts...>>>,
+                      ml::Head<First,
+                               ml::PrePartialEvaluator<ml::DelayedEval<
+                                   ml::Drop<Last, ml::PartialEvaluator<Pipe>>,
+                                   sizeof...(Ts), Ts...>>>,
                       sizeof...(Ts), Ts...>>>>,
       sizeof...(Ts), Ts...>;
 };

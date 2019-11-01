@@ -6,7 +6,7 @@
 #define CPPML_HEAD_HPP
 #include "../Algorithm/Pivot.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Sequence/Drop.hpp"
+#include "../Pack/Drop.hpp"
 namespace ml {
 /*
  * # Head:

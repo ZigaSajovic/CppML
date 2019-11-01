@@ -7,7 +7,7 @@
 #include "../Algorithm/Apply.hpp"
 #include "../Functional/F.hpp"
 #include "../Functional/UnList.hpp"
-#include "../Sequence/Append.hpp"
+#include "../Pack/Append.hpp"
 #include "../Vocabulary/List.hpp"
 
 namespace ml {

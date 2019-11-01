@@ -7,9 +7,9 @@
 #include "../Algorithm/Apply.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Functional/UnList.hpp"
-#include "../Sequence/Append.hpp"
-#include "../Sequence/Get.hpp"
-#include "../Sequence/PackExtractor.hpp"
+#include "../Pack/Append.hpp"
+#include "../Pack/Get.hpp"
+#include "../Pack/PackExtractor.hpp"
 #include "../Vocabulary/Const.hpp"
 #include "../Vocabulary/IfElse.hpp"
 #include "../Vocabulary/List.hpp"
@@ -25,10 +25,8 @@ template <bool Continue> struct Filter {
   using f = typename Filter<static_cast<bool>(sizeof...(Ts))>::template f<
       i + 1,
       typename ml::IfElse<Predicate::template f<T>::value>::template f<
-          typename 
-          ml::UnList<ml::Append<ml::Int<i>>>::template f<KeepList>,
-          //ml::Append<KeepList>::template f<ml::Int<i>>,
-      KeepList>,
+          typename ml::UnList<ml::Append<ml::Int<i>>>::template f<KeepList>,
+          KeepList>,
       Predicate, Ts...>;
 };
 

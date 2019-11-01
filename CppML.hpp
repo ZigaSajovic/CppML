@@ -7,7 +7,7 @@
 #include "CppML/Algorithm.hpp"
 #include "CppML/Arithmetic.hpp"
 #include "CppML/Functional.hpp"
-#include "CppML/Sequence.hpp"
+#include "CppML/Pack.hpp"
 #include "CppML/TypeTraits.hpp"
 #include "CppML/Vocabulary.hpp"
 #endif

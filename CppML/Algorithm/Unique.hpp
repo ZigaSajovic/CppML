@@ -9,8 +9,8 @@
 #include "../Functional/Partial.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Functional/UnList.hpp"
-#include "../Sequence/Append.hpp"
-#include "../Sequence/PackExtractor.hpp"
+#include "../Pack/Append.hpp"
+#include "../Pack/PackExtractor.hpp"
 #include "../TypeTraits/IsSame.hpp"
 
 namespace ml {

@@ -7,8 +7,12 @@
 #include "../Algorithm/Pivot.hpp"
 #include "../Functional/Invoke.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Sequence/Prepend.hpp"
+#include "../Pack/Prepend.hpp"
 namespace ml {
+/*
+ * # Insert:
+ * Inserts T as the I-th element of the pack.
+ */
 template <int I, typename T, typename Pipe = ml::ToList> struct Insert {
   template <typename... Ts>
   using f =

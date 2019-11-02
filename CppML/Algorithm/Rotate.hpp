@@ -38,10 +38,5 @@ struct Rotate {
                       sizeof...(Ts), Ts...>>>>,
       sizeof...(Ts), Ts...>;
 };
-
-template <int N, typename Pipe> struct Rotate<N, N, N + 1, Pipe> {
-  template <typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
-};
 } // namespace ml
 #endif

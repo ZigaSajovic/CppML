@@ -8,11 +8,10 @@
 
 namespace ml {
 namespace Implementations {
-template <typename, typename, typename Pipe = ml::ToList> struct Merge2;
-template <template <class...> class List, typename... Ts, typename... Us,
-          typename Pipe>
-struct Merge2<List<Ts...>, List<Us...>, Pipe> {
-  using f = typename Pipe::template f<Ts..., Us...>;
+template <typename, typename> struct Merge2;
+template <template <class...> class List, typename... Ts, typename... Us>
+struct Merge2<List<Ts...>, List<Us...>> {
+  using f = List<Ts..., Us...>;
 };
 
 template <bool Continue> struct Merge_impl {

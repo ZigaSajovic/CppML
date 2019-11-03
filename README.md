@@ -64,7 +64,7 @@ In this section we provide two demonstrations of metaprogramming using **CppML**
 
 ### Generating a permutation of elements, that minimizes the needed padding in a tuple
 
-Tuple is usually implemented by *inheriting* from each (adorned) element, as this allows one to exploit the *empty base* case *optimization*. One thing to consider is, that the order in which you inherit from these elements, defines the memory layout of the tuple. And because memory locations need to be aligned, different permutations give rise to different sizes.
+You can imagine `std::tuple<T0, T1, ..., Tn>` as a class, with members `T0 t0`, `T1 t1`, ..., `Tn tn`, laid out in the specified (or reversed) order. As such, like in any class, padding needs to be inserted between the members, so that they are *naturally aligned*, which generally means that the data's memory address is a multiple of the data size (have a look at the [Data structure alignment](https://en.wikipedia.org/wiki/Data_structure_alignment)).
 
 Our goal is two fold. We wish to **permute** the order of elements, so as to **minimize** the object **size**. But, elements need to be accessible in the same order user specified them; i.e. the element that was specified in slot `2`, must be accessible through `2`. In other words, from the users perspective, it is **as if** nothing was done.
 
@@ -105,7 +105,7 @@ using List =
 static_assert(
               std::is_same_v<T1, List>);
 ```
-which can now be used to design a base class for the tuple. Because our elements are tagged, we can locate them in the layout (and return the one tagged by `2`, when the user requests the `2` element).
+which can now be used to design a base class for the tuple. You can find this example explained in detail [here](https://github.com/ZigaSajovic/optimizing-the-memory-footprint-of-std-tuple).
 
 ### Creating a linear hierarchy of Policy classes from a flat parameter pack
 

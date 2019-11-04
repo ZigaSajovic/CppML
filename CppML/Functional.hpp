@@ -11,6 +11,7 @@
 #include "Functional/Invoke.hpp"
 #include "Functional/MaxElement.hpp"
 #include "Functional/Partial.hpp"
+#include "Functional/PartialEvaluator.hpp"
 #include "Functional/PipeN.hpp"
 #include "Functional/ToList.hpp"
 #include "Functional/ToValue.hpp"

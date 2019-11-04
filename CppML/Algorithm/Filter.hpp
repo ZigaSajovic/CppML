@@ -4,58 +4,54 @@
 
 #ifndef CPPML_FILTER_HPP
 #define CPPML_FILTER_HPP
-#include "../Algorithm/Apply.hpp"
+#include "../Functional/DelayedEval.hpp"
+#include "../Functional/Invoke.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Functional/UnList.hpp"
-#include "../Pack/Append.hpp"
-#include "../Pack/Get.hpp"
-#include "../Pack/PackExtractor.hpp"
 #include "../Vocabulary/Const.hpp"
-#include "../Vocabulary/IfElse.hpp"
-#include "../Vocabulary/List.hpp"
 
 namespace ml {
 /*
- * Implementation of Filter. It only ever instantiates two types.
+ * Implementation of Filter. Only ever instantiates 4 types
  */
 namespace Implementations {
-template <bool Continue> struct Filter {
-  template <int i, typename KeepList, typename Predicate, typename T,
+template <bool Continue> struct Filter;
+namespace Detail {
+template <bool Take> struct Filter {
+  template <typename I, typename Predicate, typename Pipe, typename T,
             typename... Ts>
-  using f = typename Filter<static_cast<bool>(sizeof...(Ts))>::template f<
-      i + 1,
-      typename ml::IfElse<Predicate::template f<T>::value>::template f<
-          typename ml::UnList<ml::Append<ml::Int<i>>>::template f<KeepList>,
-          KeepList>,
-      Predicate, Ts...>;
+  using f =
+      ml::DelayedEval<Implementations::Filter<(I::value > 1)>, sizeof...(Ts),
+                      ml::Int<I::value - 1>, Predicate, Pipe, Ts..., T>;
 };
-
 template <> struct Filter<false> {
-  template <int i, typename KeepList, typename Predicate> using f = KeepList;
+  template <typename I, typename Predicate, typename Pipe, typename T,
+            typename... Ts>
+  using f =
+      ml::DelayedEval<Implementations::Filter<(I::value > 1)>, sizeof...(Ts),
+                      ml::Int<I::value - 1>, Predicate, Pipe, Ts...>;
 };
+} // namespace Detail
 
+template <bool Continue> struct Filter {
+  template <typename I, typename Predicate, typename Pipe, typename T,
+            typename... Ts>
+  using f = ml::DelayedEval<Detail::Filter<ml::Invoke<Predicate, T>::value>,
+                            sizeof...(Ts), I, Predicate, Pipe, T, Ts...>;
+};
+template <> struct Filter<false> {
+  template <typename I, typename Predicate, typename Pipe, typename... Ts>
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+};
 }; // namespace Implementations
 /*
- * FilterIds:
- * Returns list of indexes of elements satifying the predicate.
- * **NOTE** that it works with indexes instead of elements.
- */
-template <typename Predicate, typename Pipe = ml::ToList> struct FilterIds {
-  template <typename... Ts>
-  using f = typename ml::UnList<Pipe>::template f<
-      typename Implementations::Filter<(sizeof...(Ts) < 100000)>::template f<
-          0, ml::ListT<>, Predicate, Ts...>>;
-};
-/*
- * Filter:
- * Filters elements, given a predicate.
+ * # Filter:
+ * Returns elements satifying a predicate
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
   template <typename... Ts>
-  using f =
-      typename ml::UnList<ml::Apply<PackExtractor<Ts...>, Pipe>>::template f<
-          typename Implementations::Filter<(sizeof...(Ts) < 100000)>::
-              template f<0, ml::ListT<>, Predicate, Ts...>>;
+  using f = ml::DelayedEval<
+      Implementations::Filter<static_cast<bool>(sizeof...(Ts))>, sizeof...(Ts),
+      ml::Int<sizeof...(Ts)>, Predicate, Pipe, Ts...>;
 };
 
 } // namespace ml

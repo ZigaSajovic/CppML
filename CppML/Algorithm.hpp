@@ -16,6 +16,7 @@
 #include "Algorithm/GroupIdsBy.hpp"
 #include "Algorithm/Pivot.hpp"
 #include "Algorithm/Reduce.hpp"
+#include "Algorithm/RemoveIdsIf.hpp"
 #include "Algorithm/RemoveIf.hpp"
 #include "Algorithm/ReplaceIf.hpp"
 #include "Algorithm/Rotate.hpp"

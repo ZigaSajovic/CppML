@@ -23,5 +23,5 @@
 #include "Algorithm/Sort.hpp"
 #include "Algorithm/Unique.hpp"
 #include "Algorithm/UniqueCompare.hpp"
-#include "Algorithm/Zip.hpp"
+#include "Algorithm/ZipWith.hpp"
 #endif

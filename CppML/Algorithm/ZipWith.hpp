@@ -2,8 +2,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML_ZIP_HPP
-#define CPPML_ZIP_HPP
+#ifndef CPPML_ZIP_WITH_HPP
+#define CPPML_ZIP_WITH_HPP
 #include "../Algorithm/Apply.hpp"
 #include "../Functional/F.hpp"
 #include "../Functional/UnList.hpp"
@@ -22,9 +22,8 @@ template <typename Pipe, template <class...> class Result, typename... Rs,
           template <class...> class Next, typename... Ns, typename... Rest>
 struct Zip<Pipe, Result<Rs...>, Next<Ns...>, Rest...> {
   using f =
-      typename Zip<Pipe, Result<typename ml::UnList<Append<Ns>>::template f<Rs>...>,
-
-      //ml::Append<Rs>::template f<Ns>...>,
+      typename Zip<Pipe,
+                   Result<typename ml::UnList<Append<Ns>>::template f<Rs>...>,
                    Rest...>::f;
 };
 
@@ -48,7 +47,7 @@ struct ZipStart {
  * first zip using the ml::ListT, and than change the zipper
  * to the user provided one.
  * If your zipper is a variadic template, than you can use
- * ml::ZipWithVar, which is more efficient (as it uses the
+ * ml::ZipWithVariadic, which is more efficient (as it uses the
  * Zipper directly to construct the result).
  */
 template <template <class...> class With, typename Pipe = ml::ToList>
@@ -58,24 +57,5 @@ struct ZipWith {
       sizeof...(Ts) < 10000)>::template f<Implementations::ZipStart, void>::
       template f<ml::Apply<ml::UnList<ml::F<With>>, Pipe>, ml::ListT, Ts...>;
 };
-
-/*
- * ZipWithVar:
- * Zips a pack of types in a Zipper.
- * Note:
- * Zipper needs to be a variadic template.
- */
-template <template <class...> class With, typename Pipe = ml::ToList>
-struct ZipWithVar {
-  template <typename... Ts>
-  using f = typename ml::IfElse<(sizeof...(Ts) < 10000)>::template f<
-      Implementations::ZipStart, void>::template f<Pipe, With, Ts...>;
-};
-/*
- * Zip:
- * Zips a pack of types in a ListT
- */
-template <typename Pipe = ml::ToList> using Zip = ZipWith<ml::ListT, Pipe>;
-
 } // namespace ml
 #endif

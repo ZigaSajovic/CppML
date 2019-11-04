@@ -24,4 +24,5 @@
 #include "Algorithm/Unique.hpp"
 #include "Algorithm/UniqueCompare.hpp"
 #include "Algorithm/ZipWith.hpp"
+#include "Algorithm/ZipWithVariadic.hpp"
 #endif

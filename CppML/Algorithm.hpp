@@ -5,7 +5,7 @@
 #ifndef CPPML_ALGORITHM_HPP
 #define CPPML_ALGORITHM_HPP
 #include "Algorithm/All.hpp"
-#include "Algorithm/Any.hpp"
+#include "Algorithm/AnyOf.hpp"
 #include "Algorithm/Apply.hpp"
 #include "Algorithm/Contains.hpp"
 #include "Algorithm/CountIf.hpp"

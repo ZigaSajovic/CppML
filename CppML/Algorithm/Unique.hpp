@@ -11,7 +11,7 @@
 #include "../Pack/Get.hpp"
 #include "../TypeTraits/IsSame.hpp"
 #include "../Vocabulary/Const.hpp"
-#include "Any.hpp"
+#include "AnyOf.hpp"
 
 namespace ml {
 namespace Implementations {
@@ -35,7 +35,7 @@ template <bool Continue> struct Unique {
             typename... Ts>
   using f = ml::DelayedEval<
       Detail::UniqueGet<!ml::Invoke<
-          ml::Drop<I::value - 1, ml::Any<ml::Partial<Comparator, T>>>,
+          ml::Drop<I::value - 1, ml::AnyOf<ml::Partial<Comparator, T>>>,
           Ts...>::value>,
       sizeof...(Ts), I, Comparator, Pipe, T, Ts...>;
 };

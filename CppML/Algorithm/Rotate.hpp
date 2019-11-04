@@ -5,7 +5,7 @@
 #ifndef CPPML_ROTATE_HPP
 #define CPPML_ROTATE_HPP
 #include "../Functional/DelayedEval.hpp"
-#include "../Functional/Partial.hpp"
+#include "../Functional/PartialEvaluator.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Pack/Drop.hpp"
 #include "../Pack/Head.hpp"

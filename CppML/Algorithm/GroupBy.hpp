@@ -8,7 +8,7 @@
 #include "../Algorithm/Filter.hpp"
 #include "../Algorithm/UniqueCompare.hpp"
 #include "../Functional/Compose.hpp"
-#include "../Functional/Partial.hpp"
+#include "../Functional/PartialEvaluator.hpp"
 
 namespace ml {
 /*

@@ -1,0 +1,17 @@
+//          Copyright Žiga Sajovic, XLAB 2019.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
+
+#ifndef CPPML_UNIQUE_COMPARE_HPP
+#define CPPML_UNIQUE_COMPARE_HPP
+#include "Unique.hpp"
+
+namespace ml {
+template <typename Comparator, typename Pipe = ml::ToList>
+struct UniqueCompare {
+  template <typename... Ts>
+  using f = ml::DelayedEval<Implementations::Unique, sizeof...(Ts), Comparator,
+                            Pipe, Ts...>;
+};
+} // namespace ml
+#endif

@@ -7,40 +7,50 @@
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/Invoke.hpp"
 #include "../Functional/ToList.hpp"
+#include "../Pack/Get.hpp"
 #include "../Vocabulary/Const.hpp"
 
 namespace ml {
 /*
- * Implementation of Filter. Only ever instantiates 4 types
+ * Implementation of Filter. Only ever instantiates 4 types.
  */
 namespace Implementations {
-template <bool Continue> struct Filter;
 namespace Detail {
-template <bool Take> struct Filter {
-  template <typename I, typename Predicate, typename Pipe, typename T,
-            typename... Ts>
+template <bool Continue> struct Filter;
+template <bool Take> struct FilterGet {
+  template <typename I, typename N, typename Predicate, typename Pipe,
+            typename Getter, typename T, typename... Ts>
   using f =
-      ml::DelayedEval<Implementations::Filter<(I::value > 1)>, sizeof...(Ts),
-                      ml::Int<I::value - 1>, Predicate, Pipe, Ts..., T>;
+      ml::DelayedEval<Detail::Filter<(I::value > 1)>, sizeof...(Ts),
+                      ml::Int<I::value - 1>, N, Predicate, Pipe, Getter, Ts...,
+                      ml::Invoke<Getter, T, ml::Int<N::value - I::value>>>;
 };
-template <> struct Filter<false> {
-  template <typename I, typename Predicate, typename Pipe, typename T,
-            typename... Ts>
+template <> struct FilterGet<false> {
+  template <typename I, typename N, typename Predicate, typename Pipe,
+            typename Getter, typename T, typename... Ts>
   using f =
-      ml::DelayedEval<Implementations::Filter<(I::value > 1)>, sizeof...(Ts),
-                      ml::Int<I::value - 1>, Predicate, Pipe, Ts...>;
+      ml::DelayedEval<Detail::Filter<(I::value > 1)>, sizeof...(Ts),
+                      ml::Int<I::value - 1>, N, Predicate, Pipe, Getter, Ts...>;
 };
-} // namespace Detail
 
 template <bool Continue> struct Filter {
-  template <typename I, typename Predicate, typename Pipe, typename T,
-            typename... Ts>
-  using f = ml::DelayedEval<Detail::Filter<ml::Invoke<Predicate, T>::value>,
-                            sizeof...(Ts), I, Predicate, Pipe, T, Ts...>;
+  template <typename I, typename N, typename Predicate, typename Pipe,
+            typename Getter, typename T, typename... Ts>
+  using f =
+      ml::DelayedEval<Detail::FilterGet<ml::Invoke<Predicate, T>::value>,
+                      sizeof...(Ts), I, N, Predicate, Pipe, Getter, T, Ts...>;
 };
 template <> struct Filter<false> {
-  template <typename I, typename Predicate, typename Pipe, typename... Ts>
+  template <typename I, typename N, typename Predicate, typename Pipe,
+            typename Getter, typename... Ts>
   using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+};
+} // namespace Detail
+struct Filter {
+  template <typename Predicate, typename Pipe, typename Getter, typename... Ts>
+  using f = ml::DelayedEval<Detail::Filter<static_cast<bool>(sizeof...(Ts))>,
+                            sizeof...(Ts), ml::Int<sizeof...(Ts)>, ml::Int<sizeof...(Ts)>, Predicate,
+                            Pipe, Getter, Ts...>;
 };
 }; // namespace Implementations
 /*
@@ -49,9 +59,8 @@ template <> struct Filter<false> {
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
   template <typename... Ts>
-  using f = ml::DelayedEval<
-      Implementations::Filter<static_cast<bool>(sizeof...(Ts))>, sizeof...(Ts),
-      ml::Int<sizeof...(Ts)>, Predicate, Pipe, Ts...>;
+  using f = ml::DelayedEval<Implementations::Filter, sizeof...(Ts), Predicate,
+                            Pipe, ml::Get<0>, Ts...>;
 };
 
 } // namespace ml

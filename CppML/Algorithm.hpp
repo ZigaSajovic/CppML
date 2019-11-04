@@ -12,6 +12,7 @@
 #include "Algorithm/Filter.hpp"
 #include "Algorithm/FilterIds.hpp"
 #include "Algorithm/FindIf.hpp"
+#include "Algorithm/FindIfNot.hpp"
 #include "Algorithm/GroupBy.hpp"
 #include "Algorithm/GroupIdsBy.hpp"
 #include "Algorithm/Pivot.hpp"

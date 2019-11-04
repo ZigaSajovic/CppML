@@ -2,11 +2,9 @@
 
 A Meta Language for C++
 
-**CppML** is a meta language I use when developing libraries. It was designed to allow seamless transitions between *templates*, *metafunctions* and *composable variadic transformations* they afford us. As such, metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation* and *pipe chaining*, usually operating on parameter packs and type-lists.
-See [Examples](#examples) bellow for a few demonstration.
+**CppML** is a meta language I use when developing libraries. It was designed to allow seamless transitions between *templates*, *metafunctions* and *composable variadic transformations* they afford us. As such, metafunctions are *first-class citizens* in **CppML**, with support for features like *partial evaluation* and *pipe chaining*, usually operating on parameter packs.
 
-Note that it is an evolving project, that grows in parallel with the work I do.
-Metaprogramming in C++ offers a unique experience, as one can implement **categorical concepts** (e.g. *monads* and *functors*), while controlling how the resulting types are **mapped onto hardware**.
+Metaprogramming in C++ offers a unique experience, as one can implement **categorical concepts** (e.g. *monads* and *functors*), while controlling how the resulting types are **mapped onto hardware**. For a detailed demonstration, consult the tutorial for how to [optimize the memory layout of std::tuple](https://github.com/ZigaSajovic/optimizing-the-memory-layout-of-std-tuple) using **CppML**.
 
 ### 3 Design principles
 

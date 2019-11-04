@@ -4,34 +4,25 @@
 
 #ifndef CPPML_GROUP_BY_HPP
 #define CPPML_GROUP_BY_HPP
+#include "../Algorithm/Apply.hpp"
 #include "../Algorithm/Filter.hpp"
-#include "../Algorithm/Unique.hpp"
+#include "../Algorithm/UniqueCompare.hpp"
 #include "../Functional/Compose.hpp"
 #include "../Functional/Partial.hpp"
 
 namespace ml {
 /*
- * # GroupById:
- * GroupBy given a predicate factory. It returns lists of Indexes of elements.
- */
-template <typename By, typename Pipe = ml::ToList> struct GroupById {
-  template <typename... Ts>
-  using f = typename ml::UniqueComp<
-      By, ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::FilterIds>,
-                                ml::PartialEvaluator<By>>,
-                    Pipe>>::template f<Ts...>;
-};
-
-/*
  * # GroupBy:
- * GroupBy given a predicate factory. It returns lists of elements.
+ * Group indexes of elements given a By metafunction.
+ * By :: T -> U
  */
 template <typename By, typename Pipe = ml::ToList> struct GroupBy {
   template <typename... Ts>
-  using f = typename ml::UniqueComp<
-      By, ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::Filter>,
-                                ml::PartialEvaluator<By>>,
-                    Pipe>>::template f<Ts...>;
+  using f = typename ml::UniqueCompare<
+      ml::Apply<By, ml::IsSame<>>,
+      ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::Filter>,
+                            ml::PartialEvaluator<ml::Apply<By, ml::IsSame<>>>>,
+                Pipe>>::template f<Ts...>;
 };
 } // namespace ml
 #endif

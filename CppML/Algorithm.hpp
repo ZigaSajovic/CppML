@@ -16,10 +16,11 @@
 #include "Algorithm/GroupIdsBy.hpp"
 #include "Algorithm/Pivot.hpp"
 #include "Algorithm/Reduce.hpp"
+#include "Algorithm/RemoveIf.hpp"
 #include "Algorithm/ReplaceIf.hpp"
 #include "Algorithm/Rotate.hpp"
 #include "Algorithm/Sort.hpp"
-#include "Algorithm/UniqueCompare.hpp"
 #include "Algorithm/Unique.hpp"
+#include "Algorithm/UniqueCompare.hpp"
 #include "Algorithm/Zip.hpp"
 #endif

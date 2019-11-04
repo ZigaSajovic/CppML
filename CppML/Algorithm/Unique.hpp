@@ -4,79 +4,57 @@
 
 #ifndef CPPML_UNIQUE_HPP
 #define CPPML_UNIQUE_HPP
-#include "../Algorithm/Any.hpp"
-#include "../Algorithm/Apply.hpp"
+#include "../Functional/DelayedEval.hpp"
+#include "../Functional/Invoke.hpp"
 #include "../Functional/Partial.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Functional/UnList.hpp"
-#include "../Pack/Append.hpp"
-#include "../Pack/PackExtractor.hpp"
+#include "../Pack/Get.hpp"
 #include "../TypeTraits/IsSame.hpp"
+#include "../Vocabulary/Const.hpp"
+#include "Any.hpp"
 
 namespace ml {
-/*
- * Implementation of Unique. Only ever instantiates two types.
- * **NOTE** that it works with indexes instead of elements.
- */
 namespace Implementations {
-template <bool Continue> struct Unique {
-  template <int i, typename Comparator, typename KeepList, typename T,
+namespace Detail {
+template <bool Continue> struct Unique;
+template <bool Take> struct UniqueGet {
+  template <typename I, typename Comparator, typename Pipe, typename T,
             typename... Ts>
-  using f = typename Unique<static_cast<bool>(sizeof...(Ts))>::template f<
-      i + 1, Comparator,
-      typename ml::IfElse<
-          !ml::Invoke<ml::Any<ml::Partial<Comparator, T>>, Ts...>::value>::
-          template f<
-              typename ml::UnList<ml::Append<ml::Int<i>>>::template f<KeepList>,
-              KeepList>,
-      Ts...>;
+  using f = ml::DelayedEval<Detail::Unique<(I::value > 1)>, sizeof...(Ts),
+                            ml::Int<I::value - 1>, Comparator, Pipe, Ts..., T>;
+};
+template <> struct UniqueGet<false> {
+  template <typename I, typename Comparator, typename Pipe, typename T,
+            typename... Ts>
+  using f = ml::DelayedEval<Detail::Unique<(I::value > 1)>, sizeof...(Ts),
+                            ml::Int<I::value - 1>, Comparator, Pipe, Ts...>;
 };
 
+template <bool Continue> struct Unique {
+  template <typename I, typename Comparator, typename Pipe, typename T,
+            typename... Ts>
+  using f = ml::DelayedEval<
+      Detail::UniqueGet<!ml::Invoke<
+          ml::Drop<I::value - 1, ml::Any<ml::Partial<Comparator, T>>>,
+          Ts...>::value>,
+      sizeof...(Ts), I, Comparator, Pipe, T, Ts...>;
+};
 template <> struct Unique<false> {
-  template <int i, typename Comparator, typename KeepList> using f = KeepList;
+  template <typename I, typename Comparator, typename Pipe, typename... Ts>
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+};
+} // namespace Detail
+struct Unique {
+  template <typename Comparator, typename Pipe, typename... Ts>
+  using f = ml::DelayedEval<Detail::Unique<static_cast<bool>(sizeof...(Ts))>,
+                            sizeof...(Ts), ml::Int<sizeof...(Ts)>, Comparator,
+                            Pipe, Ts...>;
 };
 } // namespace Implementations
-/*
- * # UniqueIdsComp:
- * Returns Ids of unique elements, given a Comparator
- */
-template <typename Comparator, typename Pipe = ml::ToList>
-struct UniqueIdsComp {
-  template <typename... Ts>
-  using f = typename ml::UnList<Pipe>::template f<
-      typename Implementations::Unique<static_cast<bool>(
-          sizeof...(Ts))>::template f<0, Comparator, ml::ListT<>, Ts...>>;
-};
-/*
- * # UniqueIds:
- * Returns Ids of unique elements
- */
-template <typename Pipe = ml::ToList> struct UniqueIds {
-  template <typename... Ts>
-  using f = typename ml::UnList<Pipe>::template f<
-      typename Implementations::Unique<static_cast<bool>(
-          sizeof...(Ts))>::template f<0, ml::IsSame<>, ml::ListT<>, Ts...>>;
-};
-/*
- * # UniqueComp:
- * Returns unique elements, given a Comparator
- */
-template <typename Comparator, typename Pipe = ml::ToList> struct UniqueComp {
-  template <typename... Ts>
-  using f = typename ml::UnList<ml::Apply<ml::PackExtractor<Ts...>, Pipe>>::
-      template f<typename Implementations::Unique<static_cast<bool>(
-          sizeof...(Ts))>::template f<0, Comparator, ml::ListT<>, Ts...>>;
-};
-/*
- * # Unique:
- * Returns unique elements
- */
 template <typename Pipe = ml::ToList> struct Unique {
   template <typename... Ts>
-  using f = typename ml::UnList<ml::Apply<ml::PackExtractor<Ts...>, Pipe>>::
-      template f<typename Implementations::Unique<static_cast<bool>(
-          sizeof...(Ts))>::template f<0, ml::IsSame<>, ml::ListT<>, Ts...>>;
+  using f = ml::DelayedEval<Implementations::Unique, sizeof...(Ts),
+                            ml::IsSame<>, Pipe, Ts...>;
 };
-
 } // namespace ml
 #endif

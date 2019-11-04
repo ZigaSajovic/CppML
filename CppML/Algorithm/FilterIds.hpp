@@ -9,7 +9,7 @@
 namespace ml {
 /*
  * # FilterIds:
- * Returns elements satifying a predicate
+ * Returns indexes of elements satifying a predicate
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct FilterIds {
   template <typename... Ts>

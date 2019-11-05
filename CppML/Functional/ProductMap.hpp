@@ -21,7 +21,7 @@ template <typename Pipe, typename... Fs> struct ProductMap {
  * Creates a map product of metafunctions. Meaning:
  * ```
  * F_i: Ts... -> U
- * ProductMap : Ts ... -> U... ; |U...| = |F_i...|
+ * ProductMap : Ts ... -> U... -> (Pipe) ; |U...| = |F_i...|
  * ```
  * **Note** that the last
  * metafunction will be treated as **Pipe**.

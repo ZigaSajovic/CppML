@@ -4,7 +4,7 @@
 
 ```c++
 template <typename Pipe = ml::ToList>
-struct Unique{
+struct Unique {
   template <typename ...Ts>
   using f = /* .... */;
 };

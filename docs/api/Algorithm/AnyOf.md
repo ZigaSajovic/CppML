@@ -11,7 +11,7 @@ struct AnyOf {
 ```
 ### `AnyOf<Predicate, Pipe>`
 
-`AnyOf<Predicate, Pipe>` is a metafunction that returns [`ml::Bool`](../Vocabulary/Const.md)`<truth_value>`, where truth_value marks whether the predicate holds for any element of the parameter pack `Ts`.  The result is passed to `Pipe`, which defaults to [`ml::Identity`](../Functional/Identity.md).
+`AnyOf<Predicate, Pipe>` is a metafunction that passes to `Pipe` and [`ml::Bool`](../Vocabulary/Const.md)`<truth_value>`, where truth_value marks whether the predicate holds for any element of the parameter pack `Ts`. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
 f:: Ts... -> ml::Bool<truth_value> -> ResultOf(Pipe)

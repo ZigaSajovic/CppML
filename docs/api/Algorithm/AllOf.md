@@ -14,7 +14,7 @@ struct AllOf {
 `AllOf<Predicate, Pipe>` is a metafunction that returns [`ml::Bool`](../Vocabulary/Const.md)`<truth_value>`, where truth_value marks whether the predicate holds for all elements of the parameter pack `Ts`.  The result is passed to `Pipe`, which defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
-AllOf<Predicate, Pipe>:: Ts... -> ml::Bool<truth_value> -> ResultOf(Pipe)
+f:: Ts... -> ml::Bool<truth_value> -> ResultOf(Pipe)
 ```
 
 #### Predicate

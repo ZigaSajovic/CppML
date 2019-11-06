@@ -1,17 +1,17 @@
-# `<CppML/Algorithm/FindIf.hpp>`
+# `<CppML/Algorithm/FindIfNot.hpp>`
 
-## `FindIf`
+## `FindIfNot`
 
 ```c++
 template <typename Predicate, typename Pipe = ml::Identity>
-struct FindIf {
+struct FindIfNot {
   template <typename ...Ts>
   using f = /* .... */;
 };
 ```
-### `FindIf<Predicate, Pipe>`
+### `FindIfNot<Predicate, Pipe>`
 
-`FindIf<Predicate, Pipe>` is a metafunction that passes to `Pipe` the index [`ml::Int`](../Vocabulary/Const.md)`<index>` of the first element of the parameter pack `Ts...`, for which the predicate holds. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
+`FindIfNot<Predicate, Pipe>` is a metafunction that passes to `Pipe` the index [`ml::Int`](../Vocabulary/Const.md)`<index>` of the first element of the parameter pack `Ts...`, for which the predicate does not holds. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
 f:: Ts... -> ml::Int<index> -> ResultOf(Pipe)
@@ -28,17 +28,17 @@ f: T -> ml::Bool<truth_value>
 
 ```c++
 using T0 = ml::Invoke<
-                     ml::FindIf<ml::IsClass<>>,
-                     int, char, std::string>;
-static_assert(
-              std::is_same_v<
-                  T, ml::Int<2>>);
-
-using T1 = ml::Invoke<
-                     ml::FindIf<
-                               ml::IsClass<ml::Not<>>>,
+                     ml::FindIfNot<ml::IsClass<>>,
                      int, char, std::string>;
 static_assert(
               std::is_same_v<
                   T, ml::Int<0>>);
+
+using T1 = ml::Invoke<
+                     ml::FindIfNot<
+                               ml::IsClass<ml::Not<>>>,
+                     int, char, std::string>;
+static_assert(
+              std::is_same_v<
+                  T, ml::Int<2>>);
 ```

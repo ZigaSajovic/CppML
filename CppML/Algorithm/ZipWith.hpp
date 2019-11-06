@@ -4,8 +4,8 @@
 
 #ifndef CPPML_ZIP_WITH_HPP
 #define CPPML_ZIP_WITH_HPP
-#include "../Algorithm/Map.hpp"
 #include "../Functional/F.hpp"
+#include "../Functional/Map.hpp"
 #include "../Functional/UnList.hpp"
 #include "../Pack/Append.hpp"
 #include "../Vocabulary/List.hpp"

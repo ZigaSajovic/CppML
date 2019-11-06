@@ -5,7 +5,7 @@
 #ifndef CPPML_GROUP_IDS_BY_HPP
 #define CPPML_GROUP_IDS_BY_HPP
 #include "../Algorithm/FilterIds.hpp"
-#include "../Algorithm/Map.hpp"
+#include "../Functional/Map.hpp"
 #include "../Algorithm/UniqueCompare.hpp"
 #include "../Functional/Compose.hpp"
 #include "../Functional/InvokeWith.hpp"

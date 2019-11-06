@@ -4,9 +4,9 @@
 
 #ifndef CPPML_REPLACE_IF_HPP
 #define CPPML_REPLACE_IF_HPP
+#include "../Functional/Map.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Vocabulary/IfElse.hpp"
-#include "Map.hpp"
 namespace ml {
 namespace Implementations {
 template <typename Predicate, typename With> struct ReplaceSingle {

@@ -5,10 +5,10 @@
 #ifndef CPPML_GROUP_BY_HPP
 #define CPPML_GROUP_BY_HPP
 #include "../Algorithm/Filter.hpp"
-#include "../Algorithm/Map.hpp"
 #include "../Algorithm/UniqueCompare.hpp"
 #include "../Functional/Compose.hpp"
 #include "../Functional/InvokeWith.hpp"
+#include "../Functional/Map.hpp"
 #include "../Functional/PartialEvaluator.hpp"
 
 namespace ml {

@@ -76,14 +76,14 @@ template <typename... Ts>
 using PermuteAlign = ml::Invoke<
     ml::ZipWith<Tag,           // Zip the input lists with Tag and pipe into
                 ml::Sort<      // sort, whith the comparator
-                    ml::Map< // that applies (to the two comparing elements):
+                    ml::Map< // that Maps (the two comparing elements):
                         ml::UnList<    // remove outer Tag, and pipe into
                             ml::Get<1, // getting the second element, and pipe
                                        // into
                                     ml::AligmentOf<>>>, // computing their
                                                         // aligment
                         ml::Greater<>>>>, // than compare the generated elements
-                                          // (pipe-ing from the Apply)
+                                          // (pipe-ing from the Map)
                                           // using Greater
     typename ml::TypeRange<>::template f<0, sizeof...(Ts)>, // generate a range from
                                                             // [0, numOfTypes)
@@ -179,14 +179,14 @@ We can now write the metaprogram we described at the beginning of the section.
 
 ```c++
 template <template <class...> class... Policies>
-using MakeBase = ml::Map< // Apply the
-    PartialEvaluator,  // partial evaluator on Class on the paramter pack of
-                       // metafunction that follow
+using MakeBase = ml::Map< // Map the
+    PartialEvaluator,     // partial evaluator on Class on the paramter pack of
+                          // metafunction that follow
     ml::F<ml::Compose> // and pipe the result to the Compose metafunction, which
                        // will compose all the metafunctions in the resulting
                        // parameter pack
     >::template f<ml::F<Policies>...>; // Turn each policy into a metafunction
-                                       // before passing it to the Apply
+                                       // before passing it to the Map
                                        // metafunction
 ```
 
@@ -226,14 +226,12 @@ using PrePartialEvaluator = ml::Partial< // Partially evaluate
 
 template <typename Derived> struct CRTPLinearHierarchy {
   template <class... PolicyMetafunctions>
-  using f = typename ml::Map<     // Apply the
+  using f = typename ml::Map<       // Map the paramter pack of metafunctions
       PrePartialEvaluator<Derived>, // partial evaluator on Derived on the
-                                    // paramter pack of metafunctions
       ml::F<ml::Compose> // and pipe the result to the Compose metafunction,
                          // which will compose all the metafunctions in the
                          // resulting parameter pack
       >::template f<PolicyMetafunctions...>;
-};
 ```
 We can use the `CRTPLinearHierarchy` metafunction to reproduce `MakeBase`above. Note that we create metafunction from Policies before passing them to `CRTPLinearHierarchy` (using `ml::F`).
 ```c++

@@ -13,15 +13,15 @@ namespace ml {
 namespace Implementations {
 template <typename Pipe, typename... Fs> struct Product {
   template <typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), ml::Invoke<Fs, Ts>...>;
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts), ml::Invoke<Fs, Ts...>...>;
 };
 } // namespace Implementations
 /*
  * Product:
  * Creates a product of metafunctions. Meaning:
  * ```
- * F_i: T -> U
- * Product : Ts ... -> U... -> (Pipe); |U...| = |F_i...|
+ * F_i: Ts... -> U
+ * Product : Ts ... -> U... -> (Pipe) ; |U...| = |F_i...|
  * ```
  * **Note** that the last
  * metafunction will be treated as **Pipe**.

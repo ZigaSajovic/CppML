@@ -17,3 +17,4 @@ template <typename Predicate, typename Pipe = ml::ToList>
 struct Partition
     : ml::ProductMap<ml::Filter<Predicate>, ml::RemoveIf<Predicate>, Pipe> {};
 } // namespace ml
+#endif

@@ -3,7 +3,7 @@
 ## `Rotate`
 
 ```c++
-template <int First, int Middel, int Last, typename Pipe = ml::ToList>
+template <int First, int Middle, int Last, typename Pipe = ml::ToList>
 struct Rotate {
   template <typename ...Ts>
   using f = /* .... */;

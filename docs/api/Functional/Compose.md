@@ -11,17 +11,17 @@ struct Compose {
 ```
 ### `Compose<Fs...>`
 
-`Compose<Fs...>` is a composition of metafunctions in the parameter pack `Fs...`. As such, `Compose<Fs...>` is itself a metafunction. There is no explicit `Pipe` argument, because the last one, `F`, is `Pipe` implicitly.
+`Compose<Fs...>` is a composition of metafunctions in the parameter pack `Fs...`. As such, `Compose<Fs...>` is itself a metafunction. There is no explicit `Pipe` argument, because the first one, `F0`, is `Pipe` implicitly.
 
 ```c++
-f:: Ts... -> F0 -> ... -> Fn
+f:: Ts... -> Fn -> ... -> F0
 ```
 
 #### Fs...
 
-Each metafunction `Fi` in the parameter pack `Fs...` needs to be able to take output of the `F_{i-1}` as input.
+Each metafunction `Fi` in the parameter pack `Fs...` needs to be able to take output of the `F_{i+1}` as input.
 
-
+**NOTE** that composition happens from the outside in.
 
 ### Example
 
@@ -44,4 +44,10 @@ static_assert(
 static_assert(
         std::is_same_v<
               T1, ml::Bool<false>>);
+```
+
+`NegatedPredicate` is of course equivalent to the `Pipe` formulation.
+
+```c++
+using NegatedPredicate2 = ml::IsSame<ml::Not<>>;
 ```

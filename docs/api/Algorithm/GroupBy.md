@@ -28,7 +28,7 @@ f:: T -> U
 
 ```c++
 using T0 = ml::Invoke<
-                     ml::GroupBy<ml::AlignmentOf>,
+                     ml::GroupBy<ml::AlignmentOf<>>,
                      int, char, float, bool, double>;
 static_assert(
               std::is_same_v<

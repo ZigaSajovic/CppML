@@ -21,7 +21,7 @@ AllOf<Predicate, Pipe>:: Ts... -> ml::Bool<truth_value> -> ResultOf(Pipe)
 
 Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Const.md).
 ```
-Predicate: T -> ml::Bool<truth_value>
+f:: T -> ml::Bool<truth_value>
 ```
 
 ### Example

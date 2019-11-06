@@ -76,7 +76,7 @@ template <typename... Ts>
 using PermuteAlign = ml::Invoke<
     ml::ZipWith<Tag,           // Zip the input lists with Tag and pipe into
                 ml::Sort<      // sort, whith the comparator
-                    ml::Apply< // that applies (to the two comparing elements):
+                    ml::Map< // that applies (to the two comparing elements):
                         ml::UnList<    // remove outer Tag, and pipe into
                             ml::Get<1, // getting the second element, and pipe
                                        // into
@@ -179,7 +179,7 @@ We can now write the metaprogram we described at the beginning of the section.
 
 ```c++
 template <template <class...> class... Policies>
-using MakeBase = ml::Apply< // Apply the
+using MakeBase = ml::Map< // Apply the
     PartialEvaluator,  // partial evaluator on Class on the paramter pack of
                        // metafunction that follow
     ml::F<ml::Compose> // and pipe the result to the Compose metafunction, which
@@ -226,7 +226,7 @@ using PrePartialEvaluator = ml::Partial< // Partially evaluate
 
 template <typename Derived> struct CRTPLinearHierarchy {
   template <class... PolicyMetafunctions>
-  using f = typename ml::Apply<     // Apply the
+  using f = typename ml::Map<     // Apply the
       PrePartialEvaluator<Derived>, // partial evaluator on Derived on the
                                     // paramter pack of metafunctions
       ml::F<ml::Compose> // and pipe the result to the Compose metafunction,

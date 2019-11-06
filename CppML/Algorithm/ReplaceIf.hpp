@@ -6,7 +6,7 @@
 #define CPPML_REPLACE_IF_HPP
 #include "../Functional/ToList.hpp"
 #include "../Vocabulary/IfElse.hpp"
-#include "Apply.hpp"
+#include "Map.hpp"
 namespace ml {
 namespace Implementations {
 template <typename Predicate, typename With> struct ReplaceSingle {
@@ -20,8 +20,8 @@ template <typename Predicate, typename With> struct ReplaceSingle {
 template <typename Predicate, typename With, typename Pipe = ml::ToList>
 struct ReplaceIf {
   template <typename... Ts>
-  using f = typename ml::Apply<Implementations::ReplaceSingle<Predicate, With>,
-                               Pipe>::template f<Ts...>;
+  using f = typename ml::Map<Implementations::ReplaceSingle<Predicate, With>,
+                             Pipe>::template f<Ts...>;
 };
 } // namespace ml
 #endif

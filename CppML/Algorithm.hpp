@@ -6,7 +6,6 @@
 #define CPPML_ALGORITHM_HPP
 #include "Algorithm/AllOf.hpp"
 #include "Algorithm/AnyOf.hpp"
-#include "Algorithm/Apply.hpp"
 #include "Algorithm/Contains.hpp"
 #include "Algorithm/CountIf.hpp"
 #include "Algorithm/Filter.hpp"
@@ -15,6 +14,7 @@
 #include "Algorithm/FindIfNot.hpp"
 #include "Algorithm/GroupBy.hpp"
 #include "Algorithm/GroupIdsBy.hpp"
+#include "Algorithm/Map.hpp"
 #include "Algorithm/Partition.hpp"
 #include "Algorithm/Pivot.hpp"
 #include "Algorithm/Reduce.hpp"

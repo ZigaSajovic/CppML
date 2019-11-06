@@ -4,8 +4,8 @@
 
 #ifndef CPPML_GROUP_BY_HPP
 #define CPPML_GROUP_BY_HPP
-#include "../Algorithm/Apply.hpp"
 #include "../Algorithm/Filter.hpp"
+#include "../Algorithm/Map.hpp"
 #include "../Algorithm/UniqueCompare.hpp"
 #include "../Functional/Compose.hpp"
 #include "../Functional/PartialEvaluator.hpp"
@@ -19,10 +19,10 @@ namespace ml {
 template <typename By, typename Pipe = ml::ToList> struct GroupBy {
   template <typename... Ts>
   using f = typename ml::UniqueCompare<
-      ml::Apply<By, ml::IsSame<>>,
-      ml::Apply<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::Filter>,
-                            ml::PartialEvaluator<ml::Apply<By, ml::IsSame<>>>>,
-                Pipe>>::template f<Ts...>;
+      ml::Map<By, ml::IsSame<>>,
+      ml::Map<ml::Compose<ml::InvokeWith<Ts...>, ml::F<ml::Filter>,
+                          ml::PartialEvaluator<ml::Map<By, ml::IsSame<>>>>,
+              Pipe>>::template f<Ts...>;
 };
 } // namespace ml
 #endif

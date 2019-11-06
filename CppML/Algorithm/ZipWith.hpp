@@ -4,7 +4,7 @@
 
 #ifndef CPPML_ZIP_WITH_HPP
 #define CPPML_ZIP_WITH_HPP
-#include "../Algorithm/Apply.hpp"
+#include "../Algorithm/Map.hpp"
 #include "../Functional/F.hpp"
 #include "../Functional/UnList.hpp"
 #include "../Pack/Append.hpp"
@@ -31,7 +31,7 @@ struct ZipStart {
   template <typename Pipe, template <class...> class With, typename T,
             typename... Ts>
   using f = typename Zip<
-      Pipe, typename ml::UnList<ml::Apply<ml::WrapIn<With>>>::template f<T>,
+      Pipe, typename ml::UnList<ml::Map<ml::WrapIn<With>>>::template f<T>,
       Ts...>::f;
 };
 } // namespace Implementations
@@ -55,7 +55,7 @@ struct ZipWith {
   template <typename... Ts>
   using f = typename ml::IfElse<(
       sizeof...(Ts) < 10000)>::template f<Implementations::ZipStart, void>::
-      template f<ml::Apply<ml::UnList<ml::F<With>>, Pipe>, ml::ListT, Ts...>;
+      template f<ml::Map<ml::UnList<ml::F<With>>, Pipe>, ml::ListT, Ts...>;
 };
 } // namespace ml
 #endif

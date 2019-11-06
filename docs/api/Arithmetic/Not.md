@@ -17,9 +17,9 @@ struct Not {
 f:: T -> ml::Bool<truth_value> -> ResultOf(Pipe)
 ```
 
-#### T, U
+#### T
 
-Types `T` and `U` need an `::value` alias, like [`ml::Const<Type, value>`](../Vocabulary/Const.md).
+Types `T` needs an `::value` alias, like [`ml::Const<Type, value>`](../Vocabulary/Const.md).
 
 ### Example
 

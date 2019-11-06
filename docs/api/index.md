@@ -48,8 +48,10 @@ Contains *algorithms* that operate on *parameter packs*. You can include any alg
 
 Contains *arithmetic operations* that operate on *types* (e. g. `Not`, `Less`). You can include any operation separately by `CppML/Arithmetic/<name>.hpp`, or include the entire header `CppML/Arithmetic.hpp`.
 
+* [`Decrement`](Arithmetic/Decrement.hpp)
 * [`Equals`](Arithmetic/Equals.hpp)
 * [`Greater`](Arithmetic/Greater.hpp)
+* [`Increment`](Arithmetic/Increment.hpp)
 * [`Less`](Arithmetic/Less.hpp)
 * [`Not`](Arithmetic/Not.hpp)
 

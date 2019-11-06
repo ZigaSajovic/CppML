@@ -4,7 +4,7 @@
 
 ```c++
 template <typename F, typename Pipe = ml::Identity>
-struct Rotate {
+struct Reduce {
   template <typename Init, typename ...Ts>
   using f = /* .... */;
 };

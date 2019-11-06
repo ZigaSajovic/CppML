@@ -14,6 +14,7 @@
 #include "Algorithm/FindIfNot.hpp"
 #include "Algorithm/GroupBy.hpp"
 #include "Algorithm/GroupIdsBy.hpp"
+#include "Algorithm/MaxElement.hpp"
 #include "Algorithm/Partition.hpp"
 #include "Algorithm/Pivot.hpp"
 #include "Algorithm/Reduce.hpp"

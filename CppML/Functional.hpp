@@ -11,7 +11,6 @@
 #include "Functional/Invoke.hpp"
 #include "Functional/InvokeWith.hpp"
 #include "Functional/Map.hpp"
-#include "Functional/MaxElement.hpp"
 #include "Functional/Partial.hpp"
 #include "Functional/PartialEvaluator.hpp"
 #include "Functional/PipeN.hpp"

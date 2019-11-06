@@ -32,6 +32,7 @@ Contains *algorithms* that operate on *parameter packs*. You can include any alg
 * [`MaxElement`](Algorithm/MaxElement.md)
 * [`NoneOf`](Algorithm/NoneOf.md)
 * [`Partition`](Algorithm/Partition.md)
+* [`PartitionIds`](Algorithm/PartitionIds.md)
 * [`Pivot`](Algorithm/Pivot.md)
 * [`Reduce`](Algorithm/Reduce.md)
 * [`RemoveIdsIf`](Algorithm/RemoveIdsIf.md)

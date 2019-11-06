@@ -21,7 +21,7 @@ f:: Ts... -> ml::Int<index> -> ResultOf(Pipe)
 
 Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Const.md).
 ```
-f: T -> ml::Bool<truth_value>
+f:: T -> ml::Bool<truth_value>
 ```
 
 ### Example

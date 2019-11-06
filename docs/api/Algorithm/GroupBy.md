@@ -21,7 +21,7 @@ f:: Ts... -> ml::ListT<Us...>... -> ResultOf(Pipe)
 
 By can be any metafunction returning a single type.
 ```
-f: T -> U
+f:: T -> U
 ```
 
 ### Example

@@ -25,7 +25,7 @@ f:: Init, T -> Init
 
 ### Example
 
-We implement [`ml::CountIf<`](./CountIf.md)[`<ml::IsClass>`](../TypeTraits/IsClass.md) using `Reduce`.
+We implement [`ml::CountIf`](./CountIf.md)[`<ml::IsClass>`](../TypeTraits/IsClass.md) using `Reduce`.
 
 ```c++
 using T = ml::Invoke<

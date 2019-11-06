@@ -11,7 +11,7 @@ struct CountIf {
 ```
 ### `CountIf<Predicate, Pipe>`
 
-`CountIf<Predicate, Pipe>` is a metafunction that returns [`ml::Int`](../Vocabulary/Const.md)`<count>`,  where count is the number of elements of the parameter pack `Ts`, for which the Predicate holds.  The result is passed to `Pipe`, which defaults to [`ml::Identity`](../Functional/Identity.md).
+`CountIf<Predicate, Pipe>` is a metafunction that passes to `Pipe` and [`ml::Int`](../Vocabulary/Const.md)`<count>`,  where count is the number of elements of the parameter pack `Ts`, for which the Predicate holds. `Pipe`defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
 f:: Ts... -> ml::Int<count> -> ResultOf(Pipe)

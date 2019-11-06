@@ -56,6 +56,7 @@ Contains *arithmetic operations* that operate on *types* (e. g. `Not`, `Less`). 
 * [`Increment`](Arithmetic/Increment.md)
 * [`Less`](Arithmetic/Less.md)
 * [`Not`](Arithmetic/Not.md)
+* [`Subtract`](Arithmetic/Subtract.md)
 
 ## `Functional`
 

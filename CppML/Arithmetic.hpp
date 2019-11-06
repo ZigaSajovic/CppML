@@ -11,4 +11,5 @@
 #include "Arithmetic/Increment.hpp"
 #include "Arithmetic/Less.hpp"
 #include "Arithmetic/Not.hpp"
+#include "Arithmetic/Subtract.hpp"
 #endif

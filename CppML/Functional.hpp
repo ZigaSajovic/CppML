@@ -9,6 +9,7 @@
 #include "Functional/F.hpp"
 #include "Functional/Identity.hpp"
 #include "Functional/Invoke.hpp"
+#include "Functional/InvokeWith.hpp"
 #include "Functional/MaxElement.hpp"
 #include "Functional/Partial.hpp"
 #include "Functional/PartialEvaluator.hpp"

@@ -7,14 +7,6 @@
 
 namespace ml {
 /*
- * InvokeWith:
- * A metafunction that will invoke the metafunction it is passed,
- * with the arguments Ts
- */
-template <class... Ts> struct InvokeWith {
-  template <typename F> using f = typename F::template f<Ts...>;
-};
-/*
  * Invoke:
  * Invokes a meta function
  */

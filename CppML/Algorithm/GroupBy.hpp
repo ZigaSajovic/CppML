@@ -8,6 +8,7 @@
 #include "../Algorithm/Map.hpp"
 #include "../Algorithm/UniqueCompare.hpp"
 #include "../Functional/Compose.hpp"
+#include "../Functional/InvokeWith.hpp"
 #include "../Functional/PartialEvaluator.hpp"
 
 namespace ml {

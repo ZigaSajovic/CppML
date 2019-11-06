@@ -28,8 +28,8 @@ template <> struct Reduce<false> {
  *  * F: maps (Init, T) -> Init
  *  * Ts... : parameter pack to execute on
  */
-template <typename Pipe = ml::Identity> struct Reduce {
-  template <typename Init, typename F, typename... Ts>
+template <typename F, typename Pipe = ml::Identity> struct Reduce {
+  template <typename Init, typename... Ts>
   using f = typename Pipe::template f<typename Implementations::Reduce<
       static_cast<bool>(sizeof...(Ts))>::template f<Init, F, Ts...>>;
 };

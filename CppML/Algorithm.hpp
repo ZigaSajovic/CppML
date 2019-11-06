@@ -17,6 +17,7 @@
 #include "Algorithm/MaxElement.hpp"
 #include "Algorithm/NoneOf.hpp"
 #include "Algorithm/Partition.hpp"
+#include "Algorithm/PartitionIds.hpp"
 #include "Algorithm/Pivot.hpp"
 #include "Algorithm/Reduce.hpp"
 #include "Algorithm/RemoveIdsIf.hpp"

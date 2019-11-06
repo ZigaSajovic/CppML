@@ -2,19 +2,20 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML_PARTITION_HPP
-#define CPPML_PARTITION_HPP
+#ifndef CPPML_PARTITION_IDS_HPP
+#define CPPML_PARTITION_IDS_HPP
 #include "../Functional/Product.hpp"
-#include "Filter.hpp"
-#include "RemoveIf.hpp"
+#include "FilterIds.hpp"
+#include "RemoveIdsIf.hpp"
 
 namespace ml {
 /*
- * # Partition:
- * Paritions the parameter pack, given a predicate, into two Lists.
+ * # PartitionIds:
+ * Paritions indexes of the parameter pack, given a predicate, into two Lists.
  */
 template <typename Predicate, typename Pipe = ml::ToList>
-struct Partition
-    : ml::Product<ml::Filter<Predicate>, ml::RemoveIf<Predicate>, Pipe> {};
+struct PartitionId
+    : ml::Product<ml::FilterIds<Predicate>, ml::RemoveIdsIf<Predicate>, Pipe> {
+};
 } // namespace ml
 #endif

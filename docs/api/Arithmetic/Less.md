@@ -5,7 +5,7 @@
 ```c++
 template <typename Pipe = ml::Identity>
 struct Less {
-  template <typename ...Ts>
+  template <typename T, typename U>
   using f = /* .... */;
 };
 ```

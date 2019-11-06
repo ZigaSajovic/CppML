@@ -45,7 +45,7 @@ static_assert(
 **NOTE** that
 ```c++
 ml::Map<
-        ml::AligmentOf<>, // maps each element by taking its aligment
+        ml::AligmentOf<>, // maps each element by taking its alignment
         ml::Greater<>>      // and pipes the resulting parameter pack into greater
 ```
 is a metafunction of type

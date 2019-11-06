@@ -1,0 +1,43 @@
+# `<CppML/Algorithm/AnyOf.hpp>`
+
+## `AnyOf`
+
+```c++
+template <typename Predicate, typename Pipe = ml::Identity>
+struct AnyOf {
+  template <typename ...Ts>
+  using f = /* .... */;
+};
+```
+### `AnyOf<Predicate, Pipe>`
+
+`AnyOf<Predicate, Pipe>` is a metafunction that returns whether the predicate holds for any element of the parameter pack `Ts`.  The result is passed to `Pipe`, which defaults to [`ml::Identity`](../Functional/Identity.md).
+
+```c++
+AnyOf<Predicate, Pipe>:: Ts... -> ml::Bool<truth_value> -> ResultOf(Pipe)
+```
+
+#### Predicate
+
+Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Const.md).
+```
+Predicate: T -> ml::Bool<truth_value>
+```
+
+### Example
+
+```c++
+using T0 = ml::Invoke<
+                     ml::AnyOf<ml::IsClass<>>,
+                     int, char, std::string>;
+static_assert(
+              std::is_same_v<T, ml::Bool<true>);
+
+using T1 = ml::Invoke<
+                     ml::AnyOf<
+                               ml::IsClass<>,
+                               ml::Not<>>,
+                     int, char, std::string>;
+static_assert(
+              std::is_same_v<T, ml::Bool<false>);
+```

@@ -92,7 +92,7 @@ Contains *utilities* for manipulating *parameter packs*. You can include any con
 * [`Head`](Pack/Head.md)
 * [`Insert`](Pack/Insert.md)
 * [`Length`](Pack/Length.md)
-* [`Merge`](Pack/Merge.md)
+* [`Concat`](Pack/Concat.md)
 * [`PackExtractor`](Pack/PackExtractor.md)
 * [`Prepend`](Pack/Prepend.md)
 * [`Range`](Pack/Range.md)

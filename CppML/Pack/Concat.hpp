@@ -2,34 +2,34 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CPPML_MERGE_HPP
-#define CPPML_MERGE_HPP
+#ifndef CPPML_CONCAT_HPP
+#define CPPML_CONCAT_HPP
 #include "../Functional/ToList.hpp"
 
 namespace ml {
 namespace Implementations {
-template <typename, typename> struct Merge2;
+template <typename, typename> struct Concat2;
 template <template <class...> class List, typename... Ts, typename... Us>
-struct Merge2<List<Ts...>, List<Us...>> {
+struct Concat2<List<Ts...>, List<Us...>> {
   using f = List<Ts..., Us...>;
 };
 
-template <bool Continue> struct Merge_impl {
+template <bool Continue> struct Concat_impl {
   template <typename T, typename U, typename... Ts>
-  using f = typename Merge_impl<(static_cast<bool>(
-      sizeof...(Ts)))>::template f<typename Merge2<T, U>::f, Ts...>;
+  using f = typename Concat_impl<(static_cast<bool>(
+      sizeof...(Ts)))>::template f<typename Concat2<T, U>::f, Ts...>;
 };
 
-template <> struct Merge_impl<false> { template <typename T> using f = T; };
+template <> struct Concat_impl<false> { template <typename T> using f = T; };
 }; // namespace Implementations
 
 /*
- * # Merge:
- * Merges `n` **List**-like types.
+ * # Concat:
+ * Concats `n` **List**-like types.
  */
-struct Merge {
+struct Concat {
   template <typename T, typename... Ts>
-  using f = typename Implementations::Merge_impl<static_cast<bool>(
+  using f = typename Implementations::Concat_impl<static_cast<bool>(
       sizeof...(Ts))>::template f<T, Ts...>;
 };
 } // namespace ml

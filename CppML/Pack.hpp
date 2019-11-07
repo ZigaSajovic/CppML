@@ -11,7 +11,7 @@
 #include "Pack/Head.hpp"
 #include "Pack/Insert.hpp"
 #include "Pack/Length.hpp"
-#include "Pack/Merge.hpp"
+#include "Pack/Concat.hpp"
 #include "Pack/PackExtractor.hpp"
 #include "Pack/Prepend.hpp"
 #include "Pack/Range.hpp"

@@ -11,7 +11,7 @@ struct Unwrap {
 ```
 ### `Unwrap<Pipe>`
 
-`Unwrap<Pipe>` is a metafunction that passes to `Pipe` the parameter pack `Ts...`, which is generated unwrapping the outermost template of `Wrapper<Ts...>`.
+`Unwrap<Pipe>` is a metafunction that passes to `Pipe` the parameter pack `Ts...`, which is generated unwrapping the outermost template of `Template<Ts...>`.
 
 ```c++
 f:: Wrapper<Ts...> -> Ts... -> ResultOf(Pipe)
@@ -19,7 +19,7 @@ f:: Wrapper<Ts...> -> Ts... -> ResultOf(Pipe)
 
 #### `Wrapped`
 
-`Wrapped` needs to be an instantiation of a class template, `Wrapper<Ts...>`.
+`Wrapped` needs to be an instantiation of a class template, `Template<Ts...>`.
 
 ### Example
 

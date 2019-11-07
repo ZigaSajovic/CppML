@@ -4,8 +4,8 @@
 
 #ifndef CPPML_MAP_HPP
 #define CPPML_MAP_HPP
+#include "../Functional/DelayedEval.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Vocabulary/IfElse.hpp"
 namespace ml {
 /*
  * # Map:
@@ -13,8 +13,7 @@ namespace ml {
  */
 template <typename F, typename Pipe = ToList> struct Map {
   template <typename... Ts>
-  using f = typename IfElse<(sizeof...(Ts) < 10000)>::template f<
-      Pipe, void>::template f<typename F::template f<Ts>...>;
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts), typename F::template f<Ts>...>;
 };
 } // namespace ml
 #endif

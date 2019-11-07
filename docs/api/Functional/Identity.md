@@ -17,7 +17,6 @@ f:: T -> T
 
 ### Example
 
-If we want the result of the metacomputation to be `Pipe`-ed into a `std::tuple`, we can transform it into a metafunction, and use it as `Pipe`.
 
 ```c++
 using T = ml::Invoke<

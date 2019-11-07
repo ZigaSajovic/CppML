@@ -19,7 +19,7 @@ f:: Ts... -> TF<Ts...>
 
 ### Example
 
-If we want the result of the metacomputation to be `Pipe`-ed into a `std::tuple`, we can transform it into a metafunction, and use it as `Pipe`.
+If we want to `Pipe` the result of a metacomputation into a `std::tuple`, we can transform it into a metafunction, and use it as `Pipe`.
 
 ```c++
 using F = ml::F<std::tuple>;

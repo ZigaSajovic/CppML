@@ -4,9 +4,9 @@
 
 #ifndef CPPML_RANGE_HPP
 #define CPPML_RANGE_HPP
+#include "../Functional/DelayedEval.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Vocabulary/Const.hpp"
-#include "../Vocabulary/IfElse.hpp"
 #include "../Vocabulary/List.hpp"
 namespace ml {
 namespace Implementations {
@@ -14,17 +14,16 @@ template <bool shouldContinue, typename Pipe> struct TypeRangeBase;
 
 template <typename Pipe> struct TypeRangeBase<true, Pipe> {
   template <typename From, typename To, typename step, typename... Us>
-  using f = typename IfElse<(sizeof...(Us) < 10000)>::template f<
+  using f = ml::DelayedEval<
       TypeRangeBase<(step::value > 0 ? From::value + step::value < To::value
                                      : To::value < From::value + step::value),
                     Pipe>,
-      void>::template f<Int<From::value + step::value>, To, step, Us..., From>;
+      sizeof...(Us), Int<From::value + step::value>, To, step, Us..., From>;
 };
 
 template <typename Pipe> struct TypeRangeBase<false, Pipe> {
   template <typename From, typename To, typename step, typename... Ts>
-  using f = typename IfElse<(sizeof...(Ts) <
-                             10000)>::template f<Pipe, void>::template f<Ts...>;
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
 };
 }; // namespace Implementations
 /*

@@ -10,7 +10,7 @@ struct ToList {
 ```
 ### `ToList`
 
-`ToList` is a metafunction that returns the parameter pack `Ts...` wrapped in a [`ml::ListT`](../Vocabulary/List.md)`<Ts...>`.
+`ToList` is a metafunction that returns the parameter pack `Ts...` wrapped in a list; [`ml::ListT`](../Vocabulary/List.md)`<Ts...>`.
 
 ```c++
 f:: Ts... -> ml::ListT<Ts...>

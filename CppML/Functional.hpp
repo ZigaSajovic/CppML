@@ -4,6 +4,7 @@
 
 #ifndef CPPML_FUNCTIONAL_HPP
 #define CPPML_FUNCTIONAL_HPP
+#include "Functional/Bind.hpp"
 #include "Functional/Compose.hpp"
 #include "Functional/Curry.hpp"
 #include "Functional/CurryR.hpp"

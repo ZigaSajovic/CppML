@@ -77,7 +77,6 @@ Contains *functional* utilities (e.g. `Map`). You can include any construct sepa
 * [`ToList`](Functional/ToList.md)
 * [`ToValue`](Functional/ToValue.md)
 * [`Unwrap`](Functional/Unwrap.md)
-* [`WrapIn`](Functional/WrapIn.md)
 
 ## `Pack`
 

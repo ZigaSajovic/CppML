@@ -64,7 +64,8 @@ Contains *functional* utilities (e.g. `Map`). You can include any construct sepa
 
 * [`Compose`](Functional/Compose.md)
 * [`ConstantF`](Functional/Constant.md)
-* [`ConstantF`](Functional/Curry.md)
+* [`Curry`](Functional/Curry.md)
+* [`CurryR`](Functional/CurryR.md)
 * [`DelayedEval`](Functional/DelayedEval.md)
 * [`F`](Functional/F.md)
 * [`Identity`](Functional/Identity.md)

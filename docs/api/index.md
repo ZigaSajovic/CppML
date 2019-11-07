@@ -7,7 +7,7 @@
 * [`Arithmetic`](#arithmetic)
   * *arithmetic* operations on *types*
 * [`Functional`](#functional)
-  * *functional* utilities (e.g. `Compose`, `Map`)
+  * *functional* utilities (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), [`ProductMap`](./Functional/ProductMap.md), etc.)
 * [`Pack`](#pack)
   * manipulation of *parameter packs*
 * [`TypeTraits`](#typetraits)
@@ -64,7 +64,7 @@ Contains *functional* utilities (e.g. `Map`). You can include any construct sepa
 
 * [`Bind`](Functional/Bind.md)
 * [`Compose`](Functional/Compose.md)
-* [`ConstantF`](Functional/Constant.md)
+* [`Constant`](Functional/Constant.md)
 * [`Curry`](Functional/Curry.md)
 * [`CurryR`](Functional/CurryR.md)
 * [`DelayedEval`](Functional/DelayedEval.md)

@@ -5,7 +5,7 @@
 #ifndef CPPML_SUBTRACT_HPP
 #define CPPML_SUBTRACT_HPP
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * Substract:

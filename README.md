@@ -96,10 +96,10 @@ On a concrete example, this meta program outputs
 ```c++
 using T1 = PermuteAlign<char, int, char, int, char, double, char>;
 using List =
-    ml::ListT<Tag<ml::Const<int, 5>, double>, Tag<ml::Const<int, 3>, int>,
-              Tag<ml::Const<int, 1>, int>, Tag<ml::Const<int, 6>, char>,
-              Tag<ml::Const<int, 4>, char>, Tag<ml::Const<int, 2>, char>,
-              Tag<ml::Const<int, 0>, char>>
+    ml::ListT<Tag<ml::Value<int, 5>, double>, Tag<ml::Value<int, 3>, int>,
+              Tag<ml::Value<int, 1>, int>, Tag<ml::Value<int, 6>, char>,
+              Tag<ml::Value<int, 4>, char>, Tag<ml::Value<int, 2>, char>,
+              Tag<ml::Value<int, 0>, char>>
 static_assert(
               std::is_same_v<T1, List>);
 ```

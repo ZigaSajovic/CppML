@@ -4,7 +4,7 @@
 
 #ifndef CPPML_LENGTH_HPP
 #define CPPML_LENGTH_HPP
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * Length:

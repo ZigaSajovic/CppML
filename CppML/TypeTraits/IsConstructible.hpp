@@ -5,7 +5,7 @@
 #ifndef CPPML_IS_CONSTRUCTIBLE_HPP
 #define CPPML_IS_CONSTRUCTIBLE_HPP
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 #include <type_traits>
 
 namespace ml {

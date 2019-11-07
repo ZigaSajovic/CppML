@@ -5,7 +5,7 @@
 #ifndef CPPML_LESS_HPP
 #define CPPML_LESS_HPP
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * Less:

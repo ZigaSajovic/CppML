@@ -7,7 +7,7 @@
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/Identity.hpp"
 #include "../Functional/Invoke.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 #include "../Vocabulary/IfElse.hpp"
 
 namespace ml {

@@ -7,7 +7,7 @@
 #include "../Algorithm/FindIfNot.hpp"
 #include "../Functional/Identity.hpp"
 #include "../Functional/Invoke.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * AllOf:

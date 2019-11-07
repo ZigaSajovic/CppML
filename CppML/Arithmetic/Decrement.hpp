@@ -5,7 +5,7 @@
 #ifndef CPPML_DECREMENT_HPP
 #define CPPML_DECREMENT_HPP
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * Increment:

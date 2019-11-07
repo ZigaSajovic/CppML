@@ -10,7 +10,7 @@
 #include "../Functional/ToList.hpp"
 #include "../Pack/Get.hpp"
 #include "../TypeTraits/IsSame.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 #include "AnyOf.hpp"
 
 namespace ml {

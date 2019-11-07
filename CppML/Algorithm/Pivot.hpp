@@ -6,7 +6,7 @@
 #define CPPML_PIVOT_HPP
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * Implementation of Pivot. It only ever instantiates 7 types.

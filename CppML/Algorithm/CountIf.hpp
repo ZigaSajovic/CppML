@@ -6,7 +6,7 @@
 #define CPPML_COUNT_IF_HPP
 #include "../Functional/Identity.hpp"
 #include "../Functional/Invoke.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * Implementation of CountIf. Only ever instantiates two types.

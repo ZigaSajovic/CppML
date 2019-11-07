@@ -5,7 +5,7 @@
 #ifndef CPPML_ADD_HPP
 #define CPPML_ADD_HPP
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * Add:

@@ -5,7 +5,7 @@
 #ifndef CPPML_ANY_OF_HPP
 #define CPPML_ANY_OF_HPP
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/Const.hpp"
+#include "../Vocabulary/Value.hpp"
 #include "FindIf.hpp"
 namespace ml {
 /*

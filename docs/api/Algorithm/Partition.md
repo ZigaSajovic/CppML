@@ -2,7 +2,7 @@
 
 ### `Partition<Predicate, Pipe>`
 
-`Partition<Predicate, Pipe>` is a metafunction that passes to `Pipe` two [`ml::ListT`](../Vocabulary/List.md)`<Us...>`, where the first list consists of `Us...`, types which evaluate to [`ml::Bool`](../Vocabulary/Const.md)`<true>` under `Predicate`, and the second those `Us...` that evaluate to [`ml::Bool`](../Vocabulary/Const.md)`<false>`. Formally speaking, `Partition<Predicate, Pipe>` forms equivalence classes of `Ts...` under `Predicate`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
+`Partition<Predicate, Pipe>` is a metafunction that passes to `Pipe` two [`ml::ListT`](../Vocabulary/List.md)`<Us...>`, where the first list consists of `Us...`, types which evaluate to [`ml::Bool`](../Vocabulary/Value.md)`<true>` under `Predicate`, and the second those `Us...` that evaluate to [`ml::Bool`](../Vocabulary/Value.md)`<false>`. Formally speaking, `Partition<Predicate, Pipe>` forms equivalence classes of `Ts...` under `Predicate`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
 f:: Ts... -> (ml::ListT<U0s...>, ml::ListT<U1s...>) -> ResultOf(Pipe)

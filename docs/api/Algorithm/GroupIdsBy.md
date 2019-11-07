@@ -11,7 +11,7 @@ struct GroupIdsBy {
 ```
 ### `GroupIdsBy<By, Pipe>`
 
-`GroupIdsBy<By, Pipe>` is a metafunction that passes to `Pipe` a parameter pack [`ml::ListT`](../Vocabulary/List.md)`<ml::Int<Is>...>...`, where each list in it consists of [`ml::Int`](../Vocabulary/Const.md)`<Is>...`, indexes of types which evaluate to the same type when mapped by `By`. Formally speaking, `GroupIdsBy<By, Pipe>` forms (indexes of) equivalence classes of `Ts...` under `By`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
+`GroupIdsBy<By, Pipe>` is a metafunction that passes to `Pipe` a parameter pack [`ml::ListT`](../Vocabulary/List.md)`<ml::Int<Is>...>...`, where each list in it consists of [`ml::Int`](../Vocabulary/Value.md)`<Is>...`, indexes of types which evaluate to the same type when mapped by `By`. Formally speaking, `GroupIdsBy<By, Pipe>` forms (indexes of) equivalence classes of `Ts...` under `By`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
 f:: Ts... -> ml::ListT<ml::Int<Is>...>... -> ResultOf(Pipe)

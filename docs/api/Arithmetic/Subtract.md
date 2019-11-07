@@ -11,7 +11,7 @@ struct Subtract {
 ```
 ### `Subtract<Pipe>`
 
-`Subtract<Pipe>` is a metafunction that passes to `Pipe` an [`ml::Int`](../Vocabulary/Const.md)`<value>`, where value is the difference of `::value`s of underlying types. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
+`Subtract<Pipe>` is a metafunction that passes to `Pipe` an [`ml::Int`](../Vocabulary/Value.md)`<value>`, where value is the difference of `::value`s of underlying types. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
 f:: T, U -> ml::Int<value> -> ResultOf(Pipe)
@@ -19,7 +19,7 @@ f:: T, U -> ml::Int<value> -> ResultOf(Pipe)
 
 #### T, U
 
-Types `T` and `U` need an `::value` alias, like [`ml::Const<Type, value>`](../Vocabulary/Const.md).
+Types `T` and `U` need an `::value` alias, like [`ml::Value<Type, value>`](../Vocabulary/Value.md).
 
 ### Example
 

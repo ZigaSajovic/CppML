@@ -11,7 +11,7 @@ struct Less {
 ```
 ### `Less<Pipe>`
 
-`Less<Pipe>` is a metafunction that passes to `Pipe` an [`ml::Bool`](../Vocabulary/Const.md)`<truth_value>`, where truth_value marks whether the first `::value` of underlying types is less than the second. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
+`Less<Pipe>` is a metafunction that passes to `Pipe` an [`ml::Bool`](../Vocabulary/Value.md)`<truth_value>`, where truth_value marks whether the first `::value` of underlying types is less than the second. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
 f:: T, U -> ml::Bool<truth_value> -> ResultOf(Pipe)
@@ -19,7 +19,7 @@ f:: T, U -> ml::Bool<truth_value> -> ResultOf(Pipe)
 
 #### T, U
 
-Types `T` and `U` need an `::value` alias, like [`ml::Const<Type, value>`](../Vocabulary/Const.md).
+Types `T` and `U` need an `::value` alias, like [`ml::Value<Type, value>`](../Vocabulary/Value.md).
 
 ### Example
 

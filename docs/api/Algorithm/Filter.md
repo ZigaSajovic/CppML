@@ -19,7 +19,7 @@ f:: Ts... -> Us... -> ResultOf(Pipe)
 
 #### Predicate
 
-Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Const.md).
+Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Value.md).
 ```
 f:: T -> ml::Bool<truth_value>
 ```

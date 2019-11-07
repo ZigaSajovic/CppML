@@ -11,7 +11,7 @@ struct RemoveIdsIf {
 ```
 ### `RemoveIdsIf<Predicate, Pipe>`
 
-`RemoveIdsIf<Predicate, Pipe>` is a metafunction that passes to `Pipe` a parameter pack [`ml::Int`](../Vocabulary/Const.md)`<Is>...` of indexes of the elements of the parameter pack `Ts...`, for which the predicate does not hold. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
+`RemoveIdsIf<Predicate, Pipe>` is a metafunction that passes to `Pipe` a parameter pack [`ml::Int`](../Vocabulary/Value.md)`<Is>...` of indexes of the elements of the parameter pack `Ts...`, for which the predicate does not hold. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
 f:: Ts... -> ml::Int<Is>... -> ResultOf(Pipe)
@@ -19,7 +19,7 @@ f:: Ts... -> ml::Int<Is>... -> ResultOf(Pipe)
 
 #### Predicate
 
-Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Const.md).
+Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Value.md).
 ```
 f:: T -> ml::Bool<truth_value>
 ```

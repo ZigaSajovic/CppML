@@ -11,7 +11,7 @@ struct FindIf {
 ```
 ### `FindIf<Predicate, Pipe>`
 
-`FindIf<Predicate, Pipe>` is a metafunction that passes to `Pipe` the index [`ml::Int`](../Vocabulary/Const.md)`<index>` of the first element of the parameter pack `Ts...`, for which the predicate holds. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
+`FindIf<Predicate, Pipe>` is a metafunction that passes to `Pipe` the index [`ml::Int`](../Vocabulary/Value.md)`<index>` of the first element of the parameter pack `Ts...`, for which the predicate holds. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
 f:: Ts... -> ml::Int<index> -> ResultOf(Pipe)
@@ -19,7 +19,7 @@ f:: Ts... -> ml::Int<index> -> ResultOf(Pipe)
 
 #### Predicate
 
-Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Const.md).
+Predicate must be a metafunction returning [`ml::Bool<truth_value>`](../Vocabulary/Value.md).
 ```
 f:: T -> ml::Bool<truth_value>
 ```

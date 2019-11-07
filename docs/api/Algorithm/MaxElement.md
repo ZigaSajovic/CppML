@@ -19,7 +19,7 @@ f:: Ts... -> U -> ResultOf(Pipe)
 
 #### Compare
 
-Compare must be a metafunction acting on two types and returning [`ml::Bool<truth_value>`](../Vocabulary/Const.md).
+Compare must be a metafunction acting on two types and returning [`ml::Bool<truth_value>`](../Vocabulary/Value.md).
 ```
 f:: (T, U) -> ml::Bool<truth_value>
 ```

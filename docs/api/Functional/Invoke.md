@@ -4,7 +4,7 @@
 
 ```c++
 template <typename F, typename ...Ts>
-using Invoke = /*...*/
+using Invoke = /*...*/;
 ```
 ### `Invoke<F, Ts...>`
 

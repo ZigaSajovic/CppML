@@ -20,7 +20,7 @@ f:: Init, Ts... -> F( ... F(F(Init, T0), T1), ... Tn) -> ResultOf(Pipe)
 #### F
 F is to be a metafunction from two types, to one.
 ```
-f:: Init, T -> Init
+f:: Init, T -> U
 ```
 
 ### Example

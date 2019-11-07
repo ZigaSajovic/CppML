@@ -19,34 +19,21 @@ f:: Ts... -> F(Args..., Ts...)
 
 ### Example
 
-One can create a metafunction that checks if a type is equal to `int`, by partially evaluating [`ml::IsSame`](../TypeTraits/IsSame.md).
+We can create a metafunction that checks if alignment of a type `T` is **greater** than alignment `int`, by taking [`ml::Map`](./Map.md) of [`ml::AligmentOf`](../TypeTraits/AligmentOf.md)  that has [`ml::Less`](../Arithmetic/Greater.md) as `Pipe`, and partially evaluate it on the left by `int` (note the order of arguments).
 
 ```c++
-using Predicate = ml::Partial<
-                        ml::IsSame<>,
-                        int>;
-using T0 = ml::Invoke<Predicate, double>;
-using T1 = ml::Invoke<Predicate, int>;
+using IsMoreThanInt = 
+          ml::Partial<
+              ml::Map<
+                ml::AligmentOf<>,
+                ml::Less<>>,
+              int>;
+
+using T0 = ml::Invoke<IsMoreThanInt, float>;
+using T1 = ml::Invoke<IsMoreThanInt, double>;
 static_assert(
-      std::is_same_v<T0, ml::Bool<false>);
+        std::is_same_v<
+                T0, ml::Bool<false>>);
 static_assert(
-      std::is_same_v<T1, ml::Bool<true>);
-```
-
-One can create a metafunction that appends to a list, by partially evaluating the [`ml::ToList`](./ToList.md) metafunction.
-
-```c++
-
-using Appender = ml::Partial<
-                      ml::ToList,
-                      int, char>;
-using T = ml::Invoke<
-                Appender,
-                double, bool>;
-static_assert(
-      std::is_same_v<
-            T,
-            ml::ListT<
-                int, char, double, bool>>);
-```
-
+        std::is_same_v<
+    

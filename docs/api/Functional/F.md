@@ -33,4 +33,35 @@ static_assert(
               T,
               std::tuple<double, int, char>>);
 ```
+## `F1`
 
+```c++
+template <template <class> class TF>
+struct F1 {
+  template <typename T>
+  using f = /* .... */;
+};
+```
+### `F1<TF>`
+
+`F1<TS>` creates a metafunction of one variable from a *template*.
+
+```c++
+f:: T -> TF<T>
+```
+## `F2`
+
+```c++
+template <template <class, class> class TF>
+struct F2 {
+  template <typename T, typename U>
+  using f = /* .... */;
+};
+```
+### `F2<TF>`
+
+`F2<TS>` creates a metafunction of two variables from a *template*.
+
+```c++
+f:: T, U -> TF<T, U>
+```

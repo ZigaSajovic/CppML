@@ -22,7 +22,7 @@ We partition indexes a parameter pack, to those whose alignment is greater than 
 using T = ml::Invoke<
               ml::PartitionIds<
                     ml::AligmentOf<
-                        ml::Partial<
+                        ml::PartialRR<
                             ml::Greater<>,
                             ml::Int<4>>>>,
               int, char, long, bool, double>;
@@ -36,7 +36,7 @@ static_assert(
 **NOTE** that
 ```
 ml::AligmentOf<          // take aligment of the input and pipe into
-      ml::Partial<       // a partial evaluation of the metafunction
+      ml::PartialRR<       // a partial evaluation of the metafunction
           ml::Greater<>, // greater
           ml::Int<4>>>   // on ml::Int<4>
 ```

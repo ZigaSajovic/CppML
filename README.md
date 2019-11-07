@@ -154,21 +154,21 @@ static_assert(std::is_same_v<MF0::template f<T0, T1>, //
 ```
 The created metafunction can be partially evaluated:
 ```c++
-using MF0partial = ml::PrePartial<MF0, T0>;
+using MF0partial = ml::Partial<MF0, T0>;
 static_assert(std::is_same_v<MF0partial::template f<T1>, //
                              Policy0<T0, T1>>);
 ```
 We can go further, and create a metafuntion, that will take a policy metafunction like `MF0`, and partially evaluate it at `Class`. In the bellow, note that `Partial`is like `PrePartial`, but it partially evaluates the trailing arguments (where as the `PrePartial` does so for the preceding arguments).
 ```c++
 using PartialEvaluator =
-    ml::Partial<                       // Partially evaluate
-                ml::F<ml::PrePartial>, // the metafunction created from PrePartial
+    ml::PartialRR<                       // Partially evaluate
+                ml::F<ml::Partial>, // the metafunction created from PrePartial
                 Class                  //  on the argument Class
                 >;
 ```
 We can now use the `PartialEvaluator` to create metafunction like `MF0partial`:
 ```c++
-using MF0partial = ml::PrePartial<MF0, Class>;
+using MF0partial = ml::Partial<MF0, Class>;
 using MF0partialMapped = PartialEvaluator::template f<MF0>;
 static_assert(std::is_same_v<MF0partialMapped,
                              MF0partial>);
@@ -220,8 +220,8 @@ Now we generalize the above. We write a `PrePartialEvaluator` that will Partiall
 
 ```c++
 template <typename... Args>
-using PrePartialEvaluator = ml::Partial< // Partially evaluate
-    ml::F<ml::PrePartial>, // the metafunction created from PrePartial
+using PrePartialEvaluator = ml::PartialRR< // Partially evaluate
+    ml::F<ml::Partial>, // the metafunction created from PrePartial
     Args...>;
 
 template <typename Derived> struct CRTPLinearHierarchy {

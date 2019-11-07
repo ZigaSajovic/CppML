@@ -4,8 +4,9 @@
 
 #ifndef CPPML_ROTATE_HPP
 #define CPPML_ROTATE_HPP
+#include "../Functional/Curry.hpp"
+#include "../Functional/CurryR.hpp"
 #include "../Functional/DelayedEval.hpp"
-#include "../Functional/PartialEvaluator.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Pack/Drop.hpp"
 #include "../Pack/Head.hpp"
@@ -26,16 +27,14 @@ struct Rotate {
   using f = ml::DelayedEval<
       ml::Drop<
           First,
-          ml::Head<
-              Last - First,
-              ml::Pivot<
-                  Middle - First,
-                  ml::DelayedEval<
-                      ml::Head<First,
-                               ml::PrePartialEvaluator<ml::DelayedEval<
-                                   ml::Drop<Last, ml::PartialEvaluator<Pipe>>,
-                                   sizeof...(Ts), Ts...>>>,
-                      sizeof...(Ts), Ts...>>>>,
+          ml::Head<Last - First,
+                   ml::Pivot<
+                       Middle - First,
+                       ml::DelayedEval<
+                           ml::Head<First, ml::Curry<ml::DelayedEval<
+                                               ml::Drop<Last, ml::CurryR<Pipe>>,
+                                               sizeof...(Ts), Ts...>>>,
+                           sizeof...(Ts), Ts...>>>>,
       sizeof...(Ts), Ts...>;
 };
 

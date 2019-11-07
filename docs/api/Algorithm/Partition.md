@@ -22,7 +22,7 @@ We partition a parameter pack, to those whose alignment is greater than 4, and t
 using T = ml::Invoke<
               ml::Partition<
                     ml::AligmentOf<
-                        ml::Partial<
+                        ml::PartialRR<
                             ml::Greater<>,
                             ml::Int<4>>>>,
               int, char, long, bool, double>;
@@ -36,7 +36,7 @@ static_assert(
 **NOTE** that
 ```
 ml::AligmentOf<          // take aligment of the input and pipe into
-      ml::Partial<       // a partial evaluation of the metafunction
+      ml::PartialRR<       // a partial evaluation of the metafunction
           ml::Greater<>, // greater
           ml::Int<4>>>   // on ml::Int<4>
 ```

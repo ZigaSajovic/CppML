@@ -8,7 +8,7 @@
 #include "../Arithmetic/Not.hpp"
 #include "../Functional/Compose.hpp"
 #include "../Functional/Invoke.hpp"
-#include "../Functional/Partial.hpp"
+#include "../Functional/PartialR.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Pack/Get.hpp"
 #include "Rotate.hpp"
@@ -24,7 +24,7 @@ template <bool Continue> struct Sort {
       ml::Invoke<ml::Rotate<                            //
                      ml::Invoke<                        //
                          ml::FindIf<                    //
-                             ml::Partial<               //
+                             ml::PartialR<              //
                                  Compare,               //
                                  ml::DelayedEval<       //
                                      ml::Get<I::value>, //

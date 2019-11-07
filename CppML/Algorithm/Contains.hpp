@@ -16,7 +16,7 @@ namespace ml {
  */
 template <typename T, typename Pipe = ml::Identity> struct Contains {
   template <typename... Ts>
-  using f = typename ml::AnyOf<ml::PrePartial<ml::IsSame<>, T>,
+  using f = typename ml::AnyOf<ml::Partial<ml::IsSame<>, T>,
                              Pipe>::template f<Ts...>;
 };
 } // namespace ml

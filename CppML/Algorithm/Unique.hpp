@@ -6,7 +6,7 @@
 #define CPPML_UNIQUE_HPP
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/Invoke.hpp"
-#include "../Functional/Partial.hpp"
+#include "../Functional/PartialR.hpp"
 #include "../Functional/ToList.hpp"
 #include "../Pack/Get.hpp"
 #include "../TypeTraits/IsSame.hpp"
@@ -35,7 +35,7 @@ template <bool Continue> struct Unique {
             typename... Ts>
   using f = ml::DelayedEval<
       Detail::UniqueGet<!ml::Invoke<
-          ml::Drop<I::value - 1, ml::AnyOf<ml::Partial<Comparator, T>>>,
+          ml::Drop<I::value - 1, ml::AnyOf<ml::PartialR<Comparator, T>>>,
           Ts...>::value>,
       sizeof...(Ts), I, Comparator, Pipe, T, Ts...>;
 };

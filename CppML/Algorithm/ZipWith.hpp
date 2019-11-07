@@ -6,7 +6,7 @@
 #define CPPML_ZIP_WITH_HPP
 #include "../Functional/F.hpp"
 #include "../Functional/Map.hpp"
-#include "../Functional/UnList.hpp"
+#include "../Functional/Unwrap.hpp"
 #include "../Pack/Append.hpp"
 #include "../Vocabulary/List.hpp"
 
@@ -23,7 +23,7 @@ template <typename Pipe, template <class...> class Result, typename... Rs,
 struct Zip<Pipe, Result<Rs...>, Next<Ns...>, Rest...> {
   using f =
       typename Zip<Pipe,
-                   Result<typename ml::UnList<Append<Ns>>::template f<Rs>...>,
+                   Result<typename ml::Unwrap<Append<Ns>>::template f<Rs>...>,
                    Rest...>::f;
 };
 
@@ -31,7 +31,7 @@ struct ZipStart {
   template <typename Pipe, template <class...> class With, typename T,
             typename... Ts>
   using f = typename Zip<
-      Pipe, typename ml::UnList<ml::Map<ml::WrapIn<With>>>::template f<T>,
+      Pipe, typename ml::Unwrap<ml::Map<ml::WrapIn<With>>>::template f<T>,
       Ts...>::f;
 };
 } // namespace Implementations
@@ -55,7 +55,7 @@ struct ZipWith {
   template <typename... Ts>
   using f = typename ml::IfElse<(
       sizeof...(Ts) < 10000)>::template f<Implementations::ZipStart, void>::
-      template f<ml::Map<ml::UnList<ml::F<With>>, Pipe>, ml::ListT, Ts...>;
+      template f<ml::Map<ml::Unwrap<ml::F<With>>, Pipe>, ml::ListT, Ts...>;
 };
 } // namespace ml
 #endif

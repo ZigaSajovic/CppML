@@ -15,9 +15,9 @@ namespace ml {
  */
 template <int I, typename T, typename Pipe = ml::ToList> struct Insert {
   template <typename... Ts>
-  using f =
-      ml::Invoke<ml::Pivot<I, ml::Prepend<T, ml::Pivot<sizeof...(Ts) - I + 1>>>,
-                 Ts...>;
+  using f = ml::Invoke<
+      ml::Pivot<I, ml::Prepend<T, ml::Pivot<sizeof...(Ts) - I + 1, Pipe>>>,
+      Ts...>;
 };
 } // namespace ml
 #endif

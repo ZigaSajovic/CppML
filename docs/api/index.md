@@ -72,6 +72,7 @@ Contains *functional* utilities (e.g. `Map`). You can include any construct sepa
 * [`Map`](Functional/Map.md)
 * [`PartialEvaluator`](Functional/PartialEvaluator.md)
 * [`Partial`](Functional/Partial.md)
+* [`PartialR`](Functional/Partial.md)
 * [`Product`](Functional/Product.md)
 * [`ProductMap`](Functional/ProductMap.md)
 * [`ToList`](Functional/ToList.md)

@@ -20,7 +20,7 @@ f:: Init, Ts... -> F( ... F(F(Init, T0), T1), ... Tn) -> ResultOf(Pipe)
 #### F
 F is to be a metafunction from two types, to one.
 ```
-f:: Init, T -> U
+f:: Init, T -> Init'
 ```
 
 ### Example
@@ -56,7 +56,7 @@ ml::ProductMap<    // Construct binary function F:
 is a metafunction of type
 
 ```c++
-f:: Init, T -> Identity(Init), IsClass(T) -> Init
+f:: Init, T -> Identity(Init), IsClass(T) -> Init'
 ```
 which conforms to [`F`](#f). See [`ProductMap`](../Functional/ProductMap.md).
 

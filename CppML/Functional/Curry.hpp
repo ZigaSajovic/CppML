@@ -14,3 +14,4 @@ namespace ml {
  */
 template <typename F> struct Curry : ml::Partial<ml::F<ml::Partial>, F> {};
 } // namespace ml
+#endif

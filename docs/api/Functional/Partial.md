@@ -19,7 +19,7 @@ f:: Ts... -> F(Args..., Ts...)
 
 ### Example
 
-We can create a metafunction that checks if alignment of a type `T` is **greater** than alignment `int`, by taking [`ml::Map`](./Map.md) of [`ml::AligmentOf`](../TypeTraits/AligmentOf.md)  that has [`ml::Less`](../Arithmetic/Greater.md) as `Pipe`, and partially evaluate it on the left by `int` (note the order of arguments).
+We can create a metafunction that checks if alignment of a type `T` is **greater** than alignment `int`, by taking [`ml::Map`](./Map.md) of [`ml::AligmentOf`](../TypeTraits/AligmentOf.md)  that has [`ml::Less`](../Arithmetic/Less.md) as `Pipe`, and partially evaluate it on the left by `int` (note the order of arguments).
 
 ```c++
 using IsMoreThanInt = 

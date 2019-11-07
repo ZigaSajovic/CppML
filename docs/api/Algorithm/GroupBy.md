@@ -14,7 +14,7 @@ struct GroupBy {
 `GroupBy<By, Pipe>` is a metafunction that passes to `Pipe` a parameter pack [`ml::ListT`](../Vocabulary/List.md)`<Us...>...`, where each list in it consists of `Us...`, types which evaluate to the same type when mapped by `By`. Formally speaking, `GroupBy<By, Pipe>` forms equivalence classes of `Ts...` under `By`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
-f:: Ts... -> ml::ListT<Us...>... -> ResultOf(Pipe)
+f:: Ts... -> ml::ListT<Us...>... >-> Pipe
 ```
 
 #### By

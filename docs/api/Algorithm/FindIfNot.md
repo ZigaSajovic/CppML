@@ -14,7 +14,7 @@ struct FindIfNot {
 `FindIfNot<Predicate, Pipe>` is a metafunction that passes to `Pipe` the index [`ml::Int`](../Vocabulary/Value.md)`<index>` of the first element of the parameter pack `Ts...`, for which the predicate does not holds. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
-f:: Ts... -> ml::Int<index> -> ResultOf(Pipe)
+f:: Ts... -> ml::Int<index> >-> Pipe
 ```
 
 #### Predicate

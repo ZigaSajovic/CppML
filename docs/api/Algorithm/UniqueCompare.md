@@ -14,7 +14,7 @@ struct UniqueCompare {
 `UniqueCompare<Compare, Pipe>` is a metafunction that passes to `Pipe` a parameter pack `Us...`, which consists of those elements of the parameter pack `Ts...`, which are unique, under the `Compare` metafunction. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
-f:: Ts... -> Us... -> ResultOf(Pipe)
+f:: Ts... -> Us... >-> Pipe
 ```
 
 #### Compare

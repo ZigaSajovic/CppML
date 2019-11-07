@@ -14,7 +14,7 @@ struct Unwrap {
 `Unwrap<Pipe>` is a metafunction that passes to `Pipe` the parameter pack `Ts...`, which is generated unwrapping the outermost template of `Template<Ts...>`.
 
 ```c++
-f:: Wrapper<Ts...> -> Ts... -> ResultOf(Pipe)
+f:: Wrapper<Ts...> -> Ts... >-> Pipe
 ```
 
 #### `Wrapped`

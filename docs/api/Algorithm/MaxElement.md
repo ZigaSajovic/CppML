@@ -14,7 +14,7 @@ struct MaxElement {
 `MaxElement<Compare, Pipe>` is a metafunction that passes to `Pipe` the element `U` of the parameter pack `Ts...` which is maximal, given the `Compare` metafunction. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
-f:: Ts... -> U -> ResultOf(Pipe)
+f:: Ts... -> U >-> Pipe
 ```
 
 #### Compare
@@ -46,6 +46,6 @@ ml::Map<
 ```
 is a metafunction of type
 ```
-(T, U) -> (AligmentOf(T), AligmentOf(U)) -> ml::Bool<truth_value>
+(T, U) -> (AligmentOf(T), AligmentOf(U)) >-> Greater
 ```
 and is as such a valid [compare](#compare) metafunction. See [`ml::Map`](../Functional/Map.md).

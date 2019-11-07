@@ -5,7 +5,7 @@
 `PartitionIds<Predicate, Pipe>` is a metafunction that passes to `Pipe` two [`ml::ListT`](../Vocabulary/List.md)`<ml::Int<Is>...>`, where the first list consists of `ml::Int<Is>...`, indexes of types which evaluate to [`ml::Bool`](../Vocabulary/Value.md)`<true>` under `Predicate`, and the second indexes of those `ml::Int<Is>...` that evaluate to [`ml::Bool`](../Vocabulary/Value.md)`<false>`. Formally speaking, `PartitionIds<Predicate, Pipe>` forms (indexes of ) equivalence classes of `Ts...` under `Predicate`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
-f:: Ts... -> (ml::ListT<ml::Int<I0s>...>, ml::ListT<ml::Int<I1s>...>) -> ResultOf(Pipe)
+f:: Ts... -> (ml::ListT<ml::Int<I0s>...>, ml::ListT<ml::Int<I1s>...>) >-> Pipe
 ```
 
 #### Predicate
@@ -42,6 +42,6 @@ ml::AligmentOf<          // take aligment of the input and pipe into
 ```
 is a metafunction of the type
 ```
-f:: T -> AligmentOf(T) -> ml::Bool<truth_value>
+f:: T -> AligmentOf(T) >-> Curry<Greater>(4)
 ```
 and conforms to the [predicate](#predicate) constraints.

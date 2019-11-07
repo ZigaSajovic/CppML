@@ -14,7 +14,7 @@ struct Compose {
 `Compose<Fs...>` is a composition of metafunctions in the parameter pack `Fs...`. As such, `Compose<Fs...>` is itself a metafunction. There is no explicit `Pipe` argument, because the first one, `F0`, is `Pipe` implicitly.
 
 ```c++
-f:: Ts... -> Fn -> ... -> F0
+f:: Ts... -> Ftn >-> ... -> Ft0
 ```
 
 #### Fs...

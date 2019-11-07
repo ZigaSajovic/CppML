@@ -14,7 +14,7 @@ struct Pivot {
 `Pivot<N, Pipe>` is a metafunction that passes to `Pipe` the parameter pack `Us...` which is the parameter pack `Ts...` which was pivoted around `N`-th element (making `N`-th element the first element in `Us...`). `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
-f:: First ... N-th ... Last -> N-th ... Last, First .... -> ResultOf(Pipe)
+f:: First ... N-th ... Last -> N-th ... Last, First .... >-> Pipe
 ```
 
 

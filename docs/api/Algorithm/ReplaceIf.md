@@ -14,7 +14,7 @@ struct ReplaceIf {
 `ReplaceIf<Predicate, With, Pipe>` is a metafunction that passes to `Pipe` a parameter pack `Us...` that consists of elements of the parameter pack `Ts...`, except that the elements for which `Predicate` is true are replaced by `With`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
-f:: Ts... -> Us... -> ResultOf(Pipe)
+f:: Ts... -> Us... >-> Pipe
 ```
 
 #### Predicate

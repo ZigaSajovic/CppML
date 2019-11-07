@@ -14,7 +14,7 @@ struct Filter {
 `Filter<Predicate, Pipe>` is a metafunction that passes to `Pipe` a parameter pack `Us...` consisting of the elements of the parameter pack `Ts...`, for which the predicate holds. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
-f:: Ts... -> Us... -> ResultOf(Pipe)
+f:: Ts... -> Us... >-> Pipe
 ```
 
 #### Predicate

@@ -14,7 +14,7 @@ struct Unique {
 `Unique<Pipe>` is a metafunction that passes to `Pipe` a parameter pack `Us...`, which consists of unique elements of the parameter pack `Ts...`.  `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
-f:: Ts... -> Us... -> ResultOf(Pipe)
+f:: Ts... -> Us... >-> Pipe
 ```
 
 ### Example

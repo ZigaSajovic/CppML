@@ -11,10 +11,10 @@ struct Contains {
 ```
 ### `Contains<T, Pipe>`
 
-`Contains<T, Pipe>` is a metafunction that returns [`ml::Bool`](../Vocabulary/Value.md)`<truth_value>`, where truth_value marks whether the parameter pack `Ts` contains `T`.  The result is passed to `Pipe`, which defaults to [`ml::Identity`](../Functional/Identity.md).
+`Contains<T, Pipe>` is a metafunction that passes to `Pipe` an [`ml::Bool`](../Vocabulary/Value.md)`<truth_value>`, where truth_value marks whether the parameter pack `Ts` contains `T`. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
-Contains<T, Pipe>:: Ts... -> ml::Bool<truth_value> -> ResultOf(Pipe)
+f:: Ts... -> ml::Bool<truth_value> >-> Pipe
 ```
 
 ### Example

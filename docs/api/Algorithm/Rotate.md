@@ -14,7 +14,7 @@ struct Rotate {
 `Rotate<First, Middle, Last, Pipe>` is a metafunction that passes to `Pipe` the parameter pack `Us...` which is the parameter pack `Ts...` which was been rotated around the `Middle`-th element. This makes `Middle`-th element the first element in `Us...`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
-f:: First ... Middle ... Last -> Middle ... Last, First .... -> ResultOf(Pipe)
+f:: First ... Middle ... Last -> Middle ... Last, First .... >-> Pipe
 ```
 
 

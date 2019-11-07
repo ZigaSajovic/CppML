@@ -62,6 +62,7 @@ Contains *arithmetic operations* that operate on *types* (e. g. `Not`, `Less`). 
 
 Contains *functional* utilities (e.g. `Map`). You can include any construct separately by `CppML/Functional/<name>.hpp`, or include the entire header `CppML/Functional.hpp`.
 
+* [`Bind`](Functional/Bind.md)
 * [`Compose`](Functional/Compose.md)
 * [`ConstantF`](Functional/Constant.md)
 * [`Curry`](Functional/Curry.md)

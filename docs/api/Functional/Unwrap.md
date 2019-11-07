@@ -41,7 +41,7 @@ using T0 = ml::Invoke<
                   cF1,
                   ml::Int<0>, ml::Int<1>, ml::Int<2>>>
 ```
-We can use [`ml::Compose`](./Compose.md), instead of invoking twice
+We can use [`ml::Compose`](./Compose.md), instead of invoking twice.
 ```c++
 using F = ml::Compose<
                 ml::Unwrap<cF1>,

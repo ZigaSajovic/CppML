@@ -4,12 +4,12 @@
 
 ```c++
 template <typename F, int N, typename ...Ts>
-using f = /*...*/
+using DelayedEval = /*...*/
 };
 ```
 ### `DelayedEval<F, N, Ts...>`
 
-`DelayedEval<F, N, Ts...>` is a helper metafunction to combat the *non-varadic parameter pack used as argument for a  varadic parameter pack* compiler error. It happens when you pass a parameter pack to a template (alias) expecting 
+`DelayedEval<F, N, Ts...>` is a helper metafunction invoker that combats the *non-varadic parameter pack used as argument for a  varadic parameter pack* compiler error. It happens when you pass a parameter pack to a template (alias) expecting 
 ```c++
 <typename T, typename ...Ts>
 ```

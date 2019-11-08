@@ -13,6 +13,12 @@ namespace ml {
 template <typename Pipe, typename... Ts>
 using Invoke = typename Pipe::template f<Ts...>;
 /*
+ * f:
+ * Identical to Invoke
+ */
+template <typename Pipe, typename... Ts>
+using f = typename Pipe::template f<Ts...>;
+/*
  * InvokeA:
  * Invokes a meta function
  */

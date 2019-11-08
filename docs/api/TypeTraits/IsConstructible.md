@@ -1,6 +1,5 @@
 # `<CppML/TypeTraits/IsConstructible.hpp>`
 
-
 ## `IsConstructible`
 
 ```c++
@@ -15,7 +14,7 @@ template<typename T, typename ...Args>
 Than `IsConstructible<Pipe>` is a metafunction that passes to `Pipe` an [`ml::Bool`](../Vocabulary/Value.md)`<isConstructible>`, where `isConstructible` is a `bool` marking whether `T` is constructible from `Args...`. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
-f::  T -> ml::Bool<isConstructible> <-> Pipe
+f::  T, Args... -> ml::Bool<isConstructible> <-> Pipe
 ```
 
 ### Example

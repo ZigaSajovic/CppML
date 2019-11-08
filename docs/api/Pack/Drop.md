@@ -16,6 +16,7 @@ struct Drop {
 ```c++
 f:: U0, ... U_{N-1}, Us... -> Us... >-> Pipe
 ```
+
 ### Example
 
 ```c++

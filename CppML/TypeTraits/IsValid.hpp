@@ -21,15 +21,6 @@ struct IsValid_impl : ml::Bool<false> {};
 template <class T, typename... Ts>
 struct IsValid_impl<std::void_t<typename T::template f<Ts...>>, T, Ts...>
     : ml::Bool<true> {};
-
-template <typename T> struct R { using f = T; };
-
-template <typename, class U, class T, class... Ts>
-struct IfValidOr_impl : R<U> {};
-
-template <class U, class T, typename... Ts>
-struct IfValidOr_impl<std::void_t<typename T::template f<Ts...>>, U, T, Ts...>
-    : R<typename T::template f<Ts...>> {};
 }; // namespace Implementations
 
 /*
@@ -55,16 +46,5 @@ template <typename Pipe = ml::Identity> struct IsValid {
   using f =
       typename Pipe::template f<Implementations::IsValid_impl<void, T, Ts...>>;
 };
-/*
- * IfValidOr:
- * If the metafunction T is valid, evaluate to its result,
- * else evaluate to U.
- */
-template <typename Pipe = ml::Identity> struct IfValidOr {
-  template <class U, class T, class... Ts>
-  using f = typename Pipe::template f<
-      typename Implementations::IfValidOr_impl<void, U, T, Ts...>::f>;
-};
-
 } // namespace ml
 #endif

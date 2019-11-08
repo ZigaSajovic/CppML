@@ -24,8 +24,8 @@ If you have a need to append more than one element to a parameter pack being pas
 ### Example
 
 ```c++
-using AF = ml::Append<int, ml::Map<
-                              ml::F<std::tuple>>>;
+using AF = ml::Append<int, ml::F<std::tuple>>;
+
 using T = ml::Invoke<
                    AF,
                    std::string>;

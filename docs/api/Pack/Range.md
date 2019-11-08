@@ -11,7 +11,7 @@ struct Range {
 ```
 ### `Range<Pipe>`
 
-`Range<Pipe>` is a metafunction that passes to `Pipe` a parameter pack [`ml::Int`](../Vocabulary/Value.md)`<Is>...`, where `Is` are `int`s in the range `[From, To)`, with arithmetic step of `Step` (which default to `1`). `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
+`Range<Pipe>` is a metafunction that passes to `Pipe` a parameter pack [`ml::Int`](../Vocabulary/Value.md)`<Is>...`, where `Is` are `int`s in the range `[From, To)`, with arithmetic step of `Step` (which defaults to `1`). `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
 
 ```c++
 f::  int From, int To, int Step ->  ml::Int<Is>... <-> Pipe

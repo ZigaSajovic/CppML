@@ -85,7 +85,7 @@ using PermuteAlign = ml::Invoke<
                         ml::Greater<>>>>, // than compare the generated elements
                                           // (pipe-ing from the Map)
                                           // using Greater
-    typename ml::TypeRange<>::template f<0, sizeof...(Ts)>, // generate a range from
+    typename ml::Range<>::template f<0, sizeof...(Ts)>, // generate a range from
                                                             // [0, numOfTypes)
     ml::ListT<Ts...>>;
 

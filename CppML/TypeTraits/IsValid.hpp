@@ -33,18 +33,18 @@ struct IsValid_impl<std::void_t<typename T::template f<Ts...>>, T, Ts...>
  */
 template <typename Pipe = ml::Identity> struct IsValidT {
   template <template <typename...> class T, class... Ts>
-  using f =
-      typename Pipe::template f<Implementations::IsValidT_impl<void, T, Ts...>>;
+  using f = typename Pipe::template f<
+      ml::Bool<Implementations::IsValidT_impl<void, T, Ts...>::value>>;
 };
 
 /*
  * IsValid:
- * See IsValidT. This is equivalent, but T is a metafunction.
+ * Checks if F can be invoked on Ts...
  */
 template <typename Pipe = ml::Identity> struct IsValid {
-  template <class T, class... Ts>
-  using f =
-      typename Pipe::template f<Implementations::IsValid_impl<void, T, Ts...>>;
+  template <class F, class... Ts>
+  using f = typename Pipe::template f<
+      ml::Bool<Implementations::IsValid_impl<void, F, Ts...>::value>>;
 };
 } // namespace ml
 #endif

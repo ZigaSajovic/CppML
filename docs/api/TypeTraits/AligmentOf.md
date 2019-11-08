@@ -3,7 +3,7 @@
 ## `AligmentOf`
 
 ```c++
-template <typename Pipe = ml::ToList>
+template <typename Pipe = ml::Identity>
 struct AligmentOf {
   template <typename T>
   using f = /* .... */;

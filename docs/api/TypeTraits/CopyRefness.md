@@ -3,7 +3,7 @@
 ## `CopyRefness`
 
 ```c++
-template <typename Pipe = ml::ToList>
+template <typename Pipe = ml::Identity>
 struct CopyRefness {
   template <typename From, typename To>
   using f = /* .... */;

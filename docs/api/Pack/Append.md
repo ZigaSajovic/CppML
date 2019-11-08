@@ -24,15 +24,14 @@ If you have a need to append more than one element to a parameter pack being pas
 ### Example
 
 ```c++
-using AF = ml::Append<int, ml::Map<ml::IsClass>>;
+using AF = ml::Append<int, ml::Map<
+                              ml::F<std::tuple>>>;
 using T = ml::Invoke<
                    AF,
                    std::string>;
 static_assert(
               std::is_same_v<
                   T,
-                  ml::ListT<
-                    ml::Bool<true>,
-                    ml::Bool<false>>>);
+                  std::tuple<std::string, int>>);
 
 ```

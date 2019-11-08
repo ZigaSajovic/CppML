@@ -24,15 +24,14 @@ If you have a need to prepend more than one element to a parameter pack being pa
 ### Example
 
 ```c++
-using AF = ml::Prepend<int, ml::Map<ml::IsClass>>;
+using AF = ml::Prepend<int, ml::Map<
+                              ml::F<std::tuple>>>;
 using T = ml::Invoke<
                    AF,
                    std::string>;
 static_assert(
               std::is_same_v<
                   T,
-                  ml::ListT<
-                    ml::Bool<false>,
-                    ml::Bool<true>>>);
+                  std::tuple<int, std::string>>);
 
 ```

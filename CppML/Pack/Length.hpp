@@ -4,14 +4,15 @@
 
 #ifndef CPPML_LENGTH_HPP
 #define CPPML_LENGTH_HPP
+#include "../Functional/Identity.hpp"
 #include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
  * Length:
  * Length of a List-like
  */
-template <typename List> struct Length;
-template <template <class...> class List, typename... Args>
-struct Length<List<Args...>> : ml::Int<sizeof...(Args)> {};
+template <typename Pipe = ml::Identity> struct Length {
+  template <typename... Ts> using f = ml::Int<sizeof...(Ts)>;
+};
 } // namespace ml
 #endif

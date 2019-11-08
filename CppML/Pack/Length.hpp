@@ -9,7 +9,7 @@
 namespace ml {
 /*
  * Length:
- * Length of a List-like
+ * Length of a parameter pack
  */
 template <typename Pipe = ml::Identity> struct Length {
   template <typename... Ts> using f = ml::Int<sizeof...(Ts)>;

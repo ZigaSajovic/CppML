@@ -62,7 +62,7 @@ Contains *arithmetic operations* that operate on *types* (e. g. `Not`, `Less`). 
 
 ## `ControlFlow`
 
-Contains constructs that *control* the *flow* of a metaprogram (e.g. `IfElse`). You can include any operation separately by `CppML/Arithmetic/<name>.hpp`, or include the entire header `CppML/Arithmetic.hpp`.
+Contains constructs that *control* the *flow* of a metaprogram (e.g. `IfElse`). You can include any operation separately by `CppML/ControlFlow/<name>.hpp`, or include the entire header `CppML/ControlFlow.hpp`.
 
 * [`For`](./ControlFlow/For.md)
 * [`IfElse`](./ControlFlow/IfElse.md)

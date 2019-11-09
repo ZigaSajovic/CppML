@@ -5,6 +5,7 @@
 #ifndef CPPML_IS_VALID_HPP
 #define CPPML_IS_VALID_HPP
 #include "../Functional/Identity.hpp"
+#include "../Functional/DelayedEval.hpp"
 #include "../Vocabulary/Value.hpp"
 #include <type_traits>
 namespace ml {
@@ -19,7 +20,7 @@ template <typename, class T, class... Ts>
 struct IsValid_impl : ml::Bool<false> {};
 
 template <class T, typename... Ts>
-struct IsValid_impl<std::void_t<typename T::template f<Ts...>>, T, Ts...>
+struct IsValid_impl<std::void_t<ml::DelayedEval<T, sizeof...(Ts), Ts...>>, T, Ts...>
     : ml::Bool<true> {};
 }; // namespace Implementations
 

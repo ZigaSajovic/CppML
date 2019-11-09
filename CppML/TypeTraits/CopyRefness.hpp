@@ -4,8 +4,8 @@
 
 #ifndef CPPML_COPY_REFNESS_HPP
 #define CPPML_COPY_REFNESS_HPP
+#include "../ControlFlow/IfElse.hpp"
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/IfElse.hpp"
 #include <type_traits>
 
 namespace ml {

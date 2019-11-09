@@ -4,8 +4,8 @@
 
 #ifndef CPPML_MAX_ELEMENT_HPP
 #define CPPML_MAX_ELEMENT_HPP
+#include "../ControlFlow/IfElse.hpp"
 #include "../Functional/Identity.hpp"
-#include "../Vocabulary/IfElse.hpp"
 
 namespace ml {
 namespace Implementations {

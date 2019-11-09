@@ -4,7 +4,7 @@
 
 #ifndef CPPML_COMPOSE_HPP
 #define CPPML_COMPOSE_HPP
-#include "../Vocabulary/IfElse.hpp"
+#include "../ControlFlow/IfElse.hpp"
 namespace ml {
 /*
  * Implementation of Compose. Only ever instantiates two types.

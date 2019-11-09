@@ -5,7 +5,6 @@
 #ifndef CPPML_VOCABUARY_HPP
 #define CPPML_VOCABUARY_HPP
 #include "Vocabulary/Value.hpp"
-#include "Vocabulary/IfElse.hpp"
 #include "Vocabulary/List.hpp"
 #include "Vocabulary/None.hpp"
 #include "Vocabulary/Wildcard.hpp"

@@ -4,11 +4,11 @@
 
 #ifndef CPPML_FIND_IF_HPP
 #define CPPML_FIND_IF_HPP
+#include "../ControlFlow/IfElse.hpp"
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/Identity.hpp"
 #include "../Functional/Invoke.hpp"
 #include "../Vocabulary/Value.hpp"
-#include "../Vocabulary/IfElse.hpp"
 
 namespace ml {
 /*

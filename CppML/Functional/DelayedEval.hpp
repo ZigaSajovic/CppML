@@ -4,7 +4,7 @@
 
 #ifndef CPPML_DELAYED_EVAL_HPP
 #define CPPML_DELAYED_EVAL_HPP
-#include "../Vocabulary/IfElse.hpp"
+#include "../ControlFlow/IfElse.hpp"
 namespace ml {
 /*
  * # DelayedEval:

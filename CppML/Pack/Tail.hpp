@@ -4,8 +4,8 @@
 
 #ifndef CPPML_TAIL_HPP
 #define CPPML_TAIL_HPP
+#include "../ControlFlow/IfElse.hpp"
 #include "../Functional/ToList.hpp"
-#include "../Vocabulary/IfElse.hpp"
 
 namespace ml {
 /*

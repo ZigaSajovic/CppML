@@ -6,6 +6,7 @@
 #define CPPML_HPP
 #include "CppML/Algorithm.hpp"
 #include "CppML/Arithmetic.hpp"
+#include "CppML/ControlFlow.hpp"
 #include "CppML/Functional.hpp"
 #include "CppML/Pack.hpp"
 #include "CppML/TypeTraits.hpp"

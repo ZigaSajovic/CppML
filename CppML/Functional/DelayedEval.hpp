@@ -13,5 +13,17 @@ namespace ml {
 template <typename F, int n, typename... Ts>
 using DelayedEval = typename ml::IfElse<(
     sizeof...(Ts) < 10000)>::template f<F, void>::template f<Ts...>;
+
+namespace Implementations {
+template <bool> struct DelayTemplateEval {
+  template <template <class...> class F0, typename... Ts> using f = F0<Ts...>;
+};
+template <> struct DelayTemplateEval<false> {
+  template <template <class...> class F0, typename... Ts> using f = F0<>;
+};
+} // namespace Implementations
+template <template <class...> class F, int N, typename... Ts>
+using DelayedTemplateEval = typename Implementations::DelayTemplateEval<(
+    N < 100000)>::template f<F, Ts...>;
 } // namespace ml
 #endif

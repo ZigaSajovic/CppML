@@ -7,7 +7,7 @@
 * [`Arithmetic`](#arithmetic)
   * *arithmetic* operations on *types*
 * [`Control Flow`](#control-flow)
-  * onstructs that *control* the *flow* of a metaprogram (e.g. [`IfElse`](./ControlFlow/IfElse.md))
+  * constructs that *control* the *flow* of a metaprogram (e.g. [`IfElse`](./ControlFlow/IfElse.md))
 * [`Functional`](#functional)
   * *functional* utilities (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), [`ProductMap`](./Functional/ProductMap.md), etc.)
 * [`Pack`](#pack)
@@ -126,7 +126,6 @@ Contains metafunctions that *reason* about the input *types*. You can include an
 Contains the *vocabulary* constructs of **CppML**. You can include any construct separately by `CppML/Vocabulary/<name>.hpp`, or include the entire header `CppML/Vocabulary.hpp`.
 
 * [`Value`](./Vocabulary/Value.md)
-* [`IfElse`](./Vocabulary/IfElse.md)
 * [`List`](./Vocabulary/List.md)
 * [`None`](./Vocabulary/None.md)
 * [`Wildcard`](./Vocabulary/Wildcard.md)

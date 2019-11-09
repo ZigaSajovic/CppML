@@ -15,7 +15,7 @@ namespace ml {
 namespace Implementations {
 template <bool Continue> struct For {
   template <int From, int To, typename Result, typename F>
-  using f = typename For<(From < To)>::template f<
+  using f = typename For<(From + 1 < To)>::template f<
       From + 1, To, typename F::template f<ml::Int<From>, Result>, F>;
 };
 template <> struct For<false> {

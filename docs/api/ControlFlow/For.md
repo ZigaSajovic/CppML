@@ -35,11 +35,10 @@ using U = ml::Invoke<
               ml::None>;
 
 static_assert(
-  std::is_same_v<
-      T,
-      ml::ListT<ml::Value<int, 3>,
-                ml::ListT<ml::Value<int, 2>,
-                          ml::ListT<ml::Value<int, 1>,
-                                    ml::ListT<ml::Value<int, 0>, ml::None>>>>>);
+          std::is_same_v<
+              T,
+              ml::ListT<ml::Value<int, 2>,
+                        ml::ListT<ml::Value<int, 1>,
+                                  ml::ListT<ml::Value<int, 0>, ml::None>>>>>);
 ```
 

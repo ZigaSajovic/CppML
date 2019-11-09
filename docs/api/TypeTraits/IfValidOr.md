@@ -25,21 +25,23 @@ f::  Default F, Args... -> T <-> Pipe
 
 ### Example
 
-It can be used to implement logic based on introspection.
+It can be used to implement logic based on introspection. To demonstrate, we define a metafunction, that extracts the `ValueType` alias from a type if it has one, or returns [`ml::None`](../Vocabulary/None.md), if the type does not define such an alias.
 
 ```c++
-struct A { using T = int;};
-struct B { using U = int;};
+struct A { using ValueType = int;};
+struct B {};
+
 template <typename _T>
-using GetType = typename _T::T;
+using GetType = typename _T::ValueType;
+
 using T0 = ml::Invoke<ml::IfValidOr<>,
                       ml::None,       // Default
-                      ml::F<GetType>, // metafunction to check
+                      ml::F<GetType>, // make GetType a metafunction
                       A               // type for which to check
                       >;
 using T1 = ml::Invoke<ml::IfValidOr<>,
                       ml::None,       // Default
-                      ml::F<GetType>, // metafunction to check
+                      ml::F<GetType>, // make GetType a metafunction
                       B               // type for which to check
                       >;
 static_assert( std::is_same_v<

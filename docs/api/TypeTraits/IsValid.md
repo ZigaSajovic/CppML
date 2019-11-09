@@ -19,18 +19,18 @@ f::  F, Args... -> ml::Bool<truthValue> <-> Pipe
 
 ### Example
 
-It can be used to implement introspection.
+It can be used to implement introspection. To demonstrate, we write a metafunction that checks if the type has a `size()` method.
 
 ```c++
 template <typename _T>
-using HasBracketOperator = decltype(std::declval<_T>()[0]);
+using HasSize = decltype(std::declval<_T>().size());
 using T0 = ml::Invoke<
                 ml::IsValid<>,
-                ml::F<HasBracketOperator>,
+                ml::F<HasSize>,   // make HasSize a metafunction
                 std::vector<int>>;
 using T1 = ml::Invoke<
                 ml::IsValid<>,
-                ml::F<HasBracketOperator>,
+                ml::F<HasSize>,   // make HasSize a metafunction
                 int>;
 static_assert( std::is_same_v<
                           T0, ml::Bool<true>>);

@@ -12,3 +12,4 @@ namespace ml {
  */
 template <typename T> struct Constant { template <typename...> using f = T; };
 } // namespace ml
+#endif

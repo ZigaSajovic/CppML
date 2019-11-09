@@ -31,7 +31,7 @@ struct ZipStart {
   template <typename Pipe, template <class...> class With, typename T,
             typename... Ts>
   using f = typename Zip<
-      Pipe, typename ml::Unwrap<ml::Map<ml::WrapIn<With>>>::template f<T>,
+      Pipe, typename ml::Unwrap<ml::Map<ml::F<With>>>::template f<T>,
       Ts...>::f;
 };
 } // namespace Implementations

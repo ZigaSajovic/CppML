@@ -22,8 +22,12 @@ template <> struct DelayTemplateEval<false> {
   template <template <class...> class F0, typename... Ts> using f = F0<>;
 };
 } // namespace Implementations
+/*
+ * # DelayedAliasEval:
+ * Delays an alias call, so compiler knows the number of arguments.
+ */
 template <template <class...> class F, int N, typename... Ts>
-using DelayedTemplateEval = typename Implementations::DelayTemplateEval<(
+using DelayedAliasEval = typename Implementations::DelayTemplateEval<(
     N < 100000)>::template f<F, Ts...>;
 } // namespace ml
 #endif

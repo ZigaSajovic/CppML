@@ -13,7 +13,7 @@ namespace ml {
  */
 template <template <class...> class F_> struct F {
   template <typename... Args>
-  using f = ml::DelayedTemplateEval<F_, sizeof...(Args), Args...>;
+  using f = ml::DelayedAliasEval<F_, sizeof...(Args), Args...>;
 };
 } // namespace ml
 #endif

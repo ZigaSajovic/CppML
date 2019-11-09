@@ -6,7 +6,7 @@
   * *algorithms* that operate on *parameter packs*
 * [`Arithmetic`](#arithmetic)
   * *arithmetic* operations on *types*
-* [`Control Flow`](#control-flow)
+* [`ControlFlow`](#controlflow)
   * constructs that *control* the *flow* of a metaprogram (e.g. [`IfElse`](./ControlFlow/IfElse.md))
 * [`Functional`](#functional)
   * *functional* utilities (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), [`ProductMap`](./Functional/ProductMap.md), etc.)

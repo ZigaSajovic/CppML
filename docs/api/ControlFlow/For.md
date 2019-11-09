@@ -29,7 +29,7 @@ f:: ml::Int<From>, State_{N} -> State_{N + 1}
 To demonstrate, we present an explicit example.
 
 ```c++
-using U = ml::Invoke<
+using T = ml::Invoke<
               For<0, 3>,
               ml::ToList,
               ml::None>;

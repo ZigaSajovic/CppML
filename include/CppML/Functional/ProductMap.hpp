@@ -13,7 +13,10 @@ namespace ml {
 namespace Implementations {
 template <typename Pipe, typename... Fs> struct ProductMap {
   template <typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), ml::Invoke<Fs, Ts>...>;
+  using f = ml::DelayedEval<
+      Pipe, sizeof...(Ts),
+      typename ml::IfElse<(sizeof...(Ts) + sizeof...(Fs) <
+                           10000)>::template f<Fs, void>::template f<Ts>...>;
 };
 } // namespace Implementations
 /*

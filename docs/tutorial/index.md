@@ -8,8 +8,10 @@
   * [`Metafunction`](#metafunction)
     * [`Metafunction type`](#metafunction-type)
     * [`Default pipes`](#default-pipes)
-  * [`Metaprogramming in CppML`](#metaprogramming-in-cppml)
     * [`Invoking metafunctions`](#invoking-metafunctions)
+* [`Metaprogramming in CppML`](#metaprogramming-in-cppml)
+  * [`Creating metafunctions`](#creating-metafunctions)
+    * [`Using pipes`](#using-pipes)
 
 
 
@@ -61,7 +63,7 @@ The reader might be familiar with the concept of pipes from bash ([`operator |`]
 
 ### Metafunction
 
-In [CppML](https://github.com/ZigaSajovic/CppML), a `metafunction` is a *template struct* with a *template alias* `f`. All `metafunctions` define, as their last template parameter, a metafunction [`Pipe`](#pipe) into which `f` will pass the transformed [`parameter pack`](#parameter-pack). In *pseudo-c++* this roughly translates into
+In [CppML](https://github.com/ZigaSajovic/CppML), a `metafunction` is an instantiation of a *template struct* with a *template alias* `f`. All `metafunctions` define, as their last template parameter, a metafunction [`Pipe`](#pipe) into which `f` will pass the transformed [`parameter pack`](#parameter-pack). In *pseudo-c++* this roughly translates into
 
 ```c++
 template <typename PossibleArgs...,                                // zero of more arguments
@@ -98,9 +100,7 @@ f:: Ts... -> ml::ListT<Ts...>
 ```
 that wraps the parameter pack in an [`ml::ListT`](../reference/Vocabulary/List.md).
 
-## Metaprogramming in `CppML`
-
-### Invoking [`metafunctions`](#metafunction)
+#### Invoking [`metafunctions`](#metafunction)
 
 Due to the syntax of *c++*, unaided invocations of [`metafunctions`](#metafunction) look like
 
@@ -128,6 +128,49 @@ static_assert(
                          T2,
                          ml::ListT<
                                    string, vector<int>>>);
+```
+
+#### Using [`pipes`](#pipe)
+
+Suppose we want a metafunction that takes the elements of the [`parameter pack`](#parameter-pack) in the range `[2, 6]`, and from that range remove all ([`ml::RemoveIf`](../reference/Algorithm/Filter.md)) which are a class type ([`ml::IsClass`](../reference/TypeTraits/IsClass.md).
+
+```c++
+using F = ml::Pivot<2,                                    // make third element the first
+          /* Pipe*/ ml::Head<4,                           // take first 4 elements
+          /* Pipe*/          ml::RemoveIf<ml::IsClass<>>; // filter them
+```
+
+See also [`ml::Pivot`](../reference/Algorithm/Pivot.md), and [`ml::Head`](../reference/Pack/Head.md).
+
+## Creating metafunctions
+
+[CppML](https://github.com/ZigaSajovic/CppML) aims to be used and read as a (meta) functional language. As such, the key skill to master, is how to combine and compose **simple** [`metafunctions`](#metafunction) into **complex** [`metafunctions`](#metafunction).
+
+#### Composition
+
+```
+Ts ... -> Us... >-> Pipe
+```
+
+#### Product
+
+```
+              -> U0 -
+            /    ...  \
+f:: Ts ... -  ->  Uk -- >-> Pipe
+            \    ...  /
+              -> Un - 
+```
+
+#### Product map
+
+```
+     T0 -> U0 -
+    ... -> ...  \
+f::  Tk -> Uk --  >-> Pipe
+    ... -> ...  /
+     Tn -> Uk -
+      
 ```
 
 #### Pack expansions and non-pack parameter of alias template

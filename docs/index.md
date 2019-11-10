@@ -8,13 +8,13 @@
 
 You may follow the [installation guide](./installation/index.md) for your convenience.
 
-## Usage
+## Tutorial
 
 ...
 
 ## CppML Reference
 
-[CppML](https://github.com/ZigaSajovic/CppML) comes with a detailed [`API reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs are divided in the following headers:
+[CppML](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs are divided in the following headers:
 
 * [`Algorithm`](./reference/index.md#algorithm)
   * *algorithms* that operate on *parameter packs*

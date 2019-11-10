@@ -1,5 +1,15 @@
 # Tutorial
 
+#### Table of Contents
+
+* [`Key concepts`](#key-concepts)
+  * [`Parameter pack`](#parameter-pack)
+  * [`Pipe`](#pipe)
+  * [`Metafunction`](#metafunction)
+    * [`Metafunction type`](#metafunction-type)
+    * [`Default pipes`](#default-pipes)
+
+
 ## Key Concepts
 
 ### Parameter pack
@@ -48,28 +58,46 @@ The reader might be familiar with the concept of pipes from bash ([`operator |`]
 
 ### Metafunction
 
-A MetaFunction in **CppML** is a *template struct* with a *template alias* `f`.
-All MetaFunctions have a *template parameter* `Pipe`, into which the result of its invocation is piped (think Bash pipes). Note that Pipe either defaults to `ml::Identity` (i.e. it effectively returns the result of `f`) or it defaults to `ml::ToList`(i.e. it returns the resulting parameter pack in a list of types).
-
-This roughly translates into the following:
+In [CppML](https://github.com/ZigaSajovic/CppML), a `metafunction` is a *template struct* with a *template alias* `f`. All `metafunctions` define, as their last template parameter, a metafunction [`Pipe`](#pipe) into which `f` will pass the transformed [`parameter pack`](#parameter-pack). In *pseudo-c++* this roughly translates into
 
 ```c++
-template <typename PossibleArg_i,     // could be 0 or more of them, depends on the
-                                      // metafunction
-          typename Pipe = ml::ToList> // default Pipe is to wrap the parameter
-                                      // pack in a type list (or Identity)
+template <typename PossibleArgs...,                       // zero of more arguments
+          typename Pipe = (ml::Identity or ml::ToList)>   // defined and defaulted Pipe
 struct MetaFunction {
   template <typename... Args>
-  using f = typename Pipe::template f< // Result of MetFunctionImplementation
-                                       // Gets piped to Pipe
-      MetFunctionImplementation::template f<PossibleArg_i, // PossibleArg_i could
-                                                           // be used somewhere else
-                                            Args...>>;
+  using f = Pipe::f<                                      // result passed to Pipe
+                    mfImplementation::f<
+                                        PossibleArgs...,
+                                        Args...>...>;
 };
 ```
+
+#### Metafunction type
+
+Throughout the [`CppML reference`](../reference/index.md), we use the following notation
+```c++
+f:: Args... -> Us... >-> Pipe
+```
+to mean:
+> The template alias `::f` of Metafunction takes a parameter pack `Args...` and transforms it to a parameter pack `Us...` which is than passed on into `Pipe` (i.e. the `::f` alias of `Pipe` is invoked on `Us...`).
+
+#### Default pipes
+
+Metafunctions that pass on a single parameter `T` have `Pipe` defaulted to [`ml::Identity`](../reference/Functional/Identity.md), which is a metafunction with an alias `f`,
+```c++
+f:: T -> T
+```
+that simply returns the argument it was given.
+
+Metafunctions that pass on parameter packs have `Pipe` defaulted to [`ml::ToList`](../reference/Functional/ToList.md), which is a metafunction with an alias `f`,
+```c++
+f:: Ts... -> ml::ListT<Ts...>
+```
+that wraps the parameter pack in an [`ml::ListT`](../reference/Vocabulary/List.md).
+
 #### Pack expansions and non-pack parameter of alias template
 
-[CppML](https://github.com/ZigaSajovic/CppML) **correctly** handles **mixed** alias templates of **pack** and **non-pack** arguments. This means that you can create [`metafunctions`](#metafunction) from aliases (using the [`ml::F`](./reference/Functional/F.md), from the [`Functional`](./reference/index.md#functional) header) such as
+[CppML](https://github.com/ZigaSajovic/CppML) **correctly** handles **mixed** alias templates of **pack** and **non-pack** arguments. This means that you can create [`metafunctions`](#metafunction) from aliases (using the [`ml::F`](../reference/Functional/F.md), from the [`Functional`](../reference/index.md#functional) header) such as
 ```c++
 template<typename T, typename U>
 using AT1 = /*...*/

@@ -13,7 +13,8 @@ namespace ml {
  */
 template <typename F, typename Pipe = ToList> struct Map {
   template <typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), typename F::template f<Ts>...>;
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts),
+                            ml::DelayedEval<F, sizeof...(Ts), Ts>...>;
 };
 } // namespace ml
 #endif

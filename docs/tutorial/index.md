@@ -8,6 +8,9 @@
   * [`Metafunction`](#metafunction)
     * [`Metafunction type`](#metafunction-type)
     * [`Default pipes`](#default-pipes)
+  * [`Metaprogramming in CppML`](#metaprogramming-in-cppml)
+    * [`Invoking metafunctions`](#invoking-metafunctions)
+
 
 
 ## Key Concepts
@@ -61,11 +64,11 @@ The reader might be familiar with the concept of pipes from bash ([`operator |`]
 In [CppML](https://github.com/ZigaSajovic/CppML), a `metafunction` is a *template struct* with a *template alias* `f`. All `metafunctions` define, as their last template parameter, a metafunction [`Pipe`](#pipe) into which `f` will pass the transformed [`parameter pack`](#parameter-pack). In *pseudo-c++* this roughly translates into
 
 ```c++
-template <typename PossibleArgs...,                       // zero of more arguments
-          typename Pipe = (ml::Identity or ml::ToList)>   // defined and defaulted Pipe
+template <typename PossibleArgs...,                                // zero of more arguments
+          typename Pipe = (default: ml::Identity or ml::ToList)>   // see `Default pipes` below
 struct MetaFunction {
   template <typename... Args>
-  using f = Pipe::f<                                      // result passed to Pipe
+  using f = Pipe::f<                                               // result passed to Pipe
                     mfImplementation::f<
                                         PossibleArgs...,
                                         Args...>...>;
@@ -94,6 +97,38 @@ Metafunctions that pass on parameter packs have `Pipe` defaulted to [`ml::ToList
 f:: Ts... -> ml::ListT<Ts...>
 ```
 that wraps the parameter pack in an [`ml::ListT`](../reference/Vocabulary/List.md).
+
+## Metaprogramming in `CppML`
+
+### Invoking [`metafunctions`](#metafunction)
+
+Due to the syntax of *c++*, unaided invocations of [`metafunctions`](#metafunction) look like
+
+```c++
+using T0 = typename MetaFunction::template f<int, string, char, vector<int>>;
+```
+As this is cumbersome, [CppML](https://github.com/ZigaSajovic/CppML) defines [`ml::f`](../reference/Functional/Invoke.md),
+```c++
+namespace ml {
+template <typename Metafunction, typename ...Args>
+using f = typename Metafunction::template f<Args...>;
+}
+```
+an `alias` which invokes the metafunctions' `f` alias on the supplied arguments. Using it, `T0` (above) is equivalent to a more concise
+```c++
+using T1 = ml::f<MetaFunction, int, string, char, vector<int>>;
+```
+
+Taking a concrete example, we [`ml::Filter`](../reference/Algorithm/Filter.md) a parameter pack given a predicate [`ml::IsClass`](../reference/TypeTraits/IsClass.md)
+
+```c++
+using T2 = ml::f<ml::Filter<ml::IsClass<>>, int, string, char, vector<int>>;
+static_assert(
+          std::is_same_v<
+                         T2,
+                         ml::ListT<
+                                   string, vector<int>>>);
+```
 
 #### Pack expansions and non-pack parameter of alias template
 

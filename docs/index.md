@@ -4,15 +4,9 @@
 
 ## Installation
 
-**CppML** offers two ways of installation: *direct-copy* and *CMake*.
+[CppML](https://github.com/ZigaSajovic/CppML) can be installed in two ways. You can [install it using cmake](./installation/index.md#installing-using-cmake) as an `INTERFACE` library, or you can [embed it in your project](./installation/index.md#project-embedding) (e.g. via `git submodules` or *direct-copy*).
 
-#### Direct-copy
-
-**CppML** is a header only library. Hence, you can simply copy the contents of `CppML/CppML/` to the include path of your project.
-
-#### CMake
-
-....
+You may follow the [installation guide](./installation/index.md) for your convenience.
 
 ## Usage
 

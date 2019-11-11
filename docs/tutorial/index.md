@@ -9,9 +9,9 @@
     * [`Metafunction type`](#metafunction-type)
     * [`Default pipes`](#default-pipes)
     * [`Invoking metafunctions`](#invoking-metafunctions)
-* [`Metaprogramming in CppML`](#metaprogramming-in-cppml)
-  * [`Creating metafunctions`](#creating-metafunctions)
     * [`Using pipes`](#using-pipes)
+* [`Manipulating metafunctions`](#manipulating-metafunctions)
+  * [`Composition`](#composition)
 
 
 
@@ -142,19 +142,60 @@ using F = ml::Pivot<2,                                    // make third element 
 
 See also [`ml::Pivot`](../reference/Algorithm/Pivot.md), and [`ml::Head`](../reference/Pack/Head.md).
 
-## Creating metafunctions
+## Manipulating metafunctions
 
 [CppML](https://github.com/ZigaSajovic/CppML) aims to be used and read as a (meta) functional language. As such, the key skill to master, is how to combine and compose **simple** [`metafunctions`](#metafunction) into **complex** [`metafunctions`](#metafunction).
 
-#### Composition
+### Composition
+
+The most basic of manipulations of metafunctions is the composition. The idiomatic way to compose [`metafunctions`](#metafunction) when writing metaprograms is [using pipes](#using-pipes). The flow of composition looks like this.
 
 ```
-Ts ... -> Us... >-> Pipe
+f:: Ts ... -> Us... >-> Pipe
 ```
 
-#### Product
+So, given that we have [`ml::IsClass`](../reference/TypeTraits/IsClass.md), and [`ml::Not`](../reference/TypeTraits/Not.md), we can define
 
+```c++
+using IsNotClass = ml::IsClass<ml::Not<>>;
 ```
+`IsNotClass` by [using pipes](#using-pipes). But [using pipes](#using-pipes) is only possible, when you have access to setting the template parameters. To illustrate the point, suppose we have *concrete* metafunctions
+
+```c++
+using IsClassF = ml::IsClass<>;
+using NotF = ml::Not<>;
+```
+
+for which we do not have access to [`Pipe`](#pipe). In these cases, we can use the [`ml::Compose`](../reference/Functional/Compose.md), and construct
+
+```c++
+using IsNotClassF = ml::Compose<NotF, IsClassF>;
+```
+which is equivalent to `IsNotClass` above. We can go further and make it an `alias` with a [`Pipe`](#pipe) template parameter,
+
+```c++
+template <typename Pipe = ml::Identity>
+using IsNotClassF = ml::Compose<Pipe, NotF, IsClassF>;
+```
+
+making it a proper [`metafunction`](#metafunction). We can see that
+
+```c++
+static_assert(std::is_same_v<
+                  ml::f<IsNotClassF<ml::Not<>>, int>
+                  ml::f<ml::IsClass<>, int>>);
+```
+negating is `IsNotClassF` is equivalent to `IsClass`.
+
+### Product
+
+```c++
+f:: Ts... -> Fs(Ts...)... >-> Pipe
+             ^^^^^^^^^^^^
+             U0...Uk...Un
+```
+
+```c++
               -> U0 -
             /    ...  \
 f:: Ts ... -  ->  Uk -- >-> Pipe
@@ -162,7 +203,7 @@ f:: Ts ... -  ->  Uk -- >-> Pipe
               -> Un - 
 ```
 
-#### Product map
+### Product map
 
 ```
      T0 -> U0 -

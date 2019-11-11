@@ -11,7 +11,6 @@
     * [`Invoking metafunctions`](#invoking-metafunctions)
     * [`Using pipes`](#using-pipes)
   * [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions)
-    * [`Aliases as meta-lambdas`](#aliases-as-meta-lambdas)
 * [`Manipulating metafunctions`](#manipulating-metafunctions)
   * [`Composition`](#composition)
   * [`Product`](#product)
@@ -69,7 +68,7 @@ as [`parameter packs`](#parameter-pack) of *non-variadic* length, and
 ```c++
 template<typename T, typename ...Ts>
 ```
-as *variadic* [`parameter packs`](#parameter-pack) with minimal length. For a justification, please see.
+as *variadic* [`parameter packs`](#parameter-pack) with minimal length. This is because [CppML](https://github.com/ZigaSajovic/CppML) **correctly** handles **mixed** alias templates of **pack** and **non-pack** arguments. 
 
 ### Pipe
 
@@ -193,6 +192,10 @@ static_assert(
                          std::tuple<
                                     string, vector<int>>>);
 ```
+
+**NOTE**
+
+Although both `T` and `AT` above have `variadic parameter packs`, the [`parameter packs`](#parameter-pack) can be of any form (as specified in the note [here](#parameter-pack)); i.e. `variadic`, `non-variadic` and `variadic with minimal length`. 
 
 ## Manipulating metafunctions
 
@@ -507,9 +510,9 @@ Let `F` be a metafunction `Args... -> Us...`. Than [`ml::Curry<F>`](../reference
 f:: T0s... -> T1s... -> Us...
 ```
 
+# Appendix
 
-
-#### Pack expansions and non-pack parameter of alias template
+## Pack expansions and non-pack parameter of alias template
 
 [CppML](https://github.com/ZigaSajovic/CppML) **correctly** handles **mixed** alias templates of **pack** and **non-pack** arguments. This means that you can create [`metafunctions`](#metafunction) from aliases (using the [`ml::F`](../reference/Functional/F.md), from the [`Functional`](../reference/index.md#functional) header) such as
 ```c++
@@ -526,5 +529,3 @@ using MetaF2 = ml::F<AT2>;
 and **they will properly interact** with the entire [CppML](https://github.com/ZigaSajovic/CppML) language, **without raising** the dreaded
 
 > **error**: pack expansion used as argument for non-pack parameter of alias template
-
-**We can hence view aliases like `AT1` as [`parameter packs`](#parameter-pack) of *non-variadic* length, and aliases like `AT2` as *variadic* [`parameter packs`](#parameter-pack) with minimal length.**

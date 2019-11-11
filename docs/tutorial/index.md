@@ -13,6 +13,8 @@
 * [`Manipulating metafunctions`](#manipulating-metafunctions)
   * [`Composition`](#composition)
   * [`Product`](#product)
+  * [`Product Map`](#product-map)
+  * [`Partial evaluation`](#partial-evaluation)
 
 
 
@@ -141,7 +143,7 @@ using F = ml::Pivot<2,                                    // make third element 
           /* Pipe*/          ml::RemoveIf<ml::IsClass<>>; // filter them
 ```
 
-See also [`ml::Pivot`](../reference/Algorithm/Pivot.md), and [`ml::Head`](../reference/Pack/Head.md).
+See also [`ml::Pivot`](../reference/Algorithm/Pivot.md), and [`ml::Head`](../reference/Pack/Head.md) (defined in the [`Pack`](../reference/index.md#pack) header).
 
 ## Manipulating metafunctions
 
@@ -245,8 +247,24 @@ static_assert(
 [CppML](https://github.com/ZigaSajovic/CppML) defines [`ml::Partition`](../reference/Algorithm/Partition.md) in the [`Algorithm`](../reference/index.md#algorithm) header. The implementation is almost identical to the one presented here.
 
 
-
 ### Product map
+
+As another way to make a product of [`metafunctions`](#metafunction) is to take their [`ml::ProductMap`](../reference/Functional/ProductMap.md)`<Fs..., Pipe>`. An [`ml::ProductMap`](../reference/Functional/ProductMap.md)`<Fs..., Pipe>`, which takes `n` metafunctions `Fs...` (see [`ml::ProductMap`](../reference/Functional/ProductMap.md) for detailed reference), each mapping
+
+```c++
+f:: T -> U
+```
+and a [`Pipe`](#pipe),
+```c++
+f:: Us... -> Vs...
+```
+is itself a metafunction
+```c++
+f:: Ts... -> Fs(Ts)...  >-> Pipe
+            ^^^^^^^^^^^^
+            U0...Uk...Un
+```
+which can be topologically envisioned as
 
 ```
      T0 -> U0 -
@@ -256,6 +274,54 @@ f::  Tk -> Uk --  >-> Pipe
      Tn -> Uk -
       
 ```
+where each arrow is one of the metafunctions `Fs...`.
+
+To demonstrate we implement a [`metafunction`](#metafunction) that *counts* the number of elements of a [`parameter pack`](#parameter-pack) that satisfy a `Predicate`. We will do so by utilizing the [`ml::Reduce`](../reference/Algorithm/Reduce.md) (from the [`Algorithm`](../reference/index.md#algorithm) header). Looking at its [reference](../reference/Algorithm/Reduce.md), we see that it is instantiated with a metafunction
+
+```c++
+f:: Init, U -> Init'
+```
+
+that is used to accumulate the *generalized sum*. In our case, we want a metafunction that will add `1` to the current value if the predicate is `true` and `0` otherwise. This means
+
+```c++
+f:: Init, U -> Init, Predicate(U) >-> Add
+```
+which is equivalent to
+```c++
+f:: Init, U -> Identity(Init), Predicate(U) >-> Add
+```
+We now see that this is the [`ml::ProductMap`](../reference/Functional/ProductMap.md) of [`ml:Identity`](../reference/Functional/Identity.md) and the `Predicate`, which [`Pipe`](#pipe)s to [`ml::Add`](../reference/Arithmetic/Add.md). Hence
+
+```c++
+template<typename Predicate, typename Pipe = ml::Identity>
+using CountIf_ = ml::Reduce<
+                           ml::ProductMap<
+                                          ml::Identity,
+                                          Predicate,
+                                          ml::Add<>>,
+                          Pipe>;
+```
+
+To see how it works, we invoke it on `int, string, bool, vector<int>`.
+
+```c++
+using T = ml::f<
+                CountIf_<ml::IsClass<>>,
+                ml::Int<0>,                      // Init as first parameter for reduce
+                int, string, bool, vector<int>>;
+static_assert(
+              std::is_same_v<
+                            T,
+                            ml::Int<2>>);
+```
+For `CountIf_` to fully be a `CountIf` metafunction, we need to get rid of the need to pass the `ml::Int<0>` as the initial value for [`ml::Reduce`](../reference/Algorithm/Reduce.md), because the count always starts at `0`. We can do this by [partially evaluating](#partial-evaluation) `CountIf_`, which is the subject of the next section.
+
+**NOTE**
+
+[CppML](https://github.com/ZigaSajovic/CppML) defines [`ml::CountIf`](../reference/Algorithm/CountIf.md) in the [`Algorithm`](../reference/index.md#algorithm) header.
+
+### Partial evaluation
 
 #### Pack expansions and non-pack parameter of alias template
 

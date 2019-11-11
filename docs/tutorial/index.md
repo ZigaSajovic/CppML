@@ -15,8 +15,17 @@
   * [`Product`](#product)
   * [`Product Map`](#product-map)
   * [`Partial evaluation`](#partial-evaluation)
+    * [`Partial`](#partial)
+    * [`PartialR`](#partialr)
+    * [`Bind`](#bind)
+  * [`Currying`](#currying)
 
 
+## Introduction
+
+### Link to Reference
+
+Throughout this tutorial, all links with the `ml::` prefix (e.g. [`ml::Map`](../reference/Functional/Map.md)) lead to the [`CppML reference`](../reference/index.md) for that specific metafunction (i.e. they do not lead to code).
 
 ## Key Concepts
 
@@ -322,6 +331,77 @@ For `CountIf_` to fully be a `CountIf` metafunction, we need to get rid of the n
 [CppML](https://github.com/ZigaSajovic/CppML) defines [`ml::CountIf`](../reference/Algorithm/CountIf.md) in the [`Algorithm`](../reference/index.md#algorithm) header.
 
 ### Partial evaluation
+
+After studying how you can combine [`metafunctions`](#metafunction), we take a look at how we can transform a metafunction into a different metafunction, that has some of its parameters fixed.
+
+#### Partial
+
+To partially evaluate a [`metafunction`](#metafunction) from the left, we employ the [`ml::Partial`](../reference/Functional/Partial.md)`<F, Args...>` from the [`Functional`](../reference/index.md#functional) header.
+`Partial<F, Args...>` is a metafunction, that is a partial evaluation of `F`. When invoked on `Ts...`, it is as if `F` was invoked on `Args..., Ts...`.
+
+```c++
+f:: Ts... -> F(Args..., Ts...)
+```
+
+Hence, we can use [`ml::Partial`](../reference/Functional/Partial.md) to partially evaluate `CountIf_` from the previous section on `ml::Int<0>`. Full implementation looks like this
+
+```c++
+template<typename Predicate, typename Pipe = ml::Identity>
+using CountIf = ml::Partial<
+                        ml::Reduce<
+                           ml::ProductMap<
+                                  ml::Identity,
+                                  Predicate,
+                                  ml::Add<>>,
+                           Pipe>,
+                        ml::Int<0>>;
+```
+To test it, we invoke it on the same example.
+```c++
+using T = ml::f<
+                CountIf<ml::IsClass<>>,
+                int, string, bool, vector<int>>;
+static_assert(
+              std::is_same_v<
+                            T,
+                            ml::Int<2>>);
+```
+
+#### PartialR
+
+To partially evaluate a [`metafunction`](#metafunction) from the right, we employ the [`ml::PartialR`](../reference/Functional/PartialR.md)`<F, Args...>` from the [`Functional`](../reference/index.md#functional) header.
+`PartialR<F, Args...>` is a metafunction, that is a partial evaluation of `F`. When invoked on `Ts...`, it is as if `F` was invoked on `Ts..., Args...`.
+
+```c++
+f:: Ts... -> F(Ts..., Args...)
+```
+
+#### Bind
+
+To give user complete control over partial evaluations, [CppML](https://github.com/ZigaSajovic/CppML) provides [`ml::Bind`](../reference/Functional/Bind.md)`<F, `[`ml::Par<Is, Args>`](../reference/Functional/Bind.md)`...>` for the [`Functional`](../reference/index.md#functional) header. [`ml::Bind`](../reference/Functional/Bind.md)`<F, `[`ml::Par<Is, Args>`](../reference/Functional/Bind.md)`...>` is a partial evaluation, where each element on the parameter pack `Args...` is bound to its corresponding position `int ...Is`.
+
+The [`ml::Par<I, T>`](../reference/Functional/Bind.md) is the parameter holder for [`ml::Bind`](../reference/Functional/Bind.md) (see its [reference page](../reference/Functional/Bind.md)). `Aliases` of the form
+
+```c++
+template <typename T>
+using _0 = ml::Par<0, T>
+```
+
+are defined for `N` in the range `[0, 20]`.
+
+To illustrate [`ml::Bind`](../reference/Functional/Bind.md)s functionality, we state that binding to first few positions
+
+```c++
+using boundF = ml::Bind<F, ml::_0<int>, ml::_1<bool>>;
+```
+
+is equivalent to partially evaluating from the left.
+
+```c++
+using boundF = ml::Partial<F, int, bool>;
+```
+
+Please consult its [reference page](../reference/Functional/Bind.md) for details and an example demonstration of use.
 
 #### Pack expansions and non-pack parameter of alias template
 

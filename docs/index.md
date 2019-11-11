@@ -14,7 +14,9 @@ You may follow the [installation guide](./installation/index.md) for your conven
 
 ## Tutorial
 
-...
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that behave as **algorithms** in a **functional language**.
+
+You may find a [tutorial](./tutorial/index.md) at the [following link](./tutorial/index.md).
 
 ## CppML Reference
 
@@ -30,8 +32,16 @@ You may follow the [installation guide](./installation/index.md) for your conven
 | [`TypeTraits`](../reference/index.md#typetraits)   | Insights into types (e.g. [`IsSameAs`](../reference/TypeTraits/IsSameAs.md), [`IsClass`](../reference/TypeTraits/IsClass.md), etc.)                   |
 | [`Vocabulary`](../reference/index.md#vocabulary)   | Vocabulary types of `CppML`   (e.g. [`ListT`](../reference/Vocabulary/ListT.md), [`Value`](../reference/Vocabulary/Value.md), etc.)                   |
 
-
-
 The complete `CppML reference` can be found [here](./reference/index.md).
+
+### Structure
+
+CppML is structured as follows:
+* each section has an associated header `.hpp` and a directory of the same name in the `CppML/` directory. For example, the `Algorithm` section has an `Algorithm.hpp` header located in the `include/CppML`
+* every component of each section has a dedicated `.hpp` header inside the libraries associated directory. For example, `Sort`, a component of the `Algorithm` section, has a header located at `include/CppML/Algorithm/Sort.hpp`.
+
+Thus, to use any component, you can either include its specific header (e.g. `#include <CppML/Algorithm/Sort.hpp>`), or include its containing header `#include <CppML/Algorithm.hpp>`. Note that you may include all of them at once using `#include <CppML/CppML.hpp>`.
+
+
 
 ## License

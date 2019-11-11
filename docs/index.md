@@ -2,6 +2,10 @@
 
 #### Table of Contents
 
+* [Installation](#installation)
+* [Tutorial](#tutorial)
+* [CppML Reference](#cppml-reference)
+
 ## Installation
 
 [CppML](https://github.com/ZigaSajovic/CppML) can be installed in two ways. You can [install it using cmake](./installation/index.md#installing-using-cmake) as an `INTERFACE` library, or you can [embed it in your project](./installation/index.md#project-embedding) (e.g. via `git submodules` or *direct-copy*).
@@ -16,20 +20,17 @@ You may follow the [installation guide](./installation/index.md) for your conven
 
 [CppML](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs are divided in the following headers:
 
-* [`Algorithm`](./reference/index.md#algorithm)
-  * *algorithms* that operate on *parameter packs*
-* [`Arithmetic`](./reference/index.md#arithmetic)
-  * *arithmetic* operations on *types*
-* [`ControlFlow`](./reference/index.md#controlflow)
-  * constructs that *control* the *flow* of a metaprogram (e.g. [`IfElse`](./reference/ControlFlow/IfElse.md))
-* [`Functional`](./reference/index.md#functional)
-  * *functional* utilities (e.g. [`Curry`](./reference/Functional/Curry.md), [`Map`](./reference/Functional/Map.md), [`ProductMap`](./reference/Functional/ProductMap.md), etc.)
-* [`Pack`](./reference/index.md#pack)
-  * manipulation of *parameter packs*
-* [`TypeTraits`](./reference/index.md#typetraits)
-  * metafunctions that *reason* about the input *types*
-* [`Vocabulary`](./reference/index.md#vocabulary)
-  * *vocabulary* constructs of **CppML**
+| Header                                             | Description                                                                                                                                           |
+|:---------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`Algorithm`](../reference/index.md#algorithm)     | Algorithms over parameter packs (e.g. [`Sort`](../reference/Algorithm/Sort.md), [`ZipWith`](../reference/Algorithm/ZipWith.md), etc.)                 |
+| [`Arithmetic`](../reference/index.md#arithmetic)   | Arithmetic operations on type-values (e.g. [`Greater`](../reference/Arithmetic/Greater.md), [`Not`](../reference/Arithmetic/Not.md), etc.)            |
+| [`ControlFlow`](../reference/index.md#controlflow) | Constructs that control the flow of metaprograms (e.g. [`IfElse`](../reference/ControlFlow/IfElse.md), [`For`](../reference/ControlFlow/For.md) etc.) |
+| [`Functional`](../reference/index.md#functional)   | Manipulation of metafunctions (e.g. [`Curry`](../reference/Functional/Curry.md), [`Map`](../reference/Functional/Map.md), etc.)                       |
+| [`Pack`](../reference/index.md#pack)               | Manipulation of parameter packs (e.g. [`Drop`](../reference/Pack/Drop.md), [`Get`](../reference/Pack/Get.md), etc.)                                   |
+| [`TypeTraits`](../reference/index.md#typetraits)   | Insights into types (e.g. [`IsSameAs`](../reference/TypeTraits/IsSameAs.md), [`IsClass`](../reference/TypeTraits/IsClass.md), etc.)                   |
+| [`Vocabulary`](../reference/index.md#vocabulary)   | Vocabulary types of `CppML`   (e.g. [`ListT`](../reference/Vocabulary/ListT.md), [`Value`](../reference/Vocabulary/Value.md), etc.)                   |
+
+
 
 The complete `CppML reference` can be found [here](./reference/index.md).
 

@@ -2,20 +2,17 @@
 
 #### Headers
 
-* [`Algorithm`](#algorithm)
-  * *algorithms* that operate on *parameter packs*
-* [`Arithmetic`](#arithmetic)
-  * *arithmetic* operations on *types*
-* [`ControlFlow`](#controlflow)
-  * constructs that *control* the *flow* of a metaprogram (e.g. [`IfElse`](./ControlFlow/IfElse.md))
-* [`Functional`](#functional)
-  * *functional* utilities (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), [`ProductMap`](./Functional/ProductMap.md), etc.)
-* [`Pack`](#pack)
-  * manipulation of *parameter packs*
-* [`TypeTraits`](#typetraits)
-  * metafunctions that *reason* about the input *types*
-* [`Vocabulary`](#vocabulary)
-  * *vocabulary* constructs of **CppML**
+| Header                        | Description                                                                                                                     |
+|:------------------------------|:--------------------------------------------------------------------------------------------------------------------------------|
+| [`Algorithm`](#algorithm)     | Algorithms over parameter packs (e.g. [`Sort`](./Algorithm/Sort.md), [`ZipWith`](./Algorithm/ZipWith.md), etc.)                 |
+| [`Arithmetic`](#arithmetic)   | Arithmetic operations on type-values (e.g. [`Greater`](./Arithmetic/Greater.md), [`Not`](./Arithmetic/Not.md), etc.)            |
+| [`ControlFlow`](#controlflow) | Constructs that control the flow of metaprograms (e.g. [`IfElse`](./ControlFlow/IfElse.md), [`For`](./ControlFlow/For.md) etc.) |
+| [`Functional`](#functional)   | Manipulation of metafunctions (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), etc.)                       |
+| [`Pack`](#pack)               | Manipulation of parameter packs (e.g. [`Drop`](./Pack/Drop.md), [`Get`](./Pack/Get.md), etc.)                                   |
+| [`TypeTraits`](#typetraits)   | Insights into types (e.g. [`IsSameAs`](./TypeTraits/IsSameAs.md), [`IsClass`](./TypeTraits/IsClass.md), etc.)                   |
+| [`Vocabulary`](#vocabulary)   | Vocabulary types of `CppML`   (e.g. [`ListT`](./Vocabulary/ListT.md), [`Value`](./Vocabulary/Value.md), etc.)                   |
+
+
 
 ## `Algorithm`
 

@@ -10,6 +10,8 @@
     * [`Default pipes`](#default-pipes)
     * [`Invoking metafunctions`](#invoking-metafunctions)
     * [`Using pipes`](#using-pipes)
+  * [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions)
+    * [`Aliases as meta-lambdas`](#aliases-as-meta-lambdas)
 * [`Manipulating metafunctions`](#manipulating-metafunctions)
   * [`Composition`](#composition)
   * [`Product`](#product)
@@ -18,7 +20,9 @@
     * [`Partial`](#partial)
     * [`PartialR`](#partialr)
     * [`Bind`](#bind)
+    * [`Use case: A generator of linear CRTP class hierarchies`](#use-case-a-generator-of-linear-crtp-class-hierarchies)
   * [`Currying`](#currying)
+    * [`Curry`](#curry)
 
 
 ## Introduction
@@ -153,6 +157,42 @@ using F = ml::Pivot<2,                                    // make third element 
 ```
 
 See also [`ml::Pivot`](../reference/Algorithm/Pivot.md), and [`ml::Head`](../reference/Pack/Head.md) (defined in the [`Pack`](../reference/index.md#pack) header).
+
+### Lifting templates to metafunctions
+
+Any template, either a `struct` / `class`
+
+```c++
+template<typename ...Ts>
+struct T { /* ... */};
+```
+
+or an `alias`
+
+```c++
+template<typename ...Ts>
+using AT = /* .... */;
+```
+can be *lifted* to a [`metafunction`](#metafunction), through the use of [`ml::F`](../reference/Functional/F.md)`<Template, Pipe>` (see its [reference](../reference/Functional/F.md)). For example, we can make `std::tuple` a metafunction
+
+```c++
+using TupleF = ml::F<std::tuple>;
+```
+
+and alter the previous example, to [`Pipe`](#pipe) the result into it
+
+```c++
+using T2 = ml::f<
+                 ml::Filter<                     // Filter
+                            ml::IsClass<>,       // Predicate
+                            TupleF>,             // Pipe of Filter
+                int, string, char, vector<int>>;
+static_assert(
+          std::is_same_v<
+                         T2,
+                         std::tuple<
+                                    string, vector<int>>>);
+```
 
 ## Manipulating metafunctions
 
@@ -402,6 +442,72 @@ using boundF = ml::Partial<F, int, bool>;
 ```
 
 Please consult its [reference page](../reference/Functional/Bind.md) for details and an example demonstration of use.
+
+#### Use case: A generator of linear CRTP class hierarchies
+
+As a use case, we will implement a metaprogram that generates a **linear [`CRTP`](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern) class hiearchy** from a parameter pack of templates.
+
+Suppose we define policy classes
+
+```c++
+template <class MostDerived, class BasePolicy>
+struct Policy_i : BasePolicy {
+/*
+ * Implementations
+ */
+};
+```
+which employ the *base-chaining* mechanism. Each of these policies defines some *public methods*. In order for the user to use them, he has to derive from them, by chaining them. For example, to use `Policy0`, `Policy1` and `Policy3`, he has to derive from
+
+```c++
+struct Class0 : Policy0<Class0, Policy1<Class0, Policy3<Derived, EmptyBase>>> {};
+```
+
+which is limiting in a few ways:
+
+* user has to manually nest the `Policies`, but more importantly
+* we cannot define a *general* template class for the user to use, where he would simply specify the `Policies` he wants. Currently he must manually write the class given the policies he wants, as above with `Class0`.
+
+We need a `MakeBase` metaprogram, that will allow us to implement a *general* class template
+
+```c++
+template <template <class, class> class ...Policies>
+struct Class : MakeBase<Class<Policies...>, Policies...> {};
+```
+
+where
+
+```c++
+using Class0_ = Class<Policy0, Policy1, Policy3>;
+```
+
+`Class0_` is equivalent to `Class0` above.
+
+Using the mechanics described so far, this can be achieved by:
+* Transform each template policy into a metafunction using [`ml::F`](../reference/Functional/F.md), and
+* Partially evaluate each of them on `Derived` using [`ml::Partial`](../reference/Functional/Partial.md), and
+* compose these partial evaluations using [`ml::Compose`](../reference/Functional/Compose.md), and
+* evaluate the composition on the `Bottom` base class.
+
+```c++
+template <typename Derived, template <class, class> class ...Policies>
+using MakeBase = ml::f<ml::Compose<ml::Partial<ml::F<Policies>, Derived>...>, ml::None>;
+```
+
+
+### Currying
+
+With a firm grasp on [partial evaluations](#partial-evaluation), we step a level higher, and take a look at currying. Please take note that *currying* operators in [CppML](https://github.com/ZigaSajovic/CppML) operate on variadic parameter packs (i.e. they can curry more than one argument at a time).
+
+#### Curry
+
+Let `F` be a metafunction `Args... -> Us...`. Than [`ml::Curry<F>`](../reference/Functional/Curry.md) is a metafunction that takes a parameter pack `T0s...`, and returns a metafunction `F': T1s... -> Us...`, in such a way, that `F(T0s..., T1s...) == F'(T1s...)`.
+
+```c++
+f:: T0s... -> T1s... -> Us...
+```
+
+
 
 #### Pack expansions and non-pack parameter of alias template
 

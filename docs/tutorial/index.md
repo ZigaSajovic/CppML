@@ -12,6 +12,7 @@
     * [`Using pipes`](#using-pipes)
 * [`Manipulating metafunctions`](#manipulating-metafunctions)
   * [`Composition`](#composition)
+  * [`Product`](#product)
 
 
 
@@ -130,9 +131,9 @@ static_assert(
                                    string, vector<int>>>);
 ```
 
-#### Using [`pipes`](#pipe)
+#### Using [`Pipes`](#pipe)
 
-Suppose we want a metafunction that takes the elements of the [`parameter pack`](#parameter-pack) in the range `[2, 6]`, and from that range remove all ([`ml::RemoveIf`](../reference/Algorithm/Filter.md)) which are a class type ([`ml::IsClass`](../reference/TypeTraits/IsClass.md).
+Suppose we want a metafunction that takes the elements of the [`parameter pack`](#parameter-pack) in the range `[2, 6]`, and from that range remove all ([`ml::RemoveIf`](../reference/Algorithm/Filter.md)) which are a class type ([`ml::IsClass`](../reference/TypeTraits/IsClass.md)).
 
 ```c++
 using F = ml::Pivot<2,                                    // make third element the first
@@ -189,12 +190,22 @@ negating is `IsNotClassF` is equivalent to `IsClass`.
 
 ### Product
 
+A different way to combine [`metafunctions`](#metafunction) is to take their [`ml::Product`](../reference/Functional/Product.md)`<Fs..., Pipe>`. An [`ml::Product`](../reference/Functional/Product.md)`<Fs..., Pipe>`, which takes `n` metafunctions `Fs...` (see [`ml::Product`](../reference/Functional/Product.md) for detailed reference), each mapping
+
+```c++
+f:: Ts... -> U
+```
+and a [`Pipe`](#pipe),
+```c++
+f:: Us... -> Vs...
+```
+is itself a metafunction
 ```c++
 f:: Ts... -> Fs(Ts...)... >-> Pipe
              ^^^^^^^^^^^^
              U0...Uk...Un
 ```
-
+which can be topologically envisioned as
 ```c++
               -> U0 -
             /    ...  \
@@ -202,6 +213,38 @@ f:: Ts ... -  ->  Uk -- >-> Pipe
             \    ...  /
               -> Un - 
 ```
+
+where each arrow is one of the metafunctions `Fs...`.
+
+To demonstrate, we implement a [`metafunction`](#metafunction) `partition`, which takes a `Predicate`, and partitions a [`parameter pack`](#parameter-pack) into two parts, one containing the elements that satisfy the `Predicate`, and one containing those two don't. This can be achieved by taking a [`ml::Product`](../reference/Functional/Product.md) of [`ml::Filter`](../reference/Algorithm/Filter.md) and [`ml::RemoveIf`](../reference/Algorithm/RemoveIf.md) (from the [`Algorithm`](../reference/index.md#algorithm) header).
+
+```c++
+template <typename Predicate, typename Pipe = ml::ToList>
+using Partition = ml::Product<
+                        ml::Filter<Predicate>,
+                        ml::RemoveIf<Predicate>,
+                        Pipe>;
+```
+
+To see how it works, we invoke it on `int, string, bool, vector<int>`.
+
+```c++
+using T = ml::f<
+                Partition<ml::IsClass<>>,
+                int, string, bool, vector<int>>;
+static_assert(
+      std::is_same_v<
+          T,
+          ml::ListT<
+              ml::ListT<string, vector<int>>,
+              ml::ListT<int, bool>>>);
+```
+
+**NOTE**
+
+[CppML](https://github.com/ZigaSajovic/CppML) defines [`ml::Partition`](../reference/Algorithm/Partition.md) in the [`Algorithm`](../reference/index.md#algorithm) header. The implementation is almost identical to the one presented here.
+
+
 
 ### Product map
 

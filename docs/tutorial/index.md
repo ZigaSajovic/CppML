@@ -1,7 +1,8 @@
-# Tutorial
+# `CppML` Tutorial
 
 #### Table of Contents
 
+* [`Introduction`](#introduction)
 * [`Key concepts`](#key-concepts)
   * [`Parameter pack`](#parameter-pack)
   * [`Pipe`](#pipe)
@@ -26,9 +27,19 @@
 
 ## Introduction
 
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that behave as **algorithms** in a **functional language**.
+
+3 design principles
+
+compositional pipelines
+
+it strives to be easy to speak and easy to read
+
+
+
 ### Link to Reference
 
-Throughout this tutorial, all links with the `ml::` prefix (e.g. [`ml::Map`](../reference/Functional/Map.md)) lead to the [`CppML reference`](../reference/index.md) for that specific metafunction (i.e. they do not lead to code).
+Throughout this tutorial, all links with the `ml::` prefix (e.g. [`ml::Map`](../reference/Functional/Map.md)) lead to the [`CppML reference`](../reference/index.md) for that specific metafunction. Each of them provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use.
 
 ## Key Concepts
 

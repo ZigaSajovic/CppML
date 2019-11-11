@@ -1,7 +1,9 @@
-//          Copyright Žiga Sajovic, XLAB 2019.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying https://www.boost.org/LICENSE_1_0.txt)
-
+/**
+ * Copyright Žiga Sajovic, XLAB 2019
+ * Distributed under the MIT License
+ *
+ * https://github.com/ZigaSajovic/CppML
+ **/
 #ifndef CPPML_DELAYED_EVAL_HPP
 #define CPPML_DELAYED_EVAL_HPP
 #include "../ControlFlow/IfElse.hpp"

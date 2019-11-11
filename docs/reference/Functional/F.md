@@ -3,7 +3,7 @@
 ## `F`
 
 ```c++
-template <template <class ...> class TF>
+template <template <class ...> class TF, typename Pipe = ml::Identity>
 struct F {
   template <typename ...Ts>
   using f = /* .... */;
@@ -11,10 +11,10 @@ struct F {
 ```
 ### `F<TF>`
 
-`F<TS>` creates a metafunction from a *template*.
+`F<TS>` creates a metafunction from a *template*, that passes `TF<Args...>` to `Pipe`. `Pipe` defaults to [`ml::Identity`](./Identity.md).
 
 ```c++
-f:: Ts... -> TF<Ts...>
+f:: Ts... -> TF<Ts...> >-> Pipe
 ```
 
 ### Example

@@ -5,15 +5,17 @@
 #ifndef CPPML_F_HPP
 #define CPPML_F_HPP
 #include "DelayedEval.hpp"
+#include "Identity.hpp"
+#include "Invoke.hpp"
 
 namespace ml {
 /*
  * F:
  * Creates a metafunction out of a template
  */
-template <template <class...> class F_> struct F {
+template <template <class...> class F_, typename Pipe = ml::Identity> struct F {
   template <typename... Args>
-  using f = ml::DelayedAliasEval<F_, sizeof...(Args), Args...>;
+  using f = ml::f<Pipe, ml::DelayedAliasEval<F_, sizeof...(Args), Args...>>;
 };
 } // namespace ml
 #endif

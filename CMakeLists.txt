@@ -1,8 +1,19 @@
+#--
+# Copyright Ziga Sajovic, XLAB 2019
+# Distributed under the MIT License
+#
+# https://github.com/ZigaSajovic/CppML
+
+#--
+# CppML's CMake scripts are based on approaches outlined in
+# Cmake line by line - creating a header-only library
+# (http://dominikberner.ch/cmake-interface-lib/)
+#--
 cmake_minimum_required(VERSION 3.12)
-project(CppML
-              HOMEPAGE_URL "https://github.com/ZigaSajovic/CppML"
-              LANGUAGES CXX
-              VERSION 0.0)
+project("CppML" VERSION 0.0
+                DESCRIPTION "A Meta Language for C++."
+                HOMEPAGE_URL "https://github.com/ZigaSajovic/CppML"
+                LANGUAGES CXX)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)

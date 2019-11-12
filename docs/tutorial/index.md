@@ -657,9 +657,9 @@ Algorithms have an associated header `CppML/Algorithm.hpp` and a directory of th
 
 ### Algorithm Reference
 
-We provide a detailed [`CppML reference`](../reference/index.md), which also contains an [`Algorithm`](../reference/index.md#algorithm) section. Please find the algorithm you are interested in in the table below, and click the link, which will take you to it `reference entry`.
+We provide a detailed [`CppML reference`](../reference/index.md), which also contains an [`Algorithm`](../reference/index.md#algorithm) section. Please find the algorithm of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 
-| Algorithm                                                      | Description                                                      | Type of `f` in `::f >-> Pipe`   |
+| Construct                                                      | Description                                                      | Type of `f` in `::f >-> Pipe`   |
 |----------------------------------------------------------------|------------------------------------------------------------------|---------------------------------|
 | [`AllOf`](../reference/Algorithm/AllOf.md)                     | Checks if a `Predicate` holds for all of `Ts...`.                | `Ts... -> Bool<t>`              |
 | [`AnyOf`](../reference/Algorithm/AnyOf.md)                     | Checks if a `Predicate` holds for any of `Ts...`.                | `Ts... -> Bool<t>`              |
@@ -676,7 +676,7 @@ We provide a detailed [`CppML reference`](../reference/index.md), which also con
 | [`Partition`](../reference/Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                          | `Ts... -> ListT<Us...>...`      |
 | [`PartitionIds`](../reference/Algorithm/PartitionIds.md)       | Partitions indexes of `Ts...` given a `Predicate`.               | `Ts... -> ListT<Int<Is>...>...` |
 | [`Pivot`](../reference/Algorithm/Pivot.md)                     | Pivots `Ts...` around the `N`-th element, making it the first.   | `Ts... -> Us...`                |
-| [`Reduce`](../reference/Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                        | `Ts... -> U`                    |
+| [`Reduce`](../reference/Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                        | `Init, Ts... -> U`              |
 | [`RemoveIdsIf`](../reference/Algorithm/RemoveIdsIf.md)         | Removes indexes of `Ts...` for which the `Predicate` holds.      | `Ts... -> Us...`                |
 | [`RemoveIf`](../reference/Algorithm/RemoveIf.md)               | Removes elements of `Ts...` for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
 | [`ReplaceIf`](../reference/Algorithm/ReplaceIf.md)             | Replace `Ts...`, for which the `Predicate` holds, by `U`.        | `Ts... -> Us...`                |

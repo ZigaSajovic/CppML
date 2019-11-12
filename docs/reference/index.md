@@ -18,11 +18,14 @@
 
 Contains *algorithms* that operate on *parameter packs*. You can include any algorithm separately by `CppML/Algorithm/<name>.hpp`, or include the entire header `CppML/Algorithm.hpp`.
 
-| Algorithm                                           | Description                                                      | Type of `f` in `::f >-> Pipe`   |
+Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+
+| Construct                                           | Description                                                      | Type of `f` in `::f >-> Pipe`   |
 |-----------------------------------------------------|------------------------------------------------------------------|---------------------------------|
 | [`AllOf`](./Algorithm/AllOf.md)                     | Checks if a `Predicate` holds for all of `Ts...`.                | `Ts... -> Bool<t>`              |
 | [`AnyOf`](./Algorithm/AnyOf.md)                     | Checks if a `Predicate` holds for any of `Ts...`.                | `Ts... -> Bool<t>`              |
-| [`Contains`](./Algorithm/Contains.md)               | Checks is `Ts...` contains `T`.                                  | `Ts... -> Bool<t>`              |
+| [`Contains`](./Algorithm/Contains.md)               | Checks if `Ts...` contains `T`.                                  | `Ts... -> Bool<t>`              |
 | [`CountIf`](./Algorithm/CountIf.md)                 | Counts `Ts...` for which the `Predicate` holds.                  | `Ts... -> Bool<t>`              |
 | [`Filter`](./Algorithm/Filter.md)                   | Filters `Ts...`, for which the `Predicate` holds.                | `Ts... -> Us...`                |
 | [`FilterIds`](./Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
@@ -35,7 +38,7 @@ Contains *algorithms* that operate on *parameter packs*. You can include any alg
 | [`Partition`](./Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                          | `Ts... -> ListT<Us...>...`      |
 | [`PartitionIds`](./Algorithm/PartitionIds.md)       | Partitions indexes of `Ts...` given a `Predicate`.               | `Ts... -> ListT<Int<Is>...>...` |
 | [`Pivot`](./Algorithm/Pivot.md)                     | Pivots `Ts...` around the `N`-th element, making it the first.   | `Ts... -> Us...`                |
-| [`Reduce`](./Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                        | `Ts... -> U`                    |
+| [`Reduce`](./Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                        | `Init, Ts... -> U`              |
 | [`RemoveIdsIf`](./Algorithm/RemoveIdsIf.md)         | Removes indexes of `Ts...` for which the `Predicate` holds.      | `Ts... -> Us...`                |
 | [`RemoveIf`](./Algorithm/RemoveIf.md)               | Removes elements of `Ts...` for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
 | [`ReplaceIf`](./Algorithm/ReplaceIf.md)             | Replace `Ts...`, for which the `Predicate` holds, by `U`.        | `Ts... -> Us...`                |
@@ -50,83 +53,99 @@ Contains *algorithms* that operate on *parameter packs*. You can include any alg
 
 Contains *arithmetic operations* that operate on *types* (e. g. `Not`, `Less`). You can include any operation separately by `CppML/Arithmetic/<name>.hpp`, or include the entire header `CppML/Arithmetic.hpp`.
 
-| Arithmetic                               | Description                 | Type of `f` in `::f >-> Pipe`                 |
-|------------------------------------------|-----------------------------|-----------------------------------------------|
-| [`Add`](./Arithmetic/Add.md)             | Adds two `Value`s           | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
-| [`Decrement`](./Arithmetic/Decrement.md) | Decrements a `Value`        | `Value<t, T> -> Value<--t, T>`                |
-| [`Equals`](./Arithmetic/Equals.md)       | Equality check for `Values` | `Value<T, t>, Value<U, u> -> Bool<t>`         |
-| [`Greater`](./Arithmetic/Greater.md)     | Greater for `Values`        | `Value<T, t>, Value<U, u> -> Bool<t>`         |
-| [`Increment`](./Arithmetic/Increment.md) | Increments a `Value`        | `Value<t, T> -> Value<++t, T>`                |
-| [`Less`](./Arithmetic/Less.md)           | Less for `Values`           | `Value<T, t>, Value<U, u> -> Bool<t>`         |
-| [`Not`](./Arithmetic/Not.md)             | Negates a `Value`           | `Bool<t> -> Bool< not t>`                     |
-| [`Subtract`](./Arithmetic/Subtract.md)   | Subtracts two `Value`s      | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
+Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+| Construct                                | Description                  | Type of `f` in `::f >-> Pipe`                 |
+|------------------------------------------|------------------------------|-----------------------------------------------|
+| [`Add`](./Arithmetic/Add.md)             | Adds two `Value`s.           | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
+| [`Decrement`](./Arithmetic/Decrement.md) | Decrements a `Value`         | `Value<t, T> -> Value<--t, T>`                |
+| [`Equals`](./Arithmetic/Equals.md)       | Equality check for `Values`. | `Value<T, t>, Value<U, u> -> Bool<t>`         |
+| [`Greater`](./Arithmetic/Greater.md)     | Greater for `Values`.        | `Value<T, t>, Value<U, u> -> Bool<t>`         |
+| [`Increment`](./Arithmetic/Increment.md) | Increments a `Value`.        | `Value<t, T> -> Value<++t, T>`                |
+| [`Less`](./Arithmetic/Less.md)           | Less for `Values`.           | `Value<T, t>, Value<U, u> -> Bool<t>`         |
+| [`Not`](./Arithmetic/Not.md)             | Negates a `Value`.           | `Bool<t> -> Bool< not t>`                     |
+| [`Subtract`](./Arithmetic/Subtract.md)   | Subtracts two `Value`s.      | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
 
 ## `ControlFlow`
 
 Contains constructs that *control* the *flow* of a metaprogram (e.g. `IfElse`). You can include any operation separately by `CppML/ControlFlow/<name>.hpp`, or include the entire header `CppML/ControlFlow.hpp`.
 
-* [`For`](./ControlFlow/For.md)
-* [`IfElse`](./ControlFlow/IfElse.md)
+Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+| Construct                           | Description                         | Type of `f` in `::f >-> Pipe`                        |
+|-------------------------------------|-------------------------------------|------------------------------------------------------|
+| [`For`](./ControlFlow/For.md)       | Apply `F` on for `I in [From, To)`. | `F, State -> F(Int<To-1>, F...F(Int<From>, State)))` |
+| [`IfElse`](./ControlFlow/IfElse.md) | Chooses between `T` and `U`.        | `T, U -> V`                                          |
 
 ## `Functional`
 
 Contains *functional* utilities (e.g. `Map`). You can include any construct separately by `CppML/Functional/<name>.hpp`, or include the entire header `CppML/Functional.hpp`.
 
-* [`Bind`](./Functional/Bind.md)
-* [`Compose`](./Functional/Compose.md)
-* [`Constant`](./Functional/Constant.md)
-* [`Curry`](./Functional/Curry.md)
-* [`CurryR`](./Functional/CurryR.md)
-* [`DelayedEval`](./Functional/DelayedEval.md)
-* [`F`](./Functional/F.md)
-* [`Identity`](./Functional/Identity.md)
-* [`Invoke`](./Functional/Invoke.md)
-* [`InvokeWith`](./Functional/InvokeWith.md)
-* [`Map`](./Functional/Map.md)
-* [`Partial`](./Functional/Partial.md)
-* [`PartialR`](./Functional/PartialR.md)
-* [`Product`](./Functional/Product.md)
-* [`ProductMap`](./Functional/ProductMap.md)
-* [`ToList`](./Functional/ToList.md)
-* [`ToValue`](./Functional/ToValue.md)
-* [`Unwrap`](./Functional/Unwrap.md)
+Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+| Construct                                    | Description                                          | Type of `f` in `::f >-> Pipe`  |
+|----------------------------------------------|------------------------------------------------------|--------------------------------|
+| [`Compose`](./Functional/Compose.md)         | Composition of metafunctions `Fs...`.                | `Ts... -> F0(F1(...(Fn(Us...)` |
+| [`Constant`](./Functional/Constant.md)       | Metafunction that always returns `U`.                | `Ts... -> U`                   |
+| [`Curry`](./Functional/Curry.md)             | The Curry (from the left) operator                   | `T0s... -> T1s... -> Us...`    |
+| [`CurryR`](./Functional/CurryR.md)           | The Curry (from the right) operator                  | `T1s... -> T0s... -> Us...`    |
+| [`DelayedEval`](./Functional/DelayedEval.md) | Delays an evaluation until compiler knows the arity. | `Ts... -> Us...`               |
+| [`f`](./Functional/Invoke.md)                | Invokes the `f` alias of the metafunction `F`        | `Ts... -> F::f<Ts...>`         |
+| [`F`](./Functional/F.md)                     | Lifts a template to a metafunction                   | `Ts... -> Template<Ts...>`     |
+| [`Identity`](./Functional/Identity.md)       | Identity metafunction.                               | `T -> T`                       |
+| [`InvokeWith`](./Functional/InvokeWith.md)   | Invokes the metafunction on `Ts...`                  | `Ts... -> Us... -> Us...`      |
+| [`Map`](./Functional/Map.md)                 | Maps `Ts...` by `F`.                                 | `Ts... -> F(Ts)...`            |
+| [`Partial`](./Functional/Partial.md)         | Partial evaluation of `F` on `T0s...` from the left  | `T1... -> F(T0..., T1...)`     |
+| [`PartialR`](./Functional/PartialR.md)       | Partial Evaluation of `F` on `T1s...` from the right | `T0... -> F(T0..., T1...)`     |
+| [`Product`](./Functional/Product.md)         | Product of metafunctions `Fs...`                     | `Ts... -> Fs(Ts...)...`        |
+| [`ProductMap`](./Functional/ProductMap.md)   | Product map of metafunctions `Fs`                    | `Ts... -> Fs(Ts)...`           |
+| [`ToList`](./Functional/ToList.md)           | Wraps `Ts...` in an `ListT`                          | `Ts... -> ListT<Ts...>`        |
+| [`ToValue`](./Functional/ToValue.md)         | Invokes `::value` on `Ts...`                         | `Value<Ts, ts>... -> ts...`    |
+| [`Unwrap`](./Functional/Unwrap.md)           | Unwraps the template around `Ts...`                  | `Template<Ts...> -> Ts...`     |
 
 ## `Pack`
 
 Contains *utilities* for manipulating *parameter packs*. You can include any construct separately by `CppML/Pack/<name>.hpp`, or include the entire header `CppML/Pack.hpp`.
 
-* [`Append`](./Pack/Append.md)
-* [`Drop`](./Pack/Drop.md)
-* [`Front`](./Pack/Front.md)
-* [`Get`](./Pack/Get.md)
-* [`Head`](./Pack/Head.md)
-* [`Insert`](./Pack/Insert.md)
-* [`Length`](./Pack/Length.md)
-* [`Concat`](./Pack/Concat.md)
-* [`PackExtractor`](./Pack/PackExtractor.md)
-* [`Prepend`](./Pack/Prepend.md)
-* [`Range`](./Pack/Range.md)
-* [`Tail`](./Pack/Tail.md)
+Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+| Construct                                  | Description                              | Type of `f` in `::f >-> Pipe`                     |
+|--------------------------------------------|------------------------------------------|---------------------------------------------------|
+| [`Drop`](./Pack/Drop.md)                   | Drops first `N` of `Ts...`               | `T1, ... Tn, Ts... -> Ts...`                      |
+| [`Front`](./Pack/Front.md)                 | Gets first element of `Ts...`            | `T, Ts... -> T`                                   |
+| [`Get`](./Pack/Get.md)                     | Gets `N`-th element of `Ts...`           | `T1, ... Tn, Ts... -> Tn`                         |
+| [`Head`](./Pack/Head.md)                   | First `N` of `Ts...`                     | `T1, ... Tn, Ts... -> T1, ... Tn`                 |
+| [`Insert`](./Pack/Insert.md)               | Inserts `U` as `N`-th element of `Ts...` | `T1, ... Tn, Ts... -> T1, ... U, Tn, Ts... `      |
+| [`Length`](./Pack/Length.md)               | Length of `Ts...`                        | `Ts... -> Int<sizeof...(Ts)`                      |
+| [`Concat`](./Pack/Concat.md)               | Concatenates templates `N` templates `T` | `T<A0s...>... -> T<A0s..., A1s..., Ans...>`       |
+| [`PackExtractor`](./Pack/PackExtractor.md) | Extracts `N`-th element.                 | `Int<N> -> T`                                     |
+| [`Prepend`](./Pack/Prepend.md)             | Prepends `T` to `Ts...`                  | `Ts... -> T, Ts...`                               |
+| [`Range`](./Pack/Range.md)                 | Pack of `Int<I>` in range                | `From, To -> Int<From>..., Int<To - 1>`           |
+| [`Tail`](./Pack/Tail.md)                   | Last `N` of `Ts...`                      | `Ts..., T_{-N}, ... T_{-1} -> T_{-N}, ... T_{-1}` |
 
 ## `TypeTraits`
 
 Contains metafunctions that *reason* about the input *types*. You can include any construct separately by `CppML/TypeTraits/<name>.hpp`, or include the entire header `CppML/TypeTraits.hpp`.
 
-* [`AligmentOf`](./TypeTraits/AligmentOf.md)
-* [`CopyRefness`](./TypeTraits/CopyRefness.md)
-* [`IsClass`](./TypeTraits/IsClass.md)
-* [`IsConstructible`](./TypeTraits/IsConstructible.md)
-* [`IsConvertible`](./TypeTraits/IsConvertible.md)
-* [`IsSame`](./TypeTraits/IsSame.md)
-* [`IsSameTemplate`](./TypeTraits/IsSameTemplate.md)
-* [`IsValid`](./TypeTraits/IsValid.md)
-* [`VoidTT`](./TypeTraits/VoidTT.md)
+| Construct                                            | Description                                               | Type of `f` in `::f >-> Pipe`   |
+|------------------------------------------------------|-----------------------------------------------------------|---------------------------------|
+| [`AligmentOf`](./TypeTraits/AligmentOf.md)           | Get alignment of `T`                                      | `T -> Int<alignof(T)>`          |
+| [`IsClass`](./TypeTraits/IsClass.md)                 | Checks if `T` is a class type                             | `T -> Bool<t>`                  |
+| [`IsConstructible`](./TypeTraits/IsConstructible.md) | Checks if `T` is constructable from `Ts...`               | `T, Ts... -> Bool<t>`           |
+| [`IsConvertible`](./TypeTraits/IsConvertible.md)     | Checks if `T` is convertible to `U`                       | `T, U -> Bool<t>`               |
+| [`IsSame`](./TypeTraits/IsSame.md)                   | Checks if `T` and `U` are the same type                   | `T, U -> Bool<t>`               |
+| [`IsSameTemplate`](./TypeTraits/IsSameTemplate.md)   | Checks if `T<Ts...>` and `U<Us...>` are the same template | `T<Ts...>, U<Us...> -> Bool<t>` |
+| [`IfValidOr`](./TypeTraits/IsValid.md)               | `F::f<Ts...>` if it is not ill-formed, else `U`           | `U, F, Ts... -> V`              |
+| [`IsValid`](./TypeTraits/IsValid.md)                 | Check if `F` invoked on `Ts...` is not ill-formed         | `F, Ts... -> Bool<t>`           |
 
 ## `Vocabulary`
 
 Contains the *vocabulary* constructs of **CppML**. You can include any construct separately by `CppML/Vocabulary/<name>.hpp`, or include the entire header `CppML/Vocabulary.hpp`.
 
-* [`Any`](./Vocabulary/Any.md)
-* [`Value`](./Vocabulary/Value.md)
-* [`List`](./Vocabulary/List.md)
-* [`None`](./Vocabulary/None.md)
+Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+| Construct                        | Description                 |
+|----------------------------------|-----------------------------|
+| [`Value`](./Vocabulary/Value.md) | Represents a type-value     |
+| [`List`](./Vocabulary/List.md)   | Represents a list of types  |
+| [`None`](./Vocabulary/None.md)   | Represents the nothing type |

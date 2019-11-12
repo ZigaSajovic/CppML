@@ -25,13 +25,14 @@
     * [`Curry`](#curry)
     * [`CurryR`](#curryr)
     * [`Use case: A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies)
+  * [`Aliases as type-lambdas`](#aliases-as-type-lambdas)
 
 
 ## Introduction
 
 `CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](#pipes) through which [`parameter packs`](#parameter-pack) can flow **without instantiating** new **types**.
 
-In this tutorial, we will examine the key concepts behind `CppML`, and demonstrate how to manipulate [`metafunctions`](#metafunction) as its *first-class citizens*. Through it, we will familiarize ourselves with concepts such as [`Product Map`](#product-map), [`Partial evaluation`](#partial-evaluation), [`Currying`](#currying), and others.
+In this tutorial, we will examine the key concepts behind `CppML`, and demonstrate how to [`manipulate`](#manipulating-metafunctions) [`metafunctions`](#metafunction) as its *first-class citizens*. Through it, we will familiarize ourselves with concepts such as [`Product Map`](#product-map), [`Partial evaluation`](#partial-evaluation), [`Currying`](#currying), and others.
 On our way, we will learn how to use the [`Pack`](../reference/index.md#pack) header to manipulate [`parameter packs`](#parameter-pack) and how to command their flow through the [`pipelines`](#pipes) using algorithms (provided in the [`Algorithm`](../reference/index.md/#algorithm) header). Finally, we will touch on how to include logic based on introspection in your class design, using aliases as type lambdas.
 
 #### Links to `CppML Reference`
@@ -614,3 +615,35 @@ using MakeBase = ml::f<MakeBase_f<Ts...>, ml::None>;
 ```
 
 concludes our implementation of `Class` (above).
+
+### Aliases as type-lambdas
+
+As we have already touched on, it is possible to [`lift an alias template into a metafunction`](#lifting-templates-to-metafunctions). This also means that you are able to write [`metafunctions`](#metafunction) on the spot by lifting aliases.
+
+One application of this concept is to use it for a different way of [`partially evaluating`](#partial-evaluation) a metafunction. For example, writing an `IsInt` metafunction can be written using [`ml::IsSame`](../reference/TypeTraits/IsSame.md), like so 
+
+```c++
+template <typename T>
+using IsInt_f = ml::f<ml::IsSame<>, T, int>;
+using IsInt = ml::F<IsInt_f>;
+```
+
+Note that [`ml::F`](../reference/Functional/F.md) also accepts a [`Pipe`](#pipes), allowing us to turn the `alias template` `IsInt_f` into a proper [`metafunction`](#metafunction)
+
+```c++
+template <typename Pipe = ml::Identity>
+using IsInt = ml::F<IsInt_f, Pipe>;
+```
+
+which has standard [`pipe`](#pipes)-ing syntax.
+
+```c++
+using T = ml::f<
+                IsInt<ml::Not<>>,
+                double>;
+
+static_assert(
+        std::is_same_v<
+            ml::Bool<true>,
+            T>);
+```

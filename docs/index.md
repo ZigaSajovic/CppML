@@ -5,6 +5,8 @@
 * [Installation](#installation)
 * [Tutorial](#tutorial)
 * [CppML Reference](#cppml-reference)
+  * [Structure](#structure)
+* [License](#license)
 
 ## Installation
 
@@ -14,9 +16,9 @@ You may follow the [installation guide](./installation/index.md) for your conven
 
 ## Tutorial
 
-`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that behave as **algorithms** in a **functional language**.
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./tutorial/index#pipes) through which [`parameter packs`](./tutorial/index#parameter-pack) can flow **without instantiating** new **types**.
 
-You may find a [tutorial](./tutorial/index.md) at the [following link](./tutorial/index.md).
+You can follow the [`Metaprogramming Tutorial`](./tutorial/index.md) and learn how you can bring *elegant one-liners* to your class design.
 
 ## CppML Reference
 
@@ -45,3 +47,5 @@ Thus, to use any component, you can either include its specific header (e.g. `#i
 
 
 ## License
+
+`CppML` in distributed under the **MIT License**. Please see the accompanying [`LICENSE`](../LICENSE) in the root of the project.

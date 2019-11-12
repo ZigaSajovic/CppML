@@ -29,10 +29,10 @@
 
 ## Introduction
 
-`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that behave as **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](#pipes) through which [`parameter packs`](#parameter-pack) can flow **without instantiating** new **types**.
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](#pipes) through which [`parameter packs`](#parameter-pack) can flow **without instantiating** new **types**.
 
-In this tutorial, we will examine the key concepts behind `CppML`, and demonstrate how to manipulate metafunctions as its *first-class citizens*. Through it, we will familiarize ourselves with concepts such as [`Product Map`](#product-map), [`Partial evaluation`](#partial-evaluation), [`Currying`](#currying), and others.
-On our way, we will learn how to use the [`Pack`](../reference/index.md#pack) header to manipulate [`parameter packs`](#parameter-pack) and how to command their flow through the pipelines using algorithms (provided in the [`Algorithm`](../reference/index.md/#algorithm) header). Finally, we will touch on how to include logic based on introspection in your class design, using aliases as type lambdas.
+In this tutorial, we will examine the key concepts behind `CppML`, and demonstrate how to manipulate [`metafunctions`](#metafunction) as its *first-class citizens*. Through it, we will familiarize ourselves with concepts such as [`Product Map`](#product-map), [`Partial evaluation`](#partial-evaluation), [`Currying`](#currying), and others.
+On our way, we will learn how to use the [`Pack`](../reference/index.md#pack) header to manipulate [`parameter packs`](#parameter-pack) and how to command their flow through the [`pipelines`](#pipes) using algorithms (provided in the [`Algorithm`](../reference/index.md/#algorithm) header). Finally, we will touch on how to include logic based on introspection in your class design, using aliases as type lambdas.
 
 #### Links to `CppML Reference`
 
@@ -601,17 +601,9 @@ This leaves us with a metafunction that is to be evaluated on its most bottom `B
 
 ```c++
 template <typename ...Ts>
-using MakeBase_f =
-    ml::f<ml::ZipWith<
-                      Param,   // Zip with Param
-    /* Pipe of Zip */ ml::Map<
-                              ml::Curry<ml::F<Holder>>, // Curry the metafunction
-                                                        // made from Holder
-    /* Pipe of Map */         ml::F<ml::Compose>>>, // Metafunction
-                                                    // made from Compose
-          ml::ListT<Ts...>,                  // List of Ts...
-          ml::Range<>::f<0, sizeof...(Ts)>>; // ml::ListT<ml::Int<0>, ...
-                                             // ml::Int<sizeof...(Ts) - 1>>
+using MakeBase_f = ml::f<
+    ml::ZipWith<Param, ml::Map<ml::Curry<ml::F<Holder>>, ml::F<ml::Compose>>>,
+    ml::ListT<Ts...>, ml::Range<>::f<0, sizeof...(Ts)>>;
 ```
 
 Which, after using [`ml::None`](../reference/Vocabulary/None.md) as our bottom base class,

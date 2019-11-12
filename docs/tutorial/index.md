@@ -661,33 +661,33 @@ Algorithms have an associated header `CppML/Algorithm.hpp` and a directory of th
 
 We provide a detailed [`CppML reference`](../reference/index.md), which also contains an [`Algorithm`](../reference/index.md#algorithm) section. Please find the algorithm of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 
-| Construct                                                      | Description                                                      | Type of `f` in `::f >-> Pipe`   |
-|----------------------------------------------------------------|------------------------------------------------------------------|---------------------------------|
-| [`AllOf`](../reference/Algorithm/AllOf.md)                     | Checks if a `Predicate` holds for all of `Ts...`.                | `Ts... -> Bool<t>`              |
-| [`AnyOf`](../reference/Algorithm/AnyOf.md)                     | Checks if a `Predicate` holds for any of `Ts...`.                | `Ts... -> Bool<t>`              |
-| [`Contains`](../reference/Algorithm/Contains.md)               | Checks is `Ts...` contains `T`.                                  | `Ts... -> Bool<t>`              |
-| [`CountIf`](../reference/Algorithm/CountIf.md)                 | Counts `Ts...` for which the `Predicate` holds.                  | `Ts... -> Bool<t>`              |
-| [`Filter`](../reference/Algorithm/Filter.md)                   | Filters `Ts...`, for which the `Predicate` holds.                | `Ts... -> Us...`                |
-| [`FilterIds`](../reference/Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
-| [`FindIf`](../reference/Algorithm/FindIf.md)                   | Index of `Ts...` for which the `Predicate` holds.                | `Ts... -> Int<I>`               |
-| [`FindIfNot`](../reference/Algorithm/FindIfNot.md)             | Index of `Ts...` for which the `Predicate` does not hold.        | `Ts... -> Int<I>`               |
-| [`GroupBy`](../reference/Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                    | `Ts... -> ListT<Us...>...`      |
-| [`GroupIdsBy`](../reference/Algorithm/GroupIdsBy.md)           | Groups indexes of `Ts...`, given their (`T`'s) image under `By`. | `Ts... -> ListT<Int<Is>...>...` |
-| [`MaxElement`](../reference/Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                       | `Ts... -> U`                    |
-| [`NoneOf`](../reference/Algorithm/NoneOf.md)                   | Checks if a `Predicate` holds for none of `Ts...`.               | `Ts... -> Bool<t>`              |
-| [`Partition`](../reference/Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                          | `Ts... -> ListT<Us...>...`      |
-| [`PartitionIds`](../reference/Algorithm/PartitionIds.md)       | Partitions indexes of `Ts...` given a `Predicate`.               | `Ts... -> ListT<Int<Is>...>...` |
-| [`Pivot`](../reference/Algorithm/Pivot.md)                     | Pivots `Ts...` around the `N`-th element, making it the first.   | `Ts... -> Us...`                |
-| [`Reduce`](../reference/Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                        | `Init, Ts... -> U`              |
-| [`RemoveIdsIf`](../reference/Algorithm/RemoveIdsIf.md)         | Removes indexes of `Ts...` for which the `Predicate` holds.      | `Ts... -> Us...`                |
-| [`RemoveIf`](../reference/Algorithm/RemoveIf.md)               | Removes elements of `Ts...` for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
-| [`ReplaceIf`](../reference/Algorithm/ReplaceIf.md)             | Replace `Ts...`, for which the `Predicate` holds, by `U`.        | `Ts... -> Us...`                |
-| [`Rotate`](../reference/Algorithm/Rotate.md)                   | Pivots `Ts...` in the range `[First, Middle, Last)`.             | `Ts... -> Us...`                |
-| [`Sort`](../reference/Algorithm/Sort.md)                       | Sorts `Ts...`, given a `Comparator`.                             | `Ts... -> Us...`                |
-| [`UniqueCompare`](../reference/Algorithm/UniqueCompare.md)     | Unique elements of `Ts...`, given a `Comparator`.                | `Ts... -> Us...`                |
-| [`Unique`](../reference/Algorithm/Unique.md)                   | Unique elements of `Ts...`.                                      | `Ts... -> Us...`                |
-| [`ZipWith`](../reference/Algorithm/ZipWith.md)                 | Zips two lists with a `With` template.                           | `Ts... -> With<Us...>...`       |
-| [`ZipWithVariadic`](../reference/Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                  | `Ts... -> With<Us...>...`       |
+| Construct                                                      | Description                                                    | Type of `f` in `::f >-> Pipe`   |
+|----------------------------------------------------------------|----------------------------------------------------------------|---------------------------------|
+| [`AllOf`](../reference/Algorithm/AllOf.md)                     | Checks if a `Predicate` holds for all of `Ts...`.              | `Ts... -> Bool<t>`              |
+| [`AnyOf`](../reference/Algorithm/AnyOf.md)                     | Checks if a `Predicate` holds for any of `Ts...`.              | `Ts... -> Bool<t>`              |
+| [`Contains`](../reference/Algorithm/Contains.md)               | Checks is `Ts...` contains `T`.                                | `Ts... -> Bool<t>`              |
+| [`CountIf`](../reference/Algorithm/CountIf.md)                 | Counts `Ts...` for which the `Predicate` holds.                | `Ts... -> Bool<t>`              |
+| [`Filter`](../reference/Algorithm/Filter.md)                   | Filters `Ts...`, for which the `Predicate` holds.              | `Ts... -> Us...`                |
+| [`FilterIds`](../reference/Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.   | `Ts... -> Int<Is>...`           |
+| [`FindIf`](../reference/Algorithm/FindIf.md)                   | Index of `Ts...` for which the `Predicate` holds.              | `Ts... -> Int<I>`               |
+| [`FindIfNot`](../reference/Algorithm/FindIfNot.md)             | Index of `Ts...` for which the `Predicate` does not hold.      | `Ts... -> Int<I>`               |
+| [`GroupBy`](../reference/Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                  | `Ts... -> ListT<Us...>...`      |
+| [`InclusiveScan`](./Algorithm/InclusiveScan.md)                | Inclusive scan under the binary `F`.                           | `Ts... -> T0, F(T0, T1), ...`   |
+| [`MaxElement`](../reference/Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                     | `Ts... -> U`                    |
+| [`NoneOf`](../reference/Algorithm/NoneOf.md)                   | Checks if a `Predicate` holds for none of `Ts...`.             | `Ts... -> Bool<t>`              |
+| [`Partition`](../reference/Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                        | `Ts... -> ListT<Us...>...`      |
+| [`PartitionIds`](../reference/Algorithm/PartitionIds.md)       | Partitions indexes of `Ts...` given a `Predicate`.             | `Ts... -> ListT<Int<Is>...>...` |
+| [`Pivot`](../reference/Algorithm/Pivot.md)                     | Pivots `Ts...` around the `N`-th element, making it the first. | `Ts... -> Us...`                |
+| [`Reduce`](../reference/Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                      | `Init, Ts... -> U`              |
+| [`RemoveIdsIf`](../reference/Algorithm/RemoveIdsIf.md)         | Removes indexes of `Ts...` for which the `Predicate` holds.    | `Ts... -> Us...`                |
+| [`RemoveIf`](../reference/Algorithm/RemoveIf.md)               | Removes elements of `Ts...` for which the `Predicate` holds.   | `Ts... -> Int<Is>...`           |
+| [`ReplaceIf`](../reference/Algorithm/ReplaceIf.md)             | Replace `Ts...`, for which the `Predicate` holds, by `U`.      | `Ts... -> Us...`                |
+| [`Rotate`](../reference/Algorithm/Rotate.md)                   | Pivots `Ts...` in the range `[First, Middle, Last)`.           | `Ts... -> Us...`                |
+| [`Sort`](../reference/Algorithm/Sort.md)                       | Sorts `Ts...`, given a `Comparator`.                           | `Ts... -> Us...`                |
+| [`UniqueCompare`](../reference/Algorithm/UniqueCompare.md)     | Unique elements of `Ts...`, given a `Comparator`.              | `Ts... -> Us...`                |
+| [`Unique`](../reference/Algorithm/Unique.md)                   | Unique elements of `Ts...`.                                    | `Ts... -> Us...`                |
+| [`ZipWith`](../reference/Algorithm/ZipWith.md)                 | Zips two lists with a `With` template.                         | `Ts... -> With<Us...>...`       |
+| [`ZipWithVariadic`](../reference/Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                | `Ts... -> With<Us...>...`       |
 
 ## Further examples
 

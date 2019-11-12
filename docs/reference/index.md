@@ -41,6 +41,7 @@ Find the algorithm of your interest in the table below. Each of them has it own 
 | [`FindIfNot`](./Algorithm/FindIfNot.md)             | Index of `Ts...` for which the `Predicate` does not hold.        | `Ts... -> Int<I>`               |
 | [`GroupBy`](./Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                    | `Ts... -> ListT<Us...>...`      |
 | [`GroupIdsBy`](./Algorithm/GroupIdsBy.md)           | Groups indexes of `Ts...`, given their (`T`'s) image under `By`. | `Ts... -> ListT<Int<Is>...>...` |
+| [`InclusiveScan`](./Algorithm/InclusiveScan.md)     | Inclusive scan under the binary `F`.                             | `Ts... -> T0, F(T0, T1), ...`   |
 | [`MaxElement`](./Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                       | `Ts... -> U`                    |
 | [`NoneOf`](./Algorithm/NoneOf.md)                   | Checks if a `Predicate` holds for none of `Ts...`.               | `Ts... -> Bool<t>`              |
 | [`Partition`](./Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                          | `Ts... -> ListT<Us...>...`      |

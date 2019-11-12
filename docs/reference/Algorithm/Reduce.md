@@ -11,7 +11,7 @@ struct Reduce {
 ```
 ### `Reduce<F, Pipe>`
 
-`Reduce<F, Pipe>` is a metafunction that passes to `Pipe` the generalized sum (with `F` taking the role of the binary operator) of `Ts...`, initialized by `Init`. `Pipe` defaults to [`ml::ToList`](../Functional/ToList.md).
+`Reduce<F, Pipe>` is a metafunction that passes to `Pipe` the generalized sum (with `F` taking the role of the binary operator) of `Ts...`, initialized by `Init`. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
 f:: Init, Ts... -> F( ... F(F(Init, T0), T1), ... Tn) >-> Pipe

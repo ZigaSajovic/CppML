@@ -17,6 +17,7 @@
 #include "./Algorithm/FindIfNot.hpp"
 #include "./Algorithm/GroupBy.hpp"
 #include "./Algorithm/GroupIdsBy.hpp"
+#include "./Algorithm/InclusiveScan.hpp"
 #include "./Algorithm/MaxElement.hpp"
 #include "./Algorithm/NoneOf.hpp"
 #include "./Algorithm/Partition.hpp"

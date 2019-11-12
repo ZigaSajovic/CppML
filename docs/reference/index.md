@@ -3,7 +3,7 @@
 The constructs of `CppML` are divided in into several smaller headers, which are described below:
 
 | Header                        | Description                                                                                                                     |
-|:------------------------------|:--------------------------------------------------------------------------------------------------------------------------------|
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | [`Algorithm`](#algorithm)     | Algorithms over parameter packs (e.g. [`Sort`](./Algorithm/Sort.md), [`ZipWith`](./Algorithm/ZipWith.md), etc.)                 |
 | [`Arithmetic`](#arithmetic)   | Arithmetic operations on type-values (e.g. [`Greater`](./Arithmetic/Greater.md), [`Not`](./Arithmetic/Not.md), etc.)            |
 | [`ControlFlow`](#controlflow) | Constructs that control the flow of metaprograms (e.g. [`IfElse`](./ControlFlow/IfElse.md), [`For`](./ControlFlow/For.md) etc.) |

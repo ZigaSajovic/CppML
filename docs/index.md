@@ -24,14 +24,14 @@ You can follow the [`Metaprogramming Tutorial`](./tutorial/index.md) and learn h
 
 [CppML](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs are divided in the following headers:
 
-| Header                                             | Description                                                                                                                                           |
-|:---------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Header                                            | Description                                                                                                                                         |
+|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | [`Algorithm`](./reference/index.md#algorithm)     | Algorithms over parameter packs (e.g. [`Sort`](./reference/Algorithm/Sort.md), [`ZipWith`](./reference/Algorithm/ZipWith.md), etc.)                 |
 | [`Arithmetic`](./reference/index.md#arithmetic)   | Arithmetic operations on type-values (e.g. [`Greater`](./reference/Arithmetic/Greater.md), [`Not`](./reference/Arithmetic/Not.md), etc.)            |
 | [`ControlFlow`](./reference/index.md#controlflow) | Constructs that control the flow of metaprograms (e.g. [`IfElse`](./reference/ControlFlow/IfElse.md), [`For`](./reference/ControlFlow/For.md) etc.) |
 | [`Functional`](./reference/index.md#functional)   | Manipulation of metafunctions (e.g. [`Curry`](./reference/Functional/Curry.md), [`Map`](./reference/Functional/Map.md), etc.)                       |
 | [`Pack`](./reference/index.md#pack)               | Manipulation of parameter packs (e.g. [`Drop`](./reference/Pack/Drop.md), [`Get`](./reference/Pack/Get.md), etc.)                                   |
-| [`TypeTraits`](./reference/index.md#typetraits)   | Insights into types (e.g. [`IsSameAs`](./reference/TypeTraits/IsSameAs.md), [`IsClass`](./reference/TypeTraits/IsClass.md), etc.)                   |
+| [`TypeTraits`](./reference/index.md#typetraits)   | Insights into types (e.g. [`IsSame`](./reference/TypeTraits/IsSame.md), [`IsClass`](./reference/TypeTraits/IsClass.md), etc.)                       |
 | [`Vocabulary`](./reference/index.md#vocabulary)   | Vocabulary types of `CppML`   (e.g. [`ListT`](./reference/Vocabulary/ListT.md), [`Value`](./reference/Vocabulary/Value.md), etc.)                   |
 
 The complete `CppML reference` can be found [here](./reference/index.md).

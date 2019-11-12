@@ -26,7 +26,9 @@
     * [`CurryR`](#curryr)
     * [`Use case: A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies)
   * [`Aliases as type-lambdas`](#aliases-as-type-lambdas)
-* [`Algorithms on parameter packs`](algorithms-on-parameter-packs)
+* [`Algorithms on parameter packs`](#algorithms-on-parameter-packs)
+* [`Further examples`](#further-examples)
+  * [`Optimizing the memory layout of std::tuple`](#optimizing-the-memory-layout-of-stdtuple)
 
 
 ## Introduction
@@ -686,3 +688,44 @@ We provide a detailed [`CppML reference`](../reference/index.md), which also con
 | [`Unique`](../reference/Algorithm/Unique.md)                   | Unique elements of `Ts...`.                                      | `Ts... -> Us...`                |
 | [`ZipWith`](../reference/Algorithm/ZipWith.md)                 | Zips two lists with a `With` template.                           | `Ts... -> With<Us...>...`       |
 | [`ZipWithVariadic`](../reference/Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                  | `Ts... -> With<Us...>...`       |
+
+## Further examples
+
+### Optimizing the memory layout of `std::tuple`
+
+A detailed post about optimizing the memory layout of `std::tuple` using `CppML` can be found [here](https://github.com/ZigaSajovic/optimizing-the-memory-layout-of-std-tuple). The optimization comes from considering the way in which objects are laid out in memory (remember that they must be [naturally aligned](https://en.wikipedia.org/wiki/Data_structure_alignment) and thus padding may be required).
+We implement a class `Tuple`, which is an interface wrapper around `std::tuple`. It works by computing the permutation of the element of the tuple, that minimizes the needed padding and lays them out in memory in that order. It memorizes the permutation as an `ml::ListT<ml::Int<Is>...>`, and computes its inverse permutation. Using the inverse permutation, it than internally redirects the user to the correct element upon use (hence the user can be oblivious to the permutation).
+
+Please see the original post [Optimizing the memory layout of `std::tuple`](https://github.com/ZigaSajovic/optimizing-the-memory-layout-of-std-tuple), where the entire solution is constructed step by step. Here, we present the results.
+
+```c++
+
+  Tuple<char, int, char, int, char, double, char> tup{'a', 1,   'c', 3,
+                                                      'd', 5.0, 'e'};
+  std::cout << "Size of out Tuple: " << sizeof(tup) << " Bytes" << std::endl;
+
+  std::tuple<char, int, char, int, char, double, char> std_tup{'a', 1,   'c', 3,
+                                                               'd', 5.0, 'e'};
+  std::cout << "Size of out std::tuple: " << sizeof(std_tup) << " Bytes"
+            << std::endl;
+
+  std::cout << "Actual size of data: "
+            << 4 * sizeof(char) + 2 * sizeof(int) + sizeof(double) << " Bytes"
+            << std::endl;
+
+  std::cout << get<2>(tup) << " == " << std::get<2>(std_tup) << std::endl;
+  assert(tup == std_tup);
+```
+---
+> Size of Tuple:  24 Bytes  
+Size of std::tuple: 40 Bytes  
+Actual size of data: 20 Bytes  
+c == c
+---
+We notice that the *std::tuple* has **20 Bytes** of **wasted** space (making it **twice** as big as the actual data), while *Tuple* only has **4 Bytes** of **wasted** space.
+
+| **class**  | **size [B]** | **efficiency** |  
+|:----------:|:------------:|:--------------:|  
+| Data       | 20           | 1              |  
+| Tuple      | 24           | 0.84           |  
+| std::tuple | 40           | 0.5            |  

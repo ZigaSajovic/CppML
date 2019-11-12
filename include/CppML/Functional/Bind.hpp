@@ -7,8 +7,8 @@
 #ifndef CPPML_BIND_HPP
 #define CPPML_BIND_HPP
 #include "../Pack/Insert.hpp"
-#include "Compose.hpp"
-#include "Partial.hpp"
+#include "./Compose.hpp"
+#include "./Partial.hpp"
 
 namespace ml {
 /*

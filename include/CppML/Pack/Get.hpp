@@ -9,8 +9,8 @@
 #include "../Algorithm/Pivot.hpp"
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/Identity.hpp"
-#include "Drop.hpp"
-#include "Front.hpp"
+#include "./Drop.hpp"
+#include "./Front.hpp"
 namespace ml {
 /*
  * Get:

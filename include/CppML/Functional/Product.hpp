@@ -7,9 +7,9 @@
 #ifndef CPPML_PRODUCT_HPP
 #define CPPML_PRODUCT_HPP
 #include "../Algorithm/Pivot.hpp"
-#include "DelayedEval.hpp"
-#include "F.hpp"
-#include "Invoke.hpp"
+#include "./DelayedEval.hpp"
+#include "./F.hpp"
+#include "./Invoke.hpp"
 
 namespace ml {
 namespace Implementations {

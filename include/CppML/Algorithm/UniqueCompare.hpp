@@ -6,7 +6,7 @@
  **/
 #ifndef CPPML_UNIQUE_COMPARE_HPP
 #define CPPML_UNIQUE_COMPARE_HPP
-#include "Unique.hpp"
+#include "./Unique.hpp"
 
 namespace ml {
 template <typename Comparator, typename Pipe = ml::ToList>

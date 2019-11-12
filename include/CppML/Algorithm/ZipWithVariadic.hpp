@@ -8,7 +8,7 @@
 #define CPPML_ZIP_WITH_VARIADIC_HPP
 #include "../Functional/ToList.hpp"
 #include "../Vocabulary/List.hpp"
-#include "ZipWith.hpp"
+#include "./ZipWith.hpp"
 
 namespace ml {
 /*

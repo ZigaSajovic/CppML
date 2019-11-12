@@ -6,9 +6,9 @@
  **/
 #ifndef CPPML_CURRY_R_HPP
 #define CPPML_CURRY_R_HPP
-#include "F.hpp"
-#include "Partial.hpp"
-#include "PartialR.hpp"
+#include "./F.hpp"
+#include "./Partial.hpp"
+#include "./PartialR.hpp"
 namespace ml {
 /*
  * # CurryR:

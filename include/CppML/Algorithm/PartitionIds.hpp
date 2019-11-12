@@ -7,8 +7,8 @@
 #ifndef CPPML_PARTITION_IDS_HPP
 #define CPPML_PARTITION_IDS_HPP
 #include "../Functional/Product.hpp"
-#include "FilterIds.hpp"
-#include "RemoveIdsIf.hpp"
+#include "./FilterIds.hpp"
+#include "./RemoveIdsIf.hpp"
 
 namespace ml {
 /*

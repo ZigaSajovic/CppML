@@ -6,8 +6,8 @@
  **/
 #ifndef CPPML_CURRY_HPP
 #define CPPML_CURRY_HPP
-#include "F.hpp"
-#include "Partial.hpp"
+#include "./F.hpp"
+#include "./Partial.hpp"
 namespace ml {
 /*
  * # Curry:

@@ -6,7 +6,7 @@
  **/
 #ifndef CPPML_PARTIAL_R_HPP
 #define CPPML_PARTIAL_R_HPP
-#include "DelayedEval.hpp"
+#include "./DelayedEval.hpp"
 namespace ml {
 /*
  * PartialR:

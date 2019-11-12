@@ -7,7 +7,7 @@
 #ifndef CPPML_TO_LIST_HPP
 #define CPPML_TO_LIST_HPP
 #include "../Vocabulary/List.hpp"
-#include "F.hpp"
+#include "./F.hpp"
 namespace ml {
 /*
  * ToList:

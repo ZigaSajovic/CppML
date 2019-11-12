@@ -8,7 +8,7 @@
 #define CPPML_REMOVE_IF_HPP
 #include "../Arithmetic/Not.hpp"
 #include "../Functional/Compose.hpp"
-#include "Filter.hpp"
+#include "./Filter.hpp"
 
 namespace ml {
 /*

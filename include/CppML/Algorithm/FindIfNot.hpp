@@ -8,7 +8,7 @@
 #define CPPML_FIND_IF_NOT_HPP
 #include "../Arithmetic/Not.hpp"
 #include "../Functional/Compose.hpp"
-#include "FindIf.hpp"
+#include "./FindIf.hpp"
 
 namespace ml {
 /*

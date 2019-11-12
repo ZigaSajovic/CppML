@@ -6,9 +6,9 @@
  **/
 #ifndef CPPML_F_HPP
 #define CPPML_F_HPP
-#include "DelayedEval.hpp"
-#include "Identity.hpp"
-#include "Invoke.hpp"
+#include "./DelayedEval.hpp"
+#include "./Identity.hpp"
+#include "./Invoke.hpp"
 
 namespace ml {
 /*

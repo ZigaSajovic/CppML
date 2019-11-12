@@ -7,8 +7,8 @@
 #ifndef CPPML_PARTITION_HPP
 #define CPPML_PARTITION_HPP
 #include "../Functional/Product.hpp"
-#include "Filter.hpp"
-#include "RemoveIf.hpp"
+#include "./Filter.hpp"
+#include "./RemoveIf.hpp"
 
 namespace ml {
 /*

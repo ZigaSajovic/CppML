@@ -1,6 +1,6 @@
-# CppML API Reference
+# `CppML` Reference
 
-#### Headers
+The constructs of `CppML` are divided in into several smaller headers, which are described below:
 
 | Header                        | Description                                                                                                                     |
 |:------------------------------|:--------------------------------------------------------------------------------------------------------------------------------|
@@ -9,16 +9,24 @@
 | [`ControlFlow`](#controlflow) | Constructs that control the flow of metaprograms (e.g. [`IfElse`](./ControlFlow/IfElse.md), [`For`](./ControlFlow/For.md) etc.) |
 | [`Functional`](#functional)   | Manipulation of metafunctions (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), etc.)                       |
 | [`Pack`](#pack)               | Manipulation of parameter packs (e.g. [`Drop`](./Pack/Drop.md), [`Get`](./Pack/Get.md), etc.)                                   |
-| [`TypeTraits`](#typetraits)   | Insights into types (e.g. [`IsSameAs`](./TypeTraits/IsSameAs.md), [`IsClass`](./TypeTraits/IsClass.md), etc.)                   |
+| [`TypeTraits`](#typetraits)   | Insights into types (e.g. [`IsSame`](./TypeTraits/IsSame.md), [`IsClass`](./TypeTraits/IsClass.md), etc.)                       |
 | [`Vocabulary`](#vocabulary)   | Vocabulary types of `CppML`   (e.g. [`ListT`](./Vocabulary/ListT.md), [`Value`](./Vocabulary/Value.md), etc.)                   |
+
+
+
+### Structure
+
+CppML is structured as follows:
+* each section has an associated header `.hpp` and a directory of the same name in the `CppML/` directory. For example, the `Algorithm` section has an `Algorithm.hpp` header located in the `include/CppML`
+* every component of each section has a dedicated `.hpp` header inside the libraries associated directory. For example, `Sort`, a component of the `Algorithm` section, has a header located at `include/CppML/Algorithm/Sort.hpp`.
+
+Thus, to use any component, you can either include its specific header (e.g. `#include <CppML/Algorithm/Sort.hpp>`), or include its containing header `#include <CppML/Algorithm.hpp>`. Note that you may include all of them at once using `#include <CppML/CppML.hpp>`.
 
 
 
 ## `Algorithm`
 
-Contains *algorithms* that operate on *parameter packs*. You can include any algorithm separately by `CppML/Algorithm/<name>.hpp`, or include the entire header `CppML/Algorithm.hpp`.
-
-Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+Find the algorithm of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 
 
 | Construct                                           | Description                                                      | Type of `f` in `::f >-> Pipe`   |
@@ -51,9 +59,7 @@ Please find the construct of your interest in the table below. Each of them has 
 
 ## `Arithmetic`
 
-Contains *arithmetic operations* that operate on *types* (e. g. `Not`, `Less`). You can include any operation separately by `CppML/Arithmetic/<name>.hpp`, or include the entire header `CppML/Arithmetic.hpp`.
-
-Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+Find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 
 | Construct                                | Description                  | Type of `f` in `::f >-> Pipe`                 |
 |------------------------------------------|------------------------------|-----------------------------------------------|
@@ -69,8 +75,8 @@ Please find the construct of your interest in the table below. Each of them has 
 ## `ControlFlow`
 
 Contains constructs that *control* the *flow* of a metaprogram (e.g. `IfElse`). You can include any operation separately by `CppML/ControlFlow/<name>.hpp`, or include the entire header `CppML/ControlFlow.hpp`.
-
-Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+F
+Find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 
 | Construct                           | Description                         | Type of `f` in `::f >-> Pipe`                        |
 |-------------------------------------|-------------------------------------|------------------------------------------------------|
@@ -81,7 +87,7 @@ Please find the construct of your interest in the table below. Each of them has 
 
 Contains *functional* utilities (e.g. `Map`). You can include any construct separately by `CppML/Functional/<name>.hpp`, or include the entire header `CppML/Functional.hpp`.
 
-Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+Find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 
 | Construct                                    | Description                                          | Type of `f` in `::f >-> Pipe`  |
 |----------------------------------------------|------------------------------------------------------|--------------------------------|
@@ -107,7 +113,7 @@ Please find the construct of your interest in the table below. Each of them has 
 
 Contains *utilities* for manipulating *parameter packs*. You can include any construct separately by `CppML/Pack/<name>.hpp`, or include the entire header `CppML/Pack.hpp`.
 
-Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+Find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 
 | Construct                                  | Description                              | Type of `f` in `::f >-> Pipe`                     |
 |--------------------------------------------|------------------------------------------|---------------------------------------------------|
@@ -142,7 +148,7 @@ Contains metafunctions that *reason* about the input *types*. You can include an
 
 Contains the *vocabulary* constructs of **CppML**. You can include any construct separately by `CppML/Vocabulary/<name>.hpp`, or include the entire header `CppML/Vocabulary.hpp`.
 
-Please find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+Find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 
 | Construct                        | Description                 |
 |----------------------------------|-----------------------------|

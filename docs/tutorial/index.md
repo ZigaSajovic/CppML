@@ -23,29 +23,24 @@
     * [`Use case: A generator of linear CRTP class hierarchies`](#use-case-a-generator-of-linear-crtp-class-hierarchies)
   * [`Currying`](#currying)
     * [`Curry`](#curry)
+    * [`CurryR`](#curryr)
+    * [`Use case: A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies)
 
 
 ## Introduction
 
-`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that behave as **algorithms** in a **functional language**.
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that behave as **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](#pipes) through which [`parameter packs`](#parameter-pack) can flow **without instantiating** new **types**.
 
-3 design principles
+In this tutorial, we will examine the key concepts behind `CppML`, and demonstrate how to manipulate metafunctions as its *first-class citizens*. Through it, we will familiarize ourselves with concepts such as [`Product Map`](#product-map), [`Partial evaluation`](#partial-evaluation), [`Currying`](#currying), and others.
+On our way, we will learn how to use the [`Pack`](../reference/index.md#pack) header to manipulate [`parameter packs`](#parameter-pack) and how to command their flow through the pipelines using algorithms (provided in the [`Algorithm`](../reference/index.md/#algorithm) header). Finally, we will touch on how to include logic based on introspection in your class design, using aliases as type lambdas.
 
-compositional pipelines
+#### Links to `CppML Reference`
 
-it strives to be easy to speak and easy to read
-
-
-
-### Link to Reference
-
-Throughout this tutorial, all links with the `ml::` prefix (e.g. [`ml::Map`](../reference/Functional/Map.md)) lead to the [`CppML reference`](../reference/index.md) for that specific metafunction. Each of them provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use.
+Throughout this tutorial, all links with the `ml::` prefix (e.g. [`ml::Map`](../reference/Functional/Map.md)) lead to the [`CppML reference`](../reference/index.md) for that specific metafunction. Each of them provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. You are encouraged to follow them, as you will quickly be able to learn from the [`CppML reference`](../reference/index.md) itself.
 
 ## Key Concepts
 
 ### Parameter pack
-
-> In the language of [CppML](https://github.com/ZigaSajovic/CppML), [`parameter packs`](#parameter-pack) are **streams** of **types passing** through **compositional pipes** of **transformations**.
 
 A parameter pack is a template argument with the syntax
 
@@ -189,7 +184,17 @@ can be *lifted* to a [`metafunction`](#metafunction), through the use of [`ml::F
 using TupleF = ml::F<std::tuple>;
 ```
 
-and alter the previous example, to [`Pipe`](#pipe) the result into it
+which can than be evaluated
+
+```c++
+using T = ml::f<TupleF, int, char>;
+static_assert(
+          ml::is_same_v<
+                  T,
+                  std::tuple<int, char>>);
+```
+
+We can now alter the previous example, and use `TupleF`, as the [`Pipe`](#pipes) of [`ml::Filter`](../reference/Algorithm/Filter.md)
 
 ```c++
 using T2 = ml::f<
@@ -501,13 +506,15 @@ Using the mechanics described so far, this can be achieved by:
 * Transform each template policy into a metafunction using [`ml::F`](../reference/Functional/F.md), and
 * Partially evaluate each of them on `Derived` using [`ml::Partial`](../reference/Functional/Partial.md), and
 * compose these partial evaluations using [`ml::Compose`](../reference/Functional/Compose.md), and
-* evaluate the composition on the `Bottom` base class.
+* evaluate the composition on the `ml::None`, making it the bottom base class.
+
+This sequence is easily translated into `CppML`.
 
 ```c++
 template <typename Derived, template <class, class> class ...Policies>
 using MakeBase = ml::f<ml::Compose<ml::Partial<ml::F<Policies>, Derived>...>, ml::None>;
 ```
-
+which concludes our implementation of `Class` (above).
 
 ### Currying
 
@@ -521,22 +528,97 @@ Let `F` be a metafunction `Args... -> Us...`. Than [`ml::Curry<F>`](../reference
 f:: T0s... -> T1s... -> Us...
 ```
 
-# Appendix
+This means that you can imagine the [`ml::Curry<F>`](../reference/Functional/Curry.md) as [partially evaluated metafunction](#partial-evaluation) made by [`lifting the template`](#lifting-templates-to-metafunctions)) of [`ml::Partial`](../reference/Functional/Partial.md) to a metafunction using [`ml::F`](../reference/Functional/F.md), and partially evaluating it on `F` (the template argument of `Curry`). So lets write it:
 
-## Pack expansions and non-pack parameter of alias template
-
-[CppML](https://github.com/ZigaSajovic/CppML) **correctly** handles **mixed** alias templates of **pack** and **non-pack** arguments. This means that you can create [`metafunctions`](#metafunction) from aliases (using the [`ml::F`](../reference/Functional/F.md), from the [`Functional`](../reference/index.md#functional) header) such as
 ```c++
-template<typename T, typename U>
-using AT1 = /*...*/
-using MetaF1 = ml::F<AT1>;
+template <typename F>
+using Curry = ml::Partial<ml::F<ml::Partial>, F>;
 ```
-and
-```c++
-template<typename T, typename ...Ts>
-using AT2 = /*...*/
-using MetaF2 = ml::F<AT2>;
-```
-and **they will properly interact** with the entire [CppML](https://github.com/ZigaSajovic/CppML) language, **without raising** the dreaded
 
-> **error**: pack expansion used as argument for non-pack parameter of alias template
+Note that in `CppML`, [`ml::Curry<F>`](../reference/Functional/Curry.md) is implemented by inheritance instead of an alias, to make it a distinct type. But the logic is the same.
+
+#### CurryR
+
+Please consult the [`CppML reference`](../reference/index.md) for [`ml::CurryR`](../reference/Functional/CurryR.md), which is like [`ml::Curry`](../reference/Functional/Curry.md), except that it partially evaluates from the right (see [`ml::PartialR`](../reference/Functional/PartialR.md)).
+
+#### Use case: A generator of tagged class hierarchies
+
+Suppose have an object holder, which (as in our previous use case) uses *base-chaining*
+
+```c++
+template <typename TaggedObject, typename Base>
+struct Holder : Base;
+```
+
+but each object being held, needs to be *tagged* using an [`ml::Int`](../reference/Vocabulary/Value.md), to both give it a distinct identity, and a static index. As such, assuming
+
+```c++
+template <typename Tag, typename Object> struct Param {};
+```
+
+each `TaggedObject` is constrained to be `Param<ml::Int<N>, Object>`.
+
+```c++
+template <int N, typename Object, typename Base>
+struct Holder<Param<ml::Int<N>, Object>, Base> : Base {
+  Object object;
+  /* Implementation of logic */
+};
+```
+
+For example, this is used in some implementations of `std::tuple`. One creates a nested hierarchy of such `Holder`s and derives from it. In order to be able to make use of such techniques, we need a metaprogram `MakeBase`
+
+```c++
+template <typename ...Ts>
+struct Class : MakeBase<Ts...> {
+  /* Implementation */
+};
+```
+
+where `MakeBase<T0, T1, T2, T3>` is equivalent to
+
+```c++
+Holder<Param<ml::Int<0>, T0>,
+                Holder<Param<ml::Int<1>, T1>,
+                                Holder<Param<ml::Int<2>, T2>>,
+                                                  Holder<Param<ml::Int<3>, T3>>>>;
+```
+
+Using the mechanics described so far, this can be achieved by:
+
+* Zip with `Param` (using [`ml::ZipWith`](../reference/Algorithm/ZipWith.md))
+  * the list made from `Ts...`
+    * [`ml::ListT`](../reference/Vocabulary/List.md)`<Ts...>`, and
+  * the list of type-integers in the range `[0, sizeof...(Ts))`, (which is created using [`ml::Range`](../reference/Pack/Range.md))
+    * [`ml::ListT`](../reference/Vocabulary/List.md)`<`[`ml::Int`](../reference/Vocabulary/Value.md)`<0>, ..., `[`ml::Int`](../reference/Vocabulary/Value.md)`<sizeof...(Ts) - 1>>` 
+* [`ml::Map`](../reference/Functional/Map.md) the resulting parameter pack `Param<ml::Int<Is>, Ts>...`, by the metafunction we get by
+  * Currying the metafunction (using [`ml::Curry`](../reference/Functional/Curry.md))
+    * made from `Holder` (using [`ml::F`](../reference/Functional/F.md); see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions))
+* and compose the resulting parameter pack of partially evaluated metafunctions, by having map pass it into `Pipe`
+  * which is a metafunction we made from [`ml::Compose`](../reference/Functional/Compose.md) (see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions))
+
+This leaves us with a metafunction that is to be evaluated on its most bottom `Base` class. The sequence is easily translated into `CppML`.
+
+```c++
+template <typename ...Ts>
+using MakeBase_f =
+    ml::f<ml::ZipWith<
+                      Param,   // Zip with Param
+    /* Pipe of Zip */ ml::Map<
+                              ml::Curry<ml::F<Holder>>, // Curry the metafunction
+                                                        // made from Holder
+    /* Pipe of Map */         ml::F<ml::Compose>>>, // Metafunction
+                                                    // made from Compose
+          ml::ListT<Ts...>,                  // List of Ts...
+          ml::Range<>::f<0, sizeof...(Ts)>>; // ml::ListT<ml::Int<0>, ...
+                                             // ml::Int<sizeof...(Ts) - 1>>
+```
+
+Which, after using [`ml::None`](../reference/Vocabulary/None.md) as our bottom base class,
+
+```c++
+template <typename ...Ts>
+using MakeBase = ml::f<MakeBase_f<Ts...>, ml::None>;
+```
+
+concludes our implementation of `Class` (above).

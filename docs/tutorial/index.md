@@ -26,6 +26,7 @@
     * [`CurryR`](#curryr)
     * [`Use case: A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies)
   * [`Aliases as type-lambdas`](#aliases-as-type-lambdas)
+* [`Algorithms on parameter packs`](algorithms-on-parameter-packs)
 
 
 ## Introduction
@@ -647,3 +648,41 @@ static_assert(
             ml::Bool<true>,
             T>);
 ```
+
+## Algorithms on parameter packs
+
+We have already meet a few of the algorithms (like [`ml::ZipWith`](../reference/Algorithm/ZipWith.md), [`ml::Filter`](../reference/Algorithm/Filter.md), etc.) on our way to this point of the tutorial. As was apparent from their usage, they are no different from any other [`metafunction`](#metafunction) operating on [`parameter packs`](#parameter-pack), so there is not much extra to be said about them. But what is important, is to know how to find them, when you need them.
+
+Algorithms have an associated header `CppML/Algorithm.hpp` and a directory of the same name `CppML/Algorithm`. Every algorithm has a dedicated `.hpp` header inside the `CppML/Algorithm/` directory. For example, the algorithm, [`ml::Sort`](../reference/Algorithm/Sort.md), can be found in the `CppML/Algorithm/Sort.hpp`. Hence, you can include all algorithms at once using `#include <CppML/Algorithm.hpp>`, or include only the ones you want (e.g. `#include <CppML/Algorithm/Sort.hpp>`
+
+### Algorithm Reference
+
+We provide a detailed [`CppML reference`](../reference/index.md), which also contains an [`Algorithm`](../reference/index.md#algorithm) section. Please find the algorithm you are interested in in the table below, and click the link, which will take you to it `reference entry`.
+
+| Algorithm                                                      | Description                                                      | Type of `f` in `::f >-> Pipe`   |
+|----------------------------------------------------------------|------------------------------------------------------------------|---------------------------------|
+| [`AllOf`](../reference/Algorithm/AllOf.md)                     | Checks if a `Predicate` holds for all of `Ts...`.                | `Ts... -> Bool<t>`              |
+| [`AnyOf`](../reference/Algorithm/AnyOf.md)                     | Checks if a `Predicate` holds for any of `Ts...`.                | `Ts... -> Bool<t>`              |
+| [`Contains`](../reference/Algorithm/Contains.md)               | Checks is `Ts...` contains `T`.                                  | `Ts... -> Bool<t>`              |
+| [`CountIf`](../reference/Algorithm/CountIf.md)                 | Counts `Ts...` for which the `Predicate` holds.                  | `Ts... -> Bool<t>`              |
+| [`Filter`](../reference/Algorithm/Filter.md)                   | Filters `Ts...`, for which the `Predicate` holds.                | `Ts... -> Us...`                |
+| [`FilterIds`](../reference/Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
+| [`FindIf`](../reference/Algorithm/FindIf.md)                   | Index of `Ts...` for which the `Predicate` holds.                | `Ts... -> Int<I>`               |
+| [`FindIfNot`](../reference/Algorithm/FindIfNot.md)             | Index of `Ts...` for which the `Predicate` does not hold.        | `Ts... -> Int<I>`               |
+| [`GroupBy`](../reference/Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                    | `Ts... -> ListT<Us...>...`      |
+| [`GroupIdsBy`](../reference/Algorithm/GroupIdsBy.md)           | Groups indexes of `Ts...`, given their (`T`'s) image under `By`. | `Ts... -> ListT<Int<Is>...>...` |
+| [`MaxElement`](../reference/Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                       | `Ts... -> U`                    |
+| [`NoneOf`](../reference/Algorithm/NoneOf.md)                   | Checks if a `Predicate` holds for none of `Ts...`.               | `Ts... -> Bool<t>`              |
+| [`Partition`](../reference/Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                          | `Ts... -> ListT<Us...>...`      |
+| [`PartitionIds`](../reference/Algorithm/PartitionIds.md)       | Partitions indexes of `Ts...` given a `Predicate`.               | `Ts... -> ListT<Int<Is>...>...` |
+| [`Pivot`](../reference/Algorithm/Pivot.md)                     | Pivots `Ts...` around the `N`-th element, making it the first.   | `Ts... -> Us...`                |
+| [`Reduce`](../reference/Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                        | `Ts... -> U`                    |
+| [`RemoveIdsIf`](../reference/Algorithm/RemoveIdsIf.md)         | Removes indexes of `Ts...` for which the `Predicate` holds.      | `Ts... -> Us...`                |
+| [`RemoveIf`](../reference/Algorithm/RemoveIf.md)               | Removes elements of `Ts...` for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
+| [`ReplaceIf`](../reference/Algorithm/ReplaceIf.md)             | Replace `Ts...`, for which the `Predicate` holds, by `U`.        | `Ts... -> Us...`                |
+| [`Rotate`](../reference/Algorithm/Rotate.md)                   | Pivots `Ts...` in the range `[First, Middle, Last)`.             | `Ts... -> Us...`                |
+| [`Sort`](../reference/Algorithm/Sort.md)                       | Sorts `Ts...`, given a `Comparator`.                             | `Ts... -> Us...`                |
+| [`UniqueCompare`](../reference/Algorithm/UniqueCompare.md)     | Unique elements of `Ts...`, given a `Comparator`.                | `Ts... -> Us...`                |
+| [`Unique`](../reference/Algorithm/Unique.md)                   | Unique elements of `Ts...`.                                      | `Ts... -> Us...`                |
+| [`ZipWith`](../reference/Algorithm/ZipWith.md)                 | Zips two lists with a `With` template.                           | `Ts... -> With<Us...>...`       |
+| [`ZipWithVariadic`](../reference/Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                  | `Ts... -> With<Us...>...`       |

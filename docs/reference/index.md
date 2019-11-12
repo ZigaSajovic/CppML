@@ -18,44 +18,48 @@
 
 Contains *algorithms* that operate on *parameter packs*. You can include any algorithm separately by `CppML/Algorithm/<name>.hpp`, or include the entire header `CppML/Algorithm.hpp`.
 
-* [`AllOf`](./Algorithm/AllOf.md)
-* [`AnyOf`](./Algorithm/AnyOf.md)
-* [`Contains`](./Algorithm/Contains.md)
-* [`CountIf`](./Algorithm/CountIf.md)
-* [`Filter`](./Algorithm/Filter.md)
-* [`FilterIds`](./Algorithm/FilterIds.md)
-* [`FindIf`](./Algorithm/FindIf.md)
-* [`FindIfNot`](./Algorithm/FindIfNot.md)
-* [`GroupBy`](./Algorithm/GroupBy.md)
-* [`GroupIdsBy`](./Algorithm/GroupIdsBy.md)
-* [`MaxElement`](./Algorithm/MaxElement.md)
-* [`NoneOf`](./Algorithm/NoneOf.md)
-* [`Partition`](./Algorithm/Partition.md)
-* [`PartitionIds`](./Algorithm/PartitionIds.md)
-* [`Pivot`](./Algorithm/Pivot.md)
-* [`Reduce`](./Algorithm/Reduce.md)
-* [`RemoveIdsIf`](./Algorithm/RemoveIdsIf.md)
-* [`RemoveIf`](./Algorithm/RemoveIf.md)
-* [`ReplaceIf`](./Algorithm/ReplaceIf.md)
-* [`Rotate`](./Algorithm/Rotate.md)
-* [`Sort`](./Algorithm/Sort.md)
-* [`UniqueCompare`](./Algorithm/UniqueCompare.md)
-* [`Unique`](./Algorithm/Unique.md)
-* [`ZipWith`](./Algorithm/ZipWith.md)
-* [`ZipWithVariadic`](./Algorithm/ZipWithVariadic.md)
+| Algorithm                                           | Description                                                      | Type of `f` in `::f >-> Pipe`   |
+|-----------------------------------------------------|------------------------------------------------------------------|---------------------------------|
+| [`AllOf`](./Algorithm/AllOf.md)                     | Checks if a `Predicate` holds for all of `Ts...`.                | `Ts... -> Bool<t>`              |
+| [`AnyOf`](./Algorithm/AnyOf.md)                     | Checks if a `Predicate` holds for any of `Ts...`.                | `Ts... -> Bool<t>`              |
+| [`Contains`](./Algorithm/Contains.md)               | Checks is `Ts...` contains `T`.                                  | `Ts... -> Bool<t>`              |
+| [`CountIf`](./Algorithm/CountIf.md)                 | Counts `Ts...` for which the `Predicate` holds.                  | `Ts... -> Bool<t>`              |
+| [`Filter`](./Algorithm/Filter.md)                   | Filters `Ts...`, for which the `Predicate` holds.                | `Ts... -> Us...`                |
+| [`FilterIds`](./Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
+| [`FindIf`](./Algorithm/FindIf.md)                   | Index of `Ts...` for which the `Predicate` holds.                | `Ts... -> Int<I>`               |
+| [`FindIfNot`](./Algorithm/FindIfNot.md)             | Index of `Ts...` for which the `Predicate` does not hold.        | `Ts... -> Int<I>`               |
+| [`GroupBy`](./Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                    | `Ts... -> ListT<Us...>...`      |
+| [`GroupIdsBy`](./Algorithm/GroupIdsBy.md)           | Groups indexes of `Ts...`, given their (`T`'s) image under `By`. | `Ts... -> ListT<Int<Is>...>...` |
+| [`MaxElement`](./Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                       | `Ts... -> U`                    |
+| [`NoneOf`](./Algorithm/NoneOf.md)                   | Checks if a `Predicate` holds for none of `Ts...`.               | `Ts... -> Bool<t>`              |
+| [`Partition`](./Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                          | `Ts... -> ListT<Us...>...`      |
+| [`PartitionIds`](./Algorithm/PartitionIds.md)       | Partitions indexes of `Ts...` given a `Predicate`.               | `Ts... -> ListT<Int<Is>...>...` |
+| [`Pivot`](./Algorithm/Pivot.md)                     | Pivots `Ts...` around the `N`-th element, making it the first.   | `Ts... -> Us...`                |
+| [`Reduce`](./Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                        | `Ts... -> U`                    |
+| [`RemoveIdsIf`](./Algorithm/RemoveIdsIf.md)         | Removes indexes of `Ts...` for which the `Predicate` holds.      | `Ts... -> Us...`                |
+| [`RemoveIf`](./Algorithm/RemoveIf.md)               | Removes elements of `Ts...` for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
+| [`ReplaceIf`](./Algorithm/ReplaceIf.md)             | Replace `Ts...`, for which the `Predicate` holds, by `U`.        | `Ts... -> Us...`                |
+| [`Rotate`](./Algorithm/Rotate.md)                   | Pivots `Ts...` in the range `[First, Middle, Last)`.             | `Ts... -> Us...`                |
+| [`Sort`](./Algorithm/Sort.md)                       | Sorts `Ts...`, given a `Comparator`.                             | `Ts... -> Us...`                |
+| [`UniqueCompare`](./Algorithm/UniqueCompare.md)     | Unique elements of `Ts...`, given a `Comparator`.                | `Ts... -> Us...`                |
+| [`Unique`](./Algorithm/Unique.md)                   | Unique elements of `Ts...`.                                      | `Ts... -> Us...`                |
+| [`ZipWith`](./Algorithm/ZipWith.md)                 | Zips two lists with a `With` template.                           | `Ts... -> With<Us...>...`       |
+| [`ZipWithVariadic`](./Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                  | `Ts... -> With<Us...>...`       |
 
 ## `Arithmetic`
 
 Contains *arithmetic operations* that operate on *types* (e. g. `Not`, `Less`). You can include any operation separately by `CppML/Arithmetic/<name>.hpp`, or include the entire header `CppML/Arithmetic.hpp`.
 
-* [`Add`](./Arithmetic/Add.md)
-* [`Decrement`](./Arithmetic/Decrement.md)
-* [`Equals`](./Arithmetic/Equals.md)
-* [`Greater`](./Arithmetic/Greater.md)
-* [`Increment`](./Arithmetic/Increment.md)
-* [`Less`](./Arithmetic/Less.md)
-* [`Not`](./Arithmetic/Not.md)
-* [`Subtract`](./Arithmetic/Subtract.md)
+| Arithmetic                               | Description                 | Type of `f` in `::f >-> Pipe`                 |
+|------------------------------------------|-----------------------------|-----------------------------------------------|
+| [`Add`](./Arithmetic/Add.md)             | Adds two `Value`s           | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
+| [`Decrement`](./Arithmetic/Decrement.md) | Decrements a `Value`        | `Value<t, T> -> Value<--t, T>`                |
+| [`Equals`](./Arithmetic/Equals.md)       | Equality check for `Values` | `Value<T, t>, Value<U, u> -> Bool<t>`         |
+| [`Greater`](./Arithmetic/Greater.md)     | Greater for `Values`        | `Value<T, t>, Value<U, u> -> Bool<t>`         |
+| [`Increment`](./Arithmetic/Increment.md) | Increments a `Value`        | `Value<t, T> -> Value<++t, T>`                |
+| [`Less`](./Arithmetic/Less.md)           | Less for `Values`           | `Value<T, t>, Value<U, u> -> Bool<t>`         |
+| [`Not`](./Arithmetic/Not.md)             | Negates a `Value`           | `Bool<t> -> Bool< not t>`                     |
+| [`Subtract`](./Arithmetic/Subtract.md)   | Subtracts two `Value`s      | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
 
 ## `ControlFlow`
 

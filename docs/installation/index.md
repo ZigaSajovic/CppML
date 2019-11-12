@@ -21,9 +21,9 @@ Consider running the build/install command with setting the install prefix, if y
 cmake .. -DCMAKE_INSTALL_PREFIX:PATH=${HOME}/CppML-install
 ```
 
-#### Using
+#### Usage
 
-To use the installed library in your project, add the following two lines to its `CMakeLists.txt`.
+To use the installed library in your project, add the following two lines to your `CMakeLists.txt`.
 
 ```cmake
 find_package(CppML REQUIRED)
@@ -34,9 +34,9 @@ target_link_libraries(my_project CppML::CppML)
 
 You can embed the entire [CppML](https://github.com/ZigaSajovic/CppML) source tree into your project's source tree (e.g. via `git submodules`, or copying the [CppML](https://github.com/ZigaSajovic/CppML) directory to the root of your project).
 
-#### Using
+#### Usage
 
-To use the installed library in your project, add the following two lines to its `CMakeLists.txt`.
+To use the installed library in your project, add the following two lines to your `CMakeLists.txt`.
 
 ```cmake
 add_subdirectory(CppML)

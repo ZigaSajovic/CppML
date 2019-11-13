@@ -124,7 +124,7 @@ Find the construct of your interest in the table below. Each of them has it own 
 | [`Head`](./Pack/Head.md)                   | First `N` of `Ts...`                     | `T1, ... Tn, Ts... -> T1, ... Tn`                 |
 | [`Insert`](./Pack/Insert.md)               | Inserts `U` as `N`-th element of `Ts...` | `T1, ... Tn, Ts... -> T1, ... U, Tn, Ts... `      |
 | [`Length`](./Pack/Length.md)               | Length of `Ts...`                        | `Ts... -> Int<sizeof...(Ts)`                      |
-| [`Concat`](./Pack/Concat.md)               | Concatenates templates `N` templates `T` | `T<A0s...>... -> T<A0s..., A1s..., Ans...>`       |
+| [`Concat`](./Pack/Concat.md)               | Concatenates `N` templates `T`           | `T<A0s...>... -> T<A0s..., A1s..., Ans...>`       |
 | [`PackExtractor`](./Pack/PackExtractor.md) | Extracts `N`-th element.                 | `Int<N> -> T`                                     |
 | [`Prepend`](./Pack/Prepend.md)             | Prepends `T` to `Ts...`                  | `Ts... -> T, Ts...`                               |
 | [`Range`](./Pack/Range.md)                 | Pack of `Int<I>` in range                | `From, To -> Int<From>..., Int<To - 1>`           |

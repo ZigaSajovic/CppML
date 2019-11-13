@@ -28,11 +28,13 @@
   * [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)
     * [`Use case: Subsetting a std::tuple to its non-class types`](#use-case-subsetting-a-stdtuple-to-its-non-class-types)
   * [`Aliases as type-lambdas`](#aliases-as-type-lambdas)
-* [`Algorithms on parameter packs`](#algorithms-on-parameter-packs)
 * [`Manipulating parameter packs`](#manipulating-parameter-packs)
   * [`Choosing and Sub-packing`](#choosing-and-sub-packing)
   * [`Appending, Prepending and Inserting`](#appending-prepending-and-inserting)
     * [`Appending multiple elements using partial evaluations`](#appending-multiple-elements-using-partial-evaluations)
+  * [`Pack Reference`](#pack-reference)
+* [`Algorithms on parameter packs`](#algorithms-on-parameter-packs)
+  * [`Algorithm Reference`](#algorithm-reference)
 * [`Further examples`](#further-examples)
   * [`Optimizing the memory layout of std::tuple`](#optimizing-the-memory-layout-of-stdtuple)
 
@@ -708,44 +710,6 @@ static_assert(
             T>);
 ```
 
-## Algorithms on parameter packs
-
-We have already meet a few of the algorithms (like [`ml::ZipWith`](../reference/Algorithm/ZipWith.md), [`ml::Filter`](../reference/Algorithm/Filter.md), etc.) on our way to this point of the tutorial. As was apparent from their usage, they are no different from any other [`metafunction`](#metafunction) operating on [`parameter packs`](#parameter-pack), so there is not much extra to be said about them. But what is important, is to know how to find them, when you need them.
-
-Algorithms have an associated header `CppML/Algorithm.hpp` and a directory of the same name `CppML/Algorithm`. Every algorithm has a dedicated `.hpp` header inside the `CppML/Algorithm/` directory. For example, the algorithm, [`ml::Sort`](../reference/Algorithm/Sort.md), can be found in the `CppML/Algorithm/Sort.hpp`. Hence, you can include all algorithms at once using `#include <CppML/Algorithm.hpp>`, or include only the ones you want (e.g. `#include <CppML/Algorithm/Sort.hpp>`
-
-### Algorithm Reference
-
-We provide a detailed [`CppML reference`](../reference/index.md), which also contains an [`Algorithm`](../reference/index.md#algorithm) section. Please find the algorithm of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
-
-| Construct                                                      | Description                                                    | Type of `f` in `::f >-> Pipe`   |
-|----------------------------------------------------------------|----------------------------------------------------------------|---------------------------------|
-| [`AllOf`](../reference/Algorithm/AllOf.md)                     | Checks if a `Predicate` holds for all of `Ts...`.              | `Ts... -> Bool<t>`              |
-| [`AnyOf`](../reference/Algorithm/AnyOf.md)                     | Checks if a `Predicate` holds for any of `Ts...`.              | `Ts... -> Bool<t>`              |
-| [`Contains`](../reference/Algorithm/Contains.md)               | Checks is `Ts...` contains `T`.                                | `Ts... -> Bool<t>`              |
-| [`CountIf`](../reference/Algorithm/CountIf.md)                 | Counts `Ts...` for which the `Predicate` holds.                | `Ts... -> Bool<t>`              |
-| [`Filter`](../reference/Algorithm/Filter.md)                   | Filters `Ts...`, for which the `Predicate` holds.              | `Ts... -> Us...`                |
-| [`FilterIds`](../reference/Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.   | `Ts... -> Int<Is>...`           |
-| [`FindIf`](../reference/Algorithm/FindIf.md)                   | Index of `Ts...` for which the `Predicate` holds.              | `Ts... -> Int<I>`               |
-| [`FindIfNot`](../reference/Algorithm/FindIfNot.md)             | Index of `Ts...` for which the `Predicate` does not hold.      | `Ts... -> Int<I>`               |
-| [`GroupBy`](../reference/Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                  | `Ts... -> ListT<Us...>...`      |
-| [`InclusiveScan`](./Algorithm/InclusiveScan.md)                | Inclusive scan under the binary `F`.                           | `Ts... -> T0, F(T0, T1), ...`   |
-| [`MaxElement`](../reference/Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                     | `Ts... -> U`                    |
-| [`NoneOf`](../reference/Algorithm/NoneOf.md)                   | Checks if a `Predicate` holds for none of `Ts...`.             | `Ts... -> Bool<t>`              |
-| [`Partition`](../reference/Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                        | `Ts... -> ListT<Us...>...`      |
-| [`PartitionIds`](../reference/Algorithm/PartitionIds.md)       | Partitions indexes of `Ts...` given a `Predicate`.             | `Ts... -> ListT<Int<Is>...>...` |
-| [`Pivot`](../reference/Algorithm/Pivot.md)                     | Pivots `Ts...` around the `N`-th element, making it the first. | `Ts... -> Us...`                |
-| [`Reduce`](../reference/Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                      | `Init, Ts... -> U`              |
-| [`RemoveIdsIf`](../reference/Algorithm/RemoveIdsIf.md)         | Removes indexes of `Ts...` for which the `Predicate` holds.    | `Ts... -> Us...`                |
-| [`RemoveIf`](../reference/Algorithm/RemoveIf.md)               | Removes elements of `Ts...` for which the `Predicate` holds.   | `Ts... -> Int<Is>...`           |
-| [`ReplaceIf`](../reference/Algorithm/ReplaceIf.md)             | Replace `Ts...`, for which the `Predicate` holds, by `U`.      | `Ts... -> Us...`                |
-| [`Rotate`](../reference/Algorithm/Rotate.md)                   | Pivots `Ts...` in the range `[First, Middle, Last)`.           | `Ts... -> Us...`                |
-| [`Sort`](../reference/Algorithm/Sort.md)                       | Sorts `Ts...`, given a `Comparator`.                           | `Ts... -> Us...`                |
-| [`UniqueCompare`](../reference/Algorithm/UniqueCompare.md)     | Unique elements of `Ts...`, given a `Comparator`.              | `Ts... -> Us...`                |
-| [`Unique`](../reference/Algorithm/Unique.md)                   | Unique elements of `Ts...`.                                    | `Ts... -> Us...`                |
-| [`ZipWith`](../reference/Algorithm/ZipWith.md)                 | Zips two lists with a `With` template.                         | `Ts... -> With<Us...>...`       |
-| [`ZipWithVariadic`](../reference/Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                | `Ts... -> With<Us...>...`       |
-
 ## Manipulating parameter packs
 
 [`Parameter packs`](#parameter-pack) are the streams of types that flow through our [`pipelines`](#pipes). As such, it is necessary to have a good grasp of the mechanics that control them, as you are sending them through pipes.
@@ -863,9 +827,83 @@ static_assert(
 
 **NOTE**
 
-The same holds for prepending, but we partially evaluate from the right using [`ml::PartialR`](../reference/Functional/PartialR.md). A similar procedure can be performed for inserting, if we include some [`ml::Pivot`](../reference/Algorithm/Pivot.md)-ing.
+The same holds for prepending, but we partially evaluate from the right using [`ml::PartialR`](../reference/Functional/PartialR.md). A similar procedure can also be performed for inserting, if we include some [`ml::Pivot`](../reference/Algorithm/Pivot.md)-ing.
 
-#### Templates as lists of parameter packs
+### `Pack` Reference
+
+There are other constructs for working with parameter packs, which we did not mention in this section. Those include [`ml::Range`](../reference/Pack/Range.md), which generates a [`parameter pack`](#parameter-pack) of type-values [`ml::Int`](../reference/Vocabulary/Value.md), in the range `[From, To)`, with a `Step` that default to `1`.
+
+```c++
+using Sequence = ml::Range<ml::ToList>::f<0, 6, 2>;
+static_assert(
+        std::is_same<
+            Sequence,
+            ml::List<
+                ml::Int<0>, ml::Int<2>, ml::Int<4>>>);
+```
+
+and [`ml::Length`](../reference/Pack/Length.md) which gives you the number of elements of a parameter pack. To compute the number of template arguments of type, combine it with [`ml::Unwrap`](../reference/Functional/Unwrap.md), like we did in [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions).
+
+Constructs for manipulating [`parameter packs`](#parameter-pack) have an associated header `CppML/Pack.hpp` and a directory of the same name `CppML/Pack`. Every construct has a dedicated `.hpp` header inside the `CppML/Pack/` directory. For example, the construct, [`ml::Head`](../reference/Algorithm/Head.md), can be found in the `CppML/Algorithm/Head.hpp`. Hence, you can include all algorithms at once using `#include <CppML/Pack.hpp>`, or include only the ones you want (e.g. `#include <CppML/Pack/Head.hpp>`
+
+Find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+| Construct                                             | Description                              | Type of `f` in `::f >-> Pipe`                     |
+|-------------------------------------------------------|------------------------------------------|---------------------------------------------------|
+| [`Drop`](../reference/Pack/Drop.md)                   | Drops first `N` of `Ts...`               | `T1, ... Tn, Ts... -> Ts...`                      |
+| [`Front`](../reference/Pack/Front.md)                 | Gets first element of `Ts...`            | `T, Ts... -> T`                                   |
+| [`Get`](../reference/Pack/Get.md)                     | Gets `N`-th element of `Ts...`           | `T1, ... Tn, Ts... -> Tn`                         |
+| [`Head`](../reference/Pack/Head.md)                   | First `N` of `Ts...`                     | `T1, ... Tn, Ts... -> T1, ... Tn`                 |
+| [`Insert`](../reference/Pack/Insert.md)               | Inserts `U` as `N`-th element of `Ts...` | `T1, ... Tn, Ts... -> T1, ... U, Tn, Ts... `      |
+| [`Length`](../reference/Pack/Length.md)               | Length of `Ts...`                        | `Ts... -> Int<sizeof...(Ts)`                      |
+| [`Concat`](../reference/Pack/Concat.md)               | Concatenates `N` templates `T`           | `T<A0s...>... -> T<A0s..., A1s..., Ans...>`       |
+| [`PackExtractor`](../reference/Pack/PackExtractor.md) | Extracts `N`-th element.                 | `Int<N> -> T`                                     |
+| [`Prepend`](../reference/Pack/Prepend.md)             | Prepends `T` to `Ts...`                  | `Ts... -> T, Ts...`                               |
+| [`Range`](../reference/Pack/Range.md)                 | Pack of `Int<I>` in range                | `From, To -> Int<From>..., Int<To - 1>`           |
+| [`Tail`](../reference/Pack/Tail.md)                   | Last `N` of `Ts...`                      | `Ts..., T_{-N}, ... T_{-1} -> T_{-N}, ... T_{-1}` |
+
+**NOTE**
+
+Constructs such as [`ml::Pivot`](../reference/Algorithm/Pivot.md) and [`ml::Rotate`](../reference/Algorithm/Rotate.md) are part of the [`Algorithm`](../reference/index.md#algorithm) header.
+
+## Algorithms on parameter packs
+
+We have already meet a few of the algorithms (like [`ml::ZipWith`](../reference/Algorithm/ZipWith.md), [`ml::Filter`](../reference/Algorithm/Filter.md), etc.) on our way to this point of the tutorial. As was apparent from their usage, they are no different from any other [`metafunction`](#metafunction) operating on [`parameter packs`](#parameter-pack), so there is not much extra to be said about them. But what is important, is to know how to find them, when you need them.
+
+Algorithms have an associated header `CppML/Algorithm.hpp` and a directory of the same name `CppML/Algorithm`. Every algorithm has a dedicated `.hpp` header inside the `CppML/Algorithm/` directory. For example, the algorithm, [`ml::Sort`](../reference/Algorithm/Sort.md), can be found in the `CppML/Algorithm/Sort.hpp`. Hence, you can include all algorithms at once using `#include <CppML/Algorithm.hpp>`, or include only the ones you want (e.g. `#include <CppML/Algorithm/Sort.hpp>`
+
+### `Algorithm` Reference
+
+We provide a detailed [`CppML reference`](../reference/index.md), which also contains an [`Algorithm`](../reference/index.md#algorithm) section. Please find the algorithm of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+| Construct                                                      | Description                                                    | Type of `f` in `::f >-> Pipe`   |
+|----------------------------------------------------------------|----------------------------------------------------------------|---------------------------------|
+| [`AllOf`](../reference/Algorithm/AllOf.md)                     | Checks if a `Predicate` holds for all of `Ts...`.              | `Ts... -> Bool<t>`              |
+| [`AnyOf`](../reference/Algorithm/AnyOf.md)                     | Checks if a `Predicate` holds for any of `Ts...`.              | `Ts... -> Bool<t>`              |
+| [`Contains`](../reference/Algorithm/Contains.md)               | Checks is `Ts...` contains `T`.                                | `Ts... -> Bool<t>`              |
+| [`CountIf`](../reference/Algorithm/CountIf.md)                 | Counts `Ts...` for which the `Predicate` holds.                | `Ts... -> Bool<t>`              |
+| [`Filter`](../reference/Algorithm/Filter.md)                   | Filters `Ts...`, for which the `Predicate` holds.              | `Ts... -> Us...`                |
+| [`FilterIds`](../reference/Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.   | `Ts... -> Int<Is>...`           |
+| [`FindIf`](../reference/Algorithm/FindIf.md)                   | Index of `Ts...` for which the `Predicate` holds.              | `Ts... -> Int<I>`               |
+| [`FindIfNot`](../reference/Algorithm/FindIfNot.md)             | Index of `Ts...` for which the `Predicate` does not hold.      | `Ts... -> Int<I>`               |
+| [`GroupBy`](../reference/Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                  | `Ts... -> ListT<Us...>...`      |
+| [`InclusiveScan`](./Algorithm/InclusiveScan.md)                | Inclusive scan under the binary `F`.                           | `Ts... -> T0, F(T0, T1), ...`   |
+| [`MaxElement`](../reference/Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                     | `Ts... -> U`                    |
+| [`NoneOf`](../reference/Algorithm/NoneOf.md)                   | Checks if a `Predicate` holds for none of `Ts...`.             | `Ts... -> Bool<t>`              |
+| [`Partition`](../reference/Algorithm/Partition.md)             | Partitions `Ts...` given a `Predicate`.                        | `Ts... -> ListT<Us...>...`      |
+| [`PartitionIds`](../reference/Algorithm/PartitionIds.md)       | Partitions indexes of `Ts...` given a `Predicate`.             | `Ts... -> ListT<Int<Is>...>...` |
+| [`Pivot`](../reference/Algorithm/Pivot.md)                     | Pivots `Ts...` around the `N`-th element, making it the first. | `Ts... -> Us...`                |
+| [`Reduce`](../reference/Algorithm/Reduce.md)                   | Reduce `Ts...`, given an accumulator `F`.                      | `Init, Ts... -> U`              |
+| [`RemoveIdsIf`](../reference/Algorithm/RemoveIdsIf.md)         | Removes indexes of `Ts...` for which the `Predicate` holds.    | `Ts... -> Us...`                |
+| [`RemoveIf`](../reference/Algorithm/RemoveIf.md)               | Removes elements of `Ts...` for which the `Predicate` holds.   | `Ts... -> Int<Is>...`           |
+| [`ReplaceIf`](../reference/Algorithm/ReplaceIf.md)             | Replace `Ts...`, for which the `Predicate` holds, by `U`.      | `Ts... -> Us...`                |
+| [`Rotate`](../reference/Algorithm/Rotate.md)                   | Pivots `Ts...` in the range `[First, Middle, Last)`.           | `Ts... -> Us...`                |
+| [`Sort`](../reference/Algorithm/Sort.md)                       | Sorts `Ts...`, given a `Comparator`.                           | `Ts... -> Us...`                |
+| [`UniqueCompare`](../reference/Algorithm/UniqueCompare.md)     | Unique elements of `Ts...`, given a `Comparator`.              | `Ts... -> Us...`                |
+| [`Unique`](../reference/Algorithm/Unique.md)                   | Unique elements of `Ts...`.                                    | `Ts... -> Us...`                |
+| [`ZipWith`](../reference/Algorithm/ZipWith.md)                 | Zips two lists with a `With` template.                         | `Ts... -> With<Us...>...`       |
+| [`ZipWithVariadic`](../reference/Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                | `Ts... -> With<Us...>...`       |
+
 
 ## Further examples
 

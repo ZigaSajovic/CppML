@@ -13,6 +13,7 @@
 #include "./Functional/DelayedEval.hpp"
 #include "./Functional/F.hpp"
 #include "./Functional/Identity.hpp"
+#include "./Functional/IfElse.hpp"
 #include "./Functional/Invoke.hpp"
 #include "./Functional/InvokeWith.hpp"
 #include "./Functional/Map.hpp"

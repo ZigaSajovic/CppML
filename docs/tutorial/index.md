@@ -725,6 +725,7 @@ The constructs presented in this section live in the [`Functional`](../reference
 | [`f`](../reference/Functional/Invoke.md)                | Invokes the `f` alias of the metafunction `F`        | `Ts... -> F::f<Ts...>`         |
 | [`F`](../reference/Functional/F.md)                     | Lifts a template to a metafunction                   | `Ts... -> Template<Ts...>`     |
 | [`Identity`](../reference/Functional/Identity.md)       | Identity metafunction.                               | `T -> T`                       |
+| [`IfElse`](../reference/Functional/IfElse.md)           | Chooses between `T` and `U`.                         | `T, U -> V`                    |
 | [`InvokeWith`](../reference/Functional/InvokeWith.md)   | Invokes the metafunction on `Ts...`                  | `Ts... -> Us... -> Us...`      |
 | [`Map`](../reference/Functional/Map.md)                 | Maps `Ts...` by `F`.                                 | `Ts... -> F(Ts)...`            |
 | [`Partial`](../reference/Functional/Partial.md)         | Partial evaluation of `F` on `T0s...` from the left  | `T1... -> F(T0..., T1...)`     |

@@ -44,11 +44,10 @@ template <> struct InclusiveScan<false> {
  */
 template <typename F, typename Pipe = ml::ToList> struct InclusiveScan {
   template <typename... Ts>
-  using f = ml::f<ml::f<ml::IfElse<static_cast<bool>(sizeof...(Ts))>,
+  using f = ml::f<ml::f<ml::Implementations::IfElse<static_cast<bool>(sizeof...(Ts))>,
                         Implementations::InclusiveScan<static_cast<bool>(
                             sizeof...(Ts) > 1)>,
                         Implementations::Detail::InclusiveScan>,
                   ml::Int<0>, F, Pipe, Ts...>;
 };
 } // namespace ml
-#endif

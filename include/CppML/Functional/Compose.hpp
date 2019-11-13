@@ -6,7 +6,7 @@
  **/
 #ifndef CPPML_COMPOSE_HPP
 #define CPPML_COMPOSE_HPP
-#include "../ControlFlow/IfElse.hpp"
+#include "./IfElse.hpp"
 namespace ml {
 /*
  * Implementation of Compose. Only ever instantiates two types.
@@ -19,7 +19,7 @@ template <bool Continue> struct Compose {
 };
 template <> struct Compose<false> {
   template <int i, typename Result, typename... Us>
-  using f = typename ml::IfElse<(
+  using f = typename ml::Implementations::IfElse<(
       sizeof...(Us) < 100000)>::template f<Result, void>::template f<Us...>;
 };
 }; // namespace Implementations

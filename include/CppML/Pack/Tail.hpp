@@ -6,7 +6,7 @@
  **/
 #ifndef CPPML_TAIL_HPP
 #define CPPML_TAIL_HPP
-#include "../ControlFlow/IfElse.hpp"
+#include "../Functional/IfElse.hpp"
 #include "../Functional/ToList.hpp"
 
 namespace ml {
@@ -21,7 +21,7 @@ template <bool Continue> struct TailImpl {
 
 template <> struct TailImpl<false> {
   template <int N, typename Pipe, typename... Ts>
-  using f = typename ml::IfElse<(
+  using f = typename ml::Implementations::IfElse<(
       sizeof...(Ts) < 100000)>::template f<Pipe, void>::template f<Ts...>;
 };
 struct Tail {

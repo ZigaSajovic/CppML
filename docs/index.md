@@ -28,7 +28,6 @@ You can follow the [`Metaprogramming Tutorial`](./tutorial/index.md) and learn h
 |---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | [`Algorithm`](./reference/index.md#algorithm)     | Algorithms over parameter packs (e.g. [`Sort`](./reference/Algorithm/Sort.md), [`ZipWith`](./reference/Algorithm/ZipWith.md), etc.)                 |
 | [`Arithmetic`](./reference/index.md#arithmetic)   | Arithmetic operations on type-values (e.g. [`Greater`](./reference/Arithmetic/Greater.md), [`Not`](./reference/Arithmetic/Not.md), etc.)            |
-| [`ControlFlow`](./reference/index.md#controlflow) | Constructs that control the flow of metaprograms (e.g. [`IfElse`](./reference/ControlFlow/IfElse.md), [`For`](./reference/ControlFlow/For.md) etc.) |
 | [`Functional`](./reference/index.md#functional)   | Manipulation of metafunctions (e.g. [`Curry`](./reference/Functional/Curry.md), [`Map`](./reference/Functional/Map.md), etc.)                       |
 | [`Pack`](./reference/index.md#pack)               | Manipulation of parameter packs (e.g. [`Drop`](./reference/Pack/Drop.md), [`Get`](./reference/Pack/Get.md), etc.)                                   |
 | [`TypeTraits`](./reference/index.md#typetraits)   | Insights into types (e.g. [`IsSame`](./reference/TypeTraits/IsSame.md), [`IsClass`](./reference/TypeTraits/IsClass.md), etc.)                       |

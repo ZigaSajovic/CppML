@@ -6,15 +6,15 @@
  **/
 #ifndef CPPML_REPLACE_IF_HPP
 #define CPPML_REPLACE_IF_HPP
-#include "../ControlFlow/IfElse.hpp"
+#include "../Functional/IfElse.hpp"
 #include "../Functional/Map.hpp"
 #include "../Functional/ToList.hpp"
 namespace ml {
 namespace Implementations {
 template <typename Predicate, typename With> struct ReplaceSingle {
   template <typename T>
-  using f =
-      typename ml::IfElse<Predicate::template f<T>::value>::template f<With, T>;
+  using f = typename ml::Implementations::IfElse<
+      Predicate::template f<T>::value>::template f<With, T>;
 };
 
 } // namespace Implementations

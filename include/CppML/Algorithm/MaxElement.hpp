@@ -6,19 +6,20 @@
  **/
 #ifndef CPPML_MAX_ELEMENT_HPP
 #define CPPML_MAX_ELEMENT_HPP
-#include "../ControlFlow/IfElse.hpp"
 #include "../Functional/Identity.hpp"
+#include "../Functional/IfElse.hpp"
 
 namespace ml {
 namespace Implementations {
 template <bool Done> struct MaxElement {
   template <typename Compare, typename T0, typename T1, typename... Ts>
-  using f = typename IfElse<(sizeof...(Ts) < 10000)>::template f<
-      MaxElement<static_cast<bool>(sizeof...(Ts))>,
-      void>::template f<Compare,
-                        typename IfElse<Compare::template f<T0, T1>::value>::
-                            template f<T0, T1>,
-                        Ts...>;
+  using f = typename Implementations::IfElse<(
+      sizeof...(Ts) <
+      10000)>::template f<MaxElement<static_cast<bool>(sizeof...(Ts))>, void>::
+      template f<Compare,
+                 typename Implementations::IfElse<
+                     Compare::template f<T0, T1>::value>::template f<T0, T1>,
+                 Ts...>;
 };
 template <> struct MaxElement<false> {
   template <typename Compare, typename T> using f = T;

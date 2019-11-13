@@ -6,9 +6,9 @@
  **/
 #ifndef CPPML_FIND_IF_HPP
 #define CPPML_FIND_IF_HPP
-#include "../ControlFlow/IfElse.hpp"
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/Identity.hpp"
+#include "../Functional/IfElse.hpp"
 #include "../Functional/Invoke.hpp"
 #include "../Vocabulary/Value.hpp"
 
@@ -30,7 +30,7 @@ template <bool Continue> struct FindIf {
   template <typename I, typename Pipe, typename Predicate, typename T,
             typename... Ts>
   using f = ml::DelayedEval<
-      ml::Invoke<ml::IfElse<ml::Invoke<Predicate, T>::value>,
+      ml::Invoke<ml::Implementations::IfElse<ml::Invoke<Predicate, T>::value>,
                  Detail::FindIfPipeOn, FindIf<(sizeof...(Ts) > 0)>>,
       sizeof...(Ts), ml::Int<I::value + 1>, Pipe, Predicate, Ts...>;
 };

@@ -6,14 +6,14 @@
  **/
 #ifndef CPPML_DELAYED_EVAL_HPP
 #define CPPML_DELAYED_EVAL_HPP
-#include "../ControlFlow/IfElse.hpp"
+#include "./IfElse.hpp"
 namespace ml {
 /*
  * # DelayedEval:
  * Delays a call, so compiler knows the number of arguments.
  */
 template <typename F, int n, typename... Ts>
-using DelayedEval = typename ml::IfElse<(
+using DelayedEval = typename ml::Implementations::IfElse<(
     sizeof...(Ts) < 10000)>::template f<F, void>::template f<Ts...>;
 
 namespace Implementations {

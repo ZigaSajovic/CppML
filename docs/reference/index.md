@@ -6,7 +6,6 @@ The constructs of `CppML` are divided in into several smaller headers, which are
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | [`Algorithm`](#algorithm)     | Algorithms over parameter packs (e.g. [`Sort`](./Algorithm/Sort.md), [`ZipWith`](./Algorithm/ZipWith.md), etc.)                 |
 | [`Arithmetic`](#arithmetic)   | Arithmetic operations on type-values (e.g. [`Greater`](./Arithmetic/Greater.md), [`Not`](./Arithmetic/Not.md), etc.)            |
-| [`ControlFlow`](#controlflow) | Constructs that control the flow of metaprograms (e.g. [`IfElse`](./ControlFlow/IfElse.md), [`For`](./ControlFlow/For.md) etc.) |
 | [`Functional`](#functional)   | Manipulation of metafunctions (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), etc.)                       |
 | [`Pack`](#pack)               | Manipulation of parameter packs (e.g. [`Drop`](./Pack/Drop.md), [`Get`](./Pack/Get.md), etc.)                                   |
 | [`TypeTraits`](#typetraits)   | Insights into types (e.g. [`IsSame`](./TypeTraits/IsSame.md), [`IsClass`](./TypeTraits/IsClass.md), etc.)                       |
@@ -73,17 +72,6 @@ Find the construct of your interest in the table below. Each of them has it own 
 | [`Not`](./Arithmetic/Not.md)             | Negates a `Value`.           | `Bool<t> -> Bool< not t>`                     |
 | [`Subtract`](./Arithmetic/Subtract.md)   | Subtracts two `Value`s.      | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
 
-## `ControlFlow`
-
-Contains constructs that *control* the *flow* of a metaprogram (e.g. `IfElse`). You can include any operation separately by `CppML/ControlFlow/<name>.hpp`, or include the entire header `CppML/ControlFlow.hpp`.
-F
-Find the construct of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
-
-| Construct                           | Description                         | Type of `f` in `::f >-> Pipe`                        |
-|-------------------------------------|-------------------------------------|------------------------------------------------------|
-| [`For`](./ControlFlow/For.md)       | Apply `F` on for `I in [From, To)`. | `F, State -> F(Int<To-1>, F...F(Int<From>, State)))` |
-| [`IfElse`](./ControlFlow/IfElse.md) | Chooses between `T` and `U`.        | `T, U -> V`                                          |
-
 ## `Functional`
 
 Contains *functional* utilities (e.g. `Map`). You can include any construct separately by `CppML/Functional/<name>.hpp`, or include the entire header `CppML/Functional.hpp`.
@@ -100,6 +88,7 @@ Find the construct of your interest in the table below. Each of them has it own 
 | [`f`](./Functional/Invoke.md)                | Invokes the `f` alias of the metafunction `F`        | `Ts... -> F::f<Ts...>`         |
 | [`F`](./Functional/F.md)                     | Lifts a template to a metafunction                   | `Ts... -> Template<Ts...>`     |
 | [`Identity`](./Functional/Identity.md)       | Identity metafunction.                               | `T -> T`                       |
+| [`IfElse`](./Functional/IfElse.md)           | Chooses between `T` and `U`.                         | `T, U -> V`                    |
 | [`InvokeWith`](./Functional/InvokeWith.md)   | Invokes the metafunction on `Ts...`                  | `Ts... -> Us... -> Us...`      |
 | [`Map`](./Functional/Map.md)                 | Maps `Ts...` by `F`.                                 | `Ts... -> F(Ts)...`            |
 | [`Partial`](./Functional/Partial.md)         | Partial evaluation of `F` on `T0s...` from the left  | `T1... -> F(T0..., T1...)`     |

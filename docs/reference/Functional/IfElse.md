@@ -1,17 +1,17 @@
-# `<CppML/ControlFlow/IfElse.hpp>`
+# `<CppML/Functional/IfElse.hpp>`
 
 ## `IfElse`
 
 ```c++
-template <bool Test>
+template <typename B, typename Pipe = ml::Identity>
 struct IfElse {
   template <typename T0, typename T1>
   using f = /* .... */;
 };
 ```
-### `IfElse<Test>`
+### `IfElse<Bool<t>, Pipe>`
 
-`IfElse<Test>` is a metafunction that returns `U`, which is `T0` if `First` is `true`, and `T1` otherwise.
+`IfElse<Test>` is a metafunction that passes to  `U`, which is `T0` if `B` is [`ml::Bool`](../Vocabulary/Value.md)`<true>`, and `T1` if `B` is [`ml::Bool`](../Vocabulary/Value.md)`<false>`. `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
 ```c++
 f:: T0, T1 -> U
@@ -21,7 +21,7 @@ f:: T0, T1 -> U
 
 ```c++
 using U = ml::Invoke<
-              IfElse<true>,
+              IfElse<ml::Bool<true>>,
               int,
               char;
 

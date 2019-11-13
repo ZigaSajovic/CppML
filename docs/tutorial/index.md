@@ -28,13 +28,14 @@
   * [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)
     * [`Use case: Subsetting a std::tuple to its non-class types`](#use-case-subsetting-a-stdtuple-to-its-non-class-types)
   * [`Aliases as type-lambdas`](#aliases-as-type-lambdas)
+  * [`Reference: Functional`](#reference-functional)
 * [`Manipulating parameter packs`](#manipulating-parameter-packs)
   * [`Choosing and Sub-packing`](#choosing-and-sub-packing)
   * [`Appending, Prepending and Inserting`](#appending-prepending-and-inserting)
     * [`Appending multiple elements using partial evaluations`](#appending-multiple-elements-using-partial-evaluations)
-  * [`Pack Reference`](#pack-reference)
+  * [`Reference: Pack`](#reference-pack)
 * [`Algorithms on parameter packs`](#algorithms-on-parameter-packs)
-  * [`Algorithm Reference`](#algorithm-reference)
+  * [`Reference: Algorithm`](#reference-algorithm)
 * [`Further examples`](#further-examples)
   * [`Optimizing the memory layout of std::tuple`](#optimizing-the-memory-layout-of-stdtuple)
 
@@ -710,6 +711,30 @@ static_assert(
             T>);
 ```
 
+### Reference: `Functional`
+
+The constructs presented in this section live in the [`Functional`](../reference/index.md#Functional) header. The header also contains other constructs, which were not addressed in the section. Given what you have learned so far, you are able to find the remaining constructs in the table below, and learn about each from its `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
+
+| Construct                                               | Description                                          | Type of `f` in `::f >-> Pipe`  |
+|---------------------------------------------------------|------------------------------------------------------|--------------------------------|
+| [`Compose`](../reference/Functional/Compose.md)         | Composition of metafunctions `Fs...`.                | `Ts... -> F0(F1(...(Fn(Us...)` |
+| [`Constant`](../reference/Functional/Constant.md)       | Metafunction that always returns `U`.                | `Ts... -> U`                   |
+| [`Curry`](../reference/Functional/Curry.md)             | The Curry (from the left) operator                   | `T0s... -> T1s... -> Us...`    |
+| [`CurryR`](../reference/Functional/CurryR.md)           | The Curry (from the right) operator                  | `T1s... -> T0s... -> Us...`    |
+| [`DelayedEval`](../reference/Functional/DelayedEval.md) | Delays an evaluation until compiler knows the arity. | `Ts... -> Us...`               |
+| [`f`](../reference/Functional/Invoke.md)                | Invokes the `f` alias of the metafunction `F`        | `Ts... -> F::f<Ts...>`         |
+| [`F`](../reference/Functional/F.md)                     | Lifts a template to a metafunction                   | `Ts... -> Template<Ts...>`     |
+| [`Identity`](../reference/Functional/Identity.md)       | Identity metafunction.                               | `T -> T`                       |
+| [`InvokeWith`](../reference/Functional/InvokeWith.md)   | Invokes the metafunction on `Ts...`                  | `Ts... -> Us... -> Us...`      |
+| [`Map`](../reference/Functional/Map.md)                 | Maps `Ts...` by `F`.                                 | `Ts... -> F(Ts)...`            |
+| [`Partial`](../reference/Functional/Partial.md)         | Partial evaluation of `F` on `T0s...` from the left  | `T1... -> F(T0..., T1...)`     |
+| [`PartialR`](../reference/Functional/PartialR.md)       | Partial Evaluation of `F` on `T1s...` from the right | `T0... -> F(T0..., T1...)`     |
+| [`Product`](../reference/Functional/Product.md)         | Product of metafunctions `Fs...`                     | `Ts... -> Fs(Ts...)...`        |
+| [`ProductMap`](../reference/Functional/ProductMap.md)   | Product map of metafunctions `Fs`                    | `Ts... -> Fs(Ts)...`           |
+| [`ToList`](../reference/Functional/ToList.md)           | Wraps `Ts...` in an `ListT`                          | `Ts... -> ListT<Ts...>`        |
+| [`ToValue`](../reference/Functional/ToValue.md)         | Invokes `::value` on `Ts...`                         | `Value<Ts, ts>... -> ts...`    |
+| [`Unwrap`](../reference/Functional/Unwrap.md)           | Unwraps the template around `Ts...`                  | `Template<Ts...> -> Ts...`     |
+
 ## Manipulating parameter packs
 
 [`Parameter packs`](#parameter-pack) are the streams of types that flow through our [`pipelines`](#pipes). As such, it is necessary to have a good grasp of the mechanics that control them, as you are sending them through pipes.
@@ -829,7 +854,7 @@ static_assert(
 
 The same holds for prepending, but we partially evaluate from the right using [`ml::PartialR`](../reference/Functional/PartialR.md). A similar procedure can also be performed for inserting, if we include some [`ml::Pivot`](../reference/Algorithm/Pivot.md)-ing.
 
-### `Pack` Reference
+### Reference: `Pack` 
 
 There are other constructs for working with parameter packs, which we did not mention in this section. Those include [`ml::Range`](../reference/Pack/Range.md), which generates a [`parameter pack`](#parameter-pack) of type-values [`ml::Int`](../reference/Vocabulary/Value.md), in the range `[From, To)`, with a `Step` that default to `1`.
 
@@ -872,7 +897,7 @@ We have already meet a few of the algorithms (like [`ml::ZipWith`](../reference/
 
 Algorithms have an associated header `CppML/Algorithm.hpp` and a directory of the same name `CppML/Algorithm`. Every algorithm has a dedicated `.hpp` header inside the `CppML/Algorithm/` directory. For example, the algorithm, [`ml::Sort`](../reference/Algorithm/Sort.md), can be found in the `CppML/Algorithm/Sort.hpp`. Hence, you can include all algorithms at once using `#include <CppML/Algorithm.hpp>`, or include only the ones you want (e.g. `#include <CppML/Algorithm/Sort.hpp>`
 
-### `Algorithm` Reference
+### Reference: `Algorithm`
 
 We provide a detailed [`CppML reference`](../reference/index.md), which also contains an [`Algorithm`](../reference/index.md#algorithm) section. Please find the algorithm of your interest in the table below. Each of them has it own `reference page`, where you can find a *specification of its structure*, a definition of its *metafunction type*, and an *example of use*.
 

@@ -25,8 +25,14 @@
     * [`Curry`](#curry)
     * [`CurryR`](#curryr)
     * [`Use case: A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies)
+  * [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)
+    * [`Use case: Subsetting a std::tuple to its non-class types`](#use-case-subsetting-a-stdtuple-to-its-non-class-types)
   * [`Aliases as type-lambdas`](#aliases-as-type-lambdas)
 * [`Algorithms on parameter packs`](#algorithms-on-parameter-packs)
+* [`Manipulating parameter packs`](#manipulating-parameter-packs)
+  * [`Choosing and Sub-packing`](#choosing-and-sub-packing)
+  * [`Appending, Prepending and Inserting`](#appending-prepending-and-inserting)
+    * [`Appending multiple elements using partial evaluations`](#appending-multiple-elements-using-partial-evaluations)
 * [`Further examples`](#further-examples)
   * [`Optimizing the memory layout of std::tuple`](#optimizing-the-memory-layout-of-stdtuple)
 
@@ -619,6 +625,57 @@ using MakeBase = ml::f<MakeBase_f<Ts...>, ml::None>;
 
 concludes our implementation of `Class` (above).
 
+### Unwrapping template arguments into metafunctions
+
+Templates are constructs which wrap [`parameter packs`](#parameter-pack). For example
+
+```c++
+using Tpl = std::tuple<int, char, string, bool>;
+```
+
+`Tpl` is the [`parameter pack`](#parameter-pack) `int, char, string, bool` that is wrapped in a `std::tuple`. A different example you might encounter using `CppML`, is [`ml::ListT`](../reference/Vocabulary/List.md), when you store a result of a metacomputation, where the final `Pipe` was [`ml::ToList`](../reference/Functional/ToList.md).
+
+Suppose you now want to invoke a metafunction on the [`parameter pack`](#parameter-pack) being wrapped. `CppML` defines [`ml::Unwrap`](../reference/Functional/Unwrap.md) with the metafunction type
+
+```c++
+f:: Template<Ts...> -> Ts... >-> Pipe
+```
+
+which is exactly what we need. For example, this can be used to compute the number of template parameters, by unwrapping them into [`ml::Length`](../reference/Pack/Length.md)
+
+```c++
+f:: Template<Ts...> -> Ts... >-> ml::Length
+```
+
+#### Use case: Subsetting a `std::tuple` to its non-class types
+
+Suppose we wish to create a sub-tuple of `Tpl`, which will contain only the elements which are non-class types. Using what we have seen so far, this is accomplished by:
+
+* Unwrap the parameter pack (using [`ml::Unwrap`](../reference/Functional/Unwrap.md)) into
+* Removing all elements of that are a class type, and
+  * [`ml::RemoveIf`](../reference/Algorithm/RemoveIf.md)`<`[`ml::IsClass`](../reference/TypeTraits/IsClass.md)`<>>`
+* Pipe into `std::tuple` which was [`lifted into a metafunction`](#lifting-templates-to-metafunctions)
+  * [`ml::F`](../reference/Functional/F.md)`<std::tuple>`
+
+This sequence is easily translated into `CppML`,
+
+```c++
+using NonClassSubtuple = ml::Unwrap<ml::RemoveIf<ml::IsClass<>, ml::F<std::tuple>>>;
+```
+
+and the `NonClassSubtuple` [`metafunction`](#metafunction) is ready to use:
+
+```c++
+using NonClassSubtuple = ml::Unwrap<ml::RemoveIf<ml::IsClass<>, ml::F<std::tuple>>>;
+using SubTpl = ml::f<NonClassSubtuple, Tpl>;
+static_assert(
+        std::is_same_v<
+              T,
+              std::tuple<
+                int, char, bool>>);
+
+```
+
 ### Aliases as type-lambdas
 
 As we have already touched on, it is possible to [`lift an alias template into a metafunction`](#lifting-templates-to-metafunctions). This also means that you are able to write [`metafunctions`](#metafunction) on the spot by lifting aliases.
@@ -688,6 +745,127 @@ We provide a detailed [`CppML reference`](../reference/index.md), which also con
 | [`Unique`](../reference/Algorithm/Unique.md)                   | Unique elements of `Ts...`.                                    | `Ts... -> Us...`                |
 | [`ZipWith`](../reference/Algorithm/ZipWith.md)                 | Zips two lists with a `With` template.                         | `Ts... -> With<Us...>...`       |
 | [`ZipWithVariadic`](../reference/Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                | `Ts... -> With<Us...>...`       |
+
+## Manipulating parameter packs
+
+[`Parameter packs`](#parameter-pack) are the streams of types that flow through our [`pipelines`](#pipes). As such, it is necessary to have a good grasp of the mechanics that control them, as you are sending them through pipes.
+
+### Choosing and Sub-packing
+
+We can extract the first element of a [`parameter pack`](#parameter-pack) using [`ml::First`](../reference/Pack/Front.md)
+
+```c++
+using T = ml::f<ml::Front<>, int, char, bool>;
+static_assert(
+        std::is_same_v<
+              T, int>);
+```
+
+or extract an element at arbitrary position using [`ml::Get`](../reference/Pack/Get.md).
+
+```c++
+using T = ml::f<ml::Get<1>, int char bool>;
+static_assert(
+        std::is_same_v<
+              T, char>);
+```
+
+We can sub-pack the [`parameter pack`](#parameter-pack) to the first `N` elements using [`ml::Head`](../reference/Pack/Head.md)
+
+```c++
+using T = ml::f<ml::Head<2>, int, char, bool>;
+static_assert(
+        std::is_same_v<
+              T,
+              ml::ListT<
+                int, char>>);
+```
+
+or sub-pack it to the last `N` elements using [`ml::Tail`](../reference/Pack/Tail.md)
+
+```c++
+using T = ml::f<ml::Tail<2>, int, char, bool>;
+static_assert(
+        std::is_same_v<
+              T,
+              ml::ListT<
+                char, bool>>);
+```
+
+Note that all constructs that manipulate [`parameter packs`](#parameter-pack) are just metafunctions, and can be used with `Pipes`.
+
+```c++
+using T = ml::f<ml::Tail<2, ml::Map<ml::IsClass<>>>, int, string, bool>;
+static_assert(
+        std::is_same_v<
+              T,
+              ml::ListT<
+                ml::Bool<true>, ml::Bool<false>>>);
+```
+
+### Appending, Prepending and Inserting
+
+You can append an element to a [`parameter pack`](#parameter-pack) by [`ml::Append`](../reference/Pack/Append.md)
+
+```c++
+using T = ml::f<ml::Append<string, ml::Map<ml::IsClass<>>>, int, bool>;
+static_assert(
+        std::is_same_v<
+              T,
+              ml::ListT<
+                ml::Bool<false>, ml::Bool<false>, ml::Bool<true>>>);
+```
+
+or prepend it using [`ml::Prepend`](../reference/Pack/Prepend.md).
+
+```c++
+using T = ml::f<ml::Prepend<string, ml::Map<ml::IsClass<>>>, int, bool>;
+static_assert(
+        std::is_same_v<
+              T,
+              ml::ListT<
+                ml::Bool<true>, ml::Bool<false>, ml::Bool<false>>>);
+```
+
+To insert an element at `N`-th position, use [`ml::Insert`](../reference/Pack/Insert.md)
+
+```c++
+using T = ml::f<ml::Insert<, 1, string, ml::Map<ml::IsClass<>>>, int, bool>;
+static_assert(
+        std::is_same_v<
+              T,
+              ml::ListT<
+                ml::Bool<false>, ml::Bool<true>, ml::Bool<false>>>);
+```
+
+**NOTE**
+
+As an exercise, think about how you could implement [`ml::Insert`](../reference/Pack/Insert.md), using [`ml::Pivot`](../reference/Algorithm/Pivot.md) (see [`Algorithms on parameter packs`](#algorithms-on-parameter-packs)) and [`ml::Prepend`](../reference/Pack/Prepend.md).
+
+* Pivot `N`-th element to the front
+* Prepend the element
+* Pivot original (now at position `sizeof...(Ts) - N + 1`) to the front
+
+Because this is how [`ml::Insert`](../reference/Pack/Insert.md) is implemented, you can look at its [implementation](../../include/CppML/Pack/Insert.hpp).
+
+#### Appending multiple elements using partial evaluations
+
+Because, as explained in [`parameter packs`](#parameter-packs), you cannot hold a [`parameter pack`](#parameter-pack), but only pass it forward (to a `Pipe`), appending to a [`parameter pack`](#parameter-pack) always happens as parameter passing. Hence, appending `Us...` to `Ts...` as we pass to `F`, is equivalent to an invocation of a partially evaluated `F`.
+
+```c++
+using T = ml::f<ml::Partial<ml::Map<ml::IsClass<>>>, string>, int, bool>;
+static_assert(
+        std::is_same_v<
+              T,
+              ml::ListT<
+                ml::Bool<true>, ml::Bool<false>, ml::Bool<false>>>);
+```
+
+**NOTE**
+
+The same holds for prepending, but we partially evaluate from the right using [`ml::PartialR`](../reference/Functional/PartialR.md). A similar procedure can be performed for inserting, if we include some [`ml::Pivot`](../reference/Algorithm/Pivot.md)-ing.
+
+#### Templates as lists of parameter packs
 
 ## Further examples
 

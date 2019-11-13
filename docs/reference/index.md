@@ -80,6 +80,8 @@ Find the construct of your interest in the table below. Each of them has it own 
 
 | Construct                                    | Description                                          | Type of `f` in `::f >-> Pipe`  |
 |----------------------------------------------|------------------------------------------------------|--------------------------------|
+| [`Bind`](./Functional/Bind.md)               | Metafunction with args bound to specific positions.  | `Ts... -> Us...`               |
+| [`BranchPipe`](./Functional/BranchPipe.md)   | Branches to one of two `Pipes`, given a `Predicate`. | `Ts... -> Ts...`               |
 | [`Compose`](./Functional/Compose.md)         | Composition of metafunctions `Fs...`.                | `Ts... -> F0(F1(...(Fn(Us...)` |
 | [`Constant`](./Functional/Constant.md)       | Metafunction that always returns `U`.                | `Ts... -> U`                   |
 | [`Curry`](./Functional/Curry.md)             | The Curry (from the left) operator                   | `T0s... -> T1s... -> Us...`    |

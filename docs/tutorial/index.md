@@ -47,8 +47,9 @@
 
 `CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](#pipes) through which [`parameter packs`](#parameter-pack) can flow **without instantiating** new **types**.
 
-In this tutorial, we will examine the key concepts behind `CppML`, and demonstrate how to [`manipulate`](#manipulating-metafunctions) [`metafunctions`](#metafunction) as its *first-class citizens*. Through it, we will familiarize ourselves with concepts such as [`Product Map`](#product-map), [`Partial evaluation`](#partial-evaluation), [`Currying`](#currying), and others.
-On our way, we will learn how to use the [`Pack`](../reference/index.md#pack) header to manipulate [`parameter packs`](#parameter-pack) and how to command their flow through the [`pipelines`](#pipes) using algorithms (provided in the [`Algorithm`](../reference/index.md/#algorithm) header). Finally, we will touch on how to include logic based on introspection in your class design, using [`aliases as type lambdas`](#aliases-as-type-lambdas).
+Our goal is to **give** library developers **programmatic control** over the creation of **class hierarchies** with **metaprograms** that shape their **structure and behaviour** through **metafunctional logic**.
+This way constructions of **complex designs** are easily encoded in **elegant** and **concise** functional **expressions**.
+
 
 #### Links to `CppML Reference`
 

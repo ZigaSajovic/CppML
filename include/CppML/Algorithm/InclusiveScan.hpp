@@ -51,3 +51,4 @@ template <typename F, typename Pipe = ml::ToList> struct InclusiveScan {
                   ml::Int<0>, F, Pipe, Ts...>;
 };
 } // namespace ml
+#endif

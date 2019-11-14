@@ -6,7 +6,7 @@ class CppMLConan(ConanFile):
   version = "0.0.0"
   license = "MIT"
   author = "Ziga Sajovic -- ziga.sajovic+conan@xlab.si"
-  url = "https://github.com/bernedom/SI"
+  url = "https://github.com/ZigaSajovic/CppML"
   description = "A Meta Language for C++."
   topics = ("metaprogramming", "meta-programming",
             "template-meta-programming", "cplusplus-library")

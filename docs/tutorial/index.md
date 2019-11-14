@@ -25,6 +25,8 @@
     * [`Curry`](#curry)
     * [`CurryR`](#curryr)
     * [`Use case: A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies)
+  * [`Functional branching`](#functional-branching)
+    * [`Use case: A generator of tagged class hierarchies with conditional branches`](#use-case-a-generator-of-tagged-class-hierarchies-with-conditional-branches) 
   * [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)
     * [`Use case: Subsetting a std::tuple to its non-class types`](#use-case-subsetting-a-stdtuple-to-its-non-class-types)
   * [`Aliases as type-lambdas`](#aliases-as-type-lambdas)
@@ -600,10 +602,10 @@ Holder<Param<ml::Int<0>, T0>,
 Using the mechanics described so far, this can be achieved by:
 
 * Zip with `Param` (using [`ml::ZipWith`](../reference/Algorithm/ZipWith.md))
-  * the list made from `Ts...`
-    * [`ml::ListT`](../reference/Vocabulary/List.md)`<Ts...>`, and
   * the list of type-integers in the range `[0, sizeof...(Ts))`, (which is created using [`ml::Range`](../reference/Pack/Range.md))
-    * [`ml::ListT`](../reference/Vocabulary/List.md)`<`[`ml::Int`](../reference/Vocabulary/Value.md)`<0>, ..., `[`ml::Int`](../reference/Vocabulary/Value.md)`<sizeof...(Ts) - 1>>` 
+    * [`ml::ListT`](../reference/Vocabulary/List.md)`<`[`ml::Int`](../reference/Vocabulary/Value.md)`<0>, ..., `[`ml::Int`](../reference/Vocabulary/Value.md)`<sizeof...(Ts) - 1>>` , and
+  * the list made from `Ts...`
+    * [`ml::ListT`](../reference/Vocabulary/List.md)`<Ts...>`
 * [`ml::Map`](../reference/Functional/Map.md) the resulting parameter pack `Param<ml::Int<Is>, Ts>...`, by the metafunction we get by
   * Currying the metafunction (using [`ml::Curry`](../reference/Functional/Curry.md))
     * made from `Holder` (using [`ml::F`](../reference/Functional/F.md); see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions))
@@ -616,7 +618,7 @@ This leaves us with a metafunction that is to be evaluated on its most bottom `B
 template <typename ...Ts>
 using MakeBase_f = ml::f<
     ml::ZipWith<Param, ml::Map<ml::Curry<ml::F<Holder>>, ml::F<ml::Compose>>>,
-    ml::ListT<Ts...>, ml::Range<>::f<0, sizeof...(Ts)>>;
+    ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>;
 ```
 
 Which, after using [`ml::None`](../reference/Vocabulary/None.md) as our bottom base class,
@@ -627,6 +629,103 @@ using MakeBase = ml::f<MakeBase_f<Ts...>, ml::None>;
 ```
 
 concludes our implementation of `Class` (above).
+
+### Functional branching
+
+There are two main actors behind functional branching in `CppML`. The first is the [`ml::IfElse`](../reference/Functional/IfElse.md) construct, where [`ml::IfElse`](../reference/Functional/IfElse.md)`<`[`ml::Bool`](../reference/Vocabulary/Value.md)`<t_val>>` is a [`metafunction`](#metafunction)
+
+```c++
+f:: T, U -> V >-> Pipe
+```
+
+that passes to pipe `T` if `t_val` is `true`, and `U` if `t_val` is `false`. In its bare form, it behaves like so:
+
+```c++
+using T = ml::f<ml::IfElse<ml::Bool<true>>, int, char>;
+static_assert(
+    std::is_same_v<
+              T, int>);
+```
+
+The second is [`ml::BranchPipe`](../reference/Functional/BranchPipe.md), where [`ml::BranchPipe`](../reference/Functional/BranchPipe.md)`<Predicate, IfPipe, ElsePipe>` is a metafunction which passes the [`parameter pack`](#parameter-pack) `Ts...`, to one of two `Pipes`, given the result of invoking the `Predicate`on `Ts...`.
+
+```c++
+f:: Ts... -> Ts... >-> (Predicate(Ts...) ? IfPipe : ElsePipe)
+```
+
+`BranchPipe` brings the powerful notion of having the execution of metaprograms depend on introspective predicates about types into the language. In other words, it allows us to write meta algorithms that design class hierarchies, that not only stitch them together, but also change and alter their design, based on the types involved in it.
+
+#### Use case: A generator of tagged class hierarchies with conditional branches
+
+Remembering our previous use case in which we created [`A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies), where our objects were held by
+
+```c++
+template <int N, typename Object, typename Base>
+struct Holder<Param<ml::Int<N>, Object>, Base> : Base {
+  Object object;
+  /* Implementation of logic */
+};
+```
+we note that we did not take advantage of the *empty-base-class* optimization. Because of this, each `Object` occupies at least `1 byte` in the hierarchy, even if they are empty (this is due to the fact that each object needs a unique address). If we instead wrote our `Holder` as `BaseHolder`,
+
+```c++
+template <int N, typename Object, typename Base>
+struct BaseHolder<Param<ml::Int<N>, Object>, Base> : Object, Base {
+  /* Implementation of logic */
+};
+```
+
+all empty `Objects` (of different type) could share the address, and hence gain memory efficiency by the *empty base class* optimization. But the problem with this approach is that you can only derive from *class types*. Hence, if we simply substituted `Holder` for `BaseHolder` in our metaprogram from [`A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies), it would fail to compile when any type in the invoking parameter pack `Ts...` was a *non-class* type. The solution is to let the metaprogram conditionally choose which class will hold the `Object`, depending on whether it is a class or not.
+
+Hence, we want to alter the metaprogram `MakeBase` from [`A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies), such that `MakeBase<int, string, char, vector<int>>` is equivalent to
+
+```c++
+Holder<Param<ml::Int<0>, int>,
+               BaseHolder<Param<ml::Int<1>, string>,
+                           Holder<Param<ml::Int<2>, char>>,
+                                          BaseHolder<Param<ml::Int<3>, vector<int>>>>>;
+```
+
+We will accomplish this by using `BranchPipe`, which will choose between two metafunctions as pipes, namely the [`ml::Curry`](../reference/Functional/Curry.md)`<`[`ml::F`](../reference/Functional/F.md)`<Holder>>` and [`ml::Curry`](../reference/Functional/Curry.md)`<`[`ml::F`](../reference/Functional/F.md)`<BaseHolder>>`, given the result of the [`ml::IsClass`](../reference/TypeTraits/IsClass.md) predicate. This will be used in the place where we used [`ml::Curry`](../reference/Functional/Curry.md)`<`[`ml::F`](../reference/Functional/F.md)`<Holder>>` in the [`A generator of tagged class hierarchies`](#use-case-a-generator-of-tagged-class-hierarchies). With this addition, the procedure reads:
+
+* Zip with `Param` (using [`ml::ZipWith`](../reference/Algorithm/ZipWith.md))
+  * the list of type-integers in the range `[0, sizeof...(Ts))`, (which is created using [`ml::Range`](../reference/Pack/Range.md))
+    * [`ml::ListT`](../reference/Vocabulary/List.md)`<`[`ml::Int`](../reference/Vocabulary/Value.md)`<0>, ..., `[`ml::Int`](../reference/Vocabulary/Value.md)`<sizeof...(Ts) - 1>>`, and
+  * the list made from `Ts...`
+    * [`ml::ListT`](../reference/Vocabulary/List.md)`<Ts...>`
+* [`ml::Map`](../reference/Functional/Map.md) the resulting parameter pack `Param<ml::Int<Is>, Ts>...`, by the metafunction we get by:
+  * Branching on the `Predicate` (using [`ml::BranchPipe`](../reference/Functional/BranchPipe.md)) we get by:
+    * Extract the `T` from `Param<Int<I>, T>`, using [`ml::Get`](../reference/Pack/Get.md)`<0>`, and `Pipe` it to [`ml::IsClass`](../reference/TypeTraits/IsClass.md)
+  * If `T` *is a class type*:
+    * Currying the metafunction (using [`ml::Curry`](../reference/Functional/Curry.md))
+      * made from `BaseHolder` (using [`ml::F`](../reference/Functional/F.md); see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions))
+  * else (if the `T` is a *non-class type*):
+    * Currying the metafunction (using [`ml::Curry`](../reference/Functional/Curry.md))
+      * made from `Holder` (using [`ml::F`](../reference/Functional/F.md); see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions))
+* and compose the resulting parameter pack of partially evaluated metafunctions, by having map pass it into `Pipe`
+  * which is a metafunction we made from [`ml::Compose`](../reference/Functional/Compose.md) (see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions))
+
+This leaves us with a metafunction that is to be evaluated on its most bottom `Base` class. The sequence is easily translated into `CppML`.
+
+```c++
+template <typename... Ts>
+using MakeBase_f = ml::f<
+    ml::ZipWith<Param,
+                ml::Map<ml::BranchPipe<ml::Unwrap<ml::Get<0, ml::IsClass<>>>,
+                                       ml::Curry<ml::F<BaseHolder>>,
+                                       ml::Curry<ml::F<Holder>>>,
+                        ml::F<ml::Compose>>>,
+    ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>;
+```
+
+Which, after using [`ml::None`](../reference/Vocabulary/None.md) as our bottom base class,
+
+```c++
+template <typename ...Ts>
+using MakeBase = ml::f<MakeBase_f<Ts...>, ml::None>;
+```
+
+concludes our implementation.
 
 ### Unwrapping template arguments into metafunctions
 
@@ -717,6 +816,8 @@ The constructs presented in this section live in the [`Functional`](../reference
 
 | Construct                                               | Description                                          | Type of `f` in `::f >-> Pipe`  |
 |---------------------------------------------------------|------------------------------------------------------|--------------------------------|
+| [`Bind`](../reference/Functional/Bind.md)               | Metafunction with args bound to specific positions.  | `Ts... -> Us...`               |
+| [`BranchPipe`](../reference/Functional/BranchPipe.md)   | Branches to one of two `Pipes`, given a `Predicate`. | `Ts... -> Ts...`               |
 | [`Compose`](../reference/Functional/Compose.md)         | Composition of metafunctions `Fs...`.                | `Ts... -> F0(F1(...(Fn(Us...)` |
 | [`Constant`](../reference/Functional/Constant.md)       | Metafunction that always returns `U`.                | `Ts... -> U`                   |
 | [`Curry`](../reference/Functional/Curry.md)             | The Curry (from the left) operator                   | `T0s... -> T1s... -> Us...`    |

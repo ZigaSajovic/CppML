@@ -30,6 +30,7 @@
   * [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)
     * [`Use case: Subsetting a std::tuple to its non-class types`](#use-case-subsetting-a-stdtuple-to-its-non-class-types)
   * [`Aliases as type-lambdas`](#aliases-as-type-lambdas)
+    * [`Use case: Introspective metafunctions`](#use-case-introspective-metafunctions)
   * [`Reference: Functional`](#reference-functional)
 * [`Manipulating parameter packs`](#manipulating-parameter-packs)
   * [`Choosing and Sub-packing`](#choosing-and-sub-packing)
@@ -529,7 +530,7 @@ This sequence is easily translated into `CppML`.
 template <typename Derived, template <class, class> class ...Policies>
 using MakeBase = ml::f<ml::Compose<ml::Partial<ml::F<Policies>, Derived>...>, ml::None>;
 ```
-which concludes our implementation of `Class` (above).
+which concludes our implementation of `Class` (above), in an elegant *one-liner*. This is the strength of the functional approach to meta design.
 
 ### Currying
 
@@ -628,7 +629,7 @@ template <typename ...Ts>
 using MakeBase = ml::f<MakeBase_f<Ts...>, ml::None>;
 ```
 
-concludes our implementation of `Class` (above).
+concludes our implementation of `Class` (above), which remains simple and easy to read.
 
 ### Functional branching
 
@@ -725,7 +726,7 @@ template <typename ...Ts>
 using MakeBase = ml::f<MakeBase_f<Ts...>, ml::None>;
 ```
 
-concludes our implementation.
+concludes our implementation. Looking at the metaprogram `MakeBase`, it is a direct translation of our procedure in the bullet list, into the compositional pipelines of `CppML`. We hope it sheds light on the purpose of `CppML`: to give you control over class design through expressions that feel like algorithms in a functional language.
 
 ### Unwrapping template arguments into metafunctions
 
@@ -809,6 +810,85 @@ static_assert(
             ml::Bool<true>,
             T>);
 ```
+
+#### Use case: Introspective metafunctions
+
+Introspection can be implemented by checking whether an invocation of a [`metafunction`](#metafunction) on some parameter pack `Ts...` is *ill-formed* or not. These checks can be performed by [`ml::IsValid`](../reference/TypeTraits/IsValid.md), which maps a metafunction `F` and arguments `Ts...`, to an [`ml::Bool`](../reference/Vocabulary/Value.md). We can create metafunctions, whose validity answers our introspective questions.
+
+Suppose we are interested in whether a type defines a `.size()` method. Than, we create a `type lambda` which attempts to use it, like so:
+
+```c++
+template <typename _T>
+using HasSize_f = decltype(std::declval<_T>().size());
+```
+
+which can be used with [`ml::IsValid`](../reference/TypeTraits/IsValid.md) by [`lifting it to a metafunctions`](#lifting-templates-to-metafunctions).
+
+```c++
+using T = ml::f<
+                ml::IsValid<>,
+                ml::F<HasSize_f>,
+                std::vector<int>>;
+
+static_assert( std::is_same_v<
+                          T, ml::Bool<true>>);
+```
+
+We can now define a proper metafunction `HasSize`, by partially evaluating [`ml::IsValid`](../reference/TypeTraits/IsValid.md) on [`ml::F`](../reference/Functional/F)`<HasSize_f>`. We will also give it a `Pipe`, to make it a proper [`metafunction`](#metafunction).
+
+```c++
+template <typename Pipe = ml::Identity>
+using HasSize = ml::Partial<ml::IsValid<Pipe>, ml::F<HasSize_f>>;
+```
+
+We now have a `HasSize` metafunction, which can be used in compositional pipelines of `CppML` as any other [`metafunction`](#metafunction). Lets use it to [`ml::Filter`](../reference/Algorithm/Filter.md) a parameter pack for types which have a `.size()` method.
+
+```c++
+using T = ml::f<
+                ml::Filter<HasSize<>>,
+                std::vector<int>, int, std::map<int, int>>;
+static_assert(
+        std::is_same_v<
+                T,
+                ml::ListT<
+                    std::vector<int>, std::map<int, int>>>);
+```
+
+The other thing one might want to do is get the result of the invocation of a [`metafunction`](#metafunction) on `Ts...` if it is not *ill-formed*, and get a `Default` type, if it is *ill-formed*. The construct that enables this is the [`ml::IfValidOr`](../reference/TypeTraits/IfValidOr.md).
+
+To demonstrate, suppose we need a metafunction that extracts the `ValueType` alias of a type if it defines one, or return [`ml::None`](../reference/Vocabulary/None.md), if it does not.
+
+```c++
+struct A { using ValueType = int;};
+struct B {};
+
+template <typename _T>
+using GetType_f = typename _T::ValueType;
+```
+
+We will define a [`metafunction`](#metafunction) by partially evaluating [`ml::IfValidOr`](../reference/TypeTraits/IfValidOr.md) on [`ml::None`](../reference/Vocabulary/None.md) (as `Default`) and [`ml::F`](../reference/Functional/F)`<GetType_f>`. We will also give it a `Pipe`, to make it a proper [`metafunction`](#metafunction).
+
+```c++
+template <typename Pipe = ml::Identity>
+using GetValueType = ml::Partial<ml::IfValidOr<Pipe>, ml::None, ml::F<GetType_f>>;
+```
+
+We now have a `GetValueType` metafunction, which can be used in compositional pipelines of `CppML` as any other [`metafunction`](#metafunction):
+
+```c++
+using T = ml::f<
+            ml::Map<GetValueType>,
+            A, B>;
+
+
+static_assert(
+        std::is_same_v<
+                T,
+                ml::ListT<
+                  int, ml::None>>);
+```
+
+This demonstrates how you can include introspective logic in your class design using `type lambdas`.
 
 ### Reference: `Functional`
 

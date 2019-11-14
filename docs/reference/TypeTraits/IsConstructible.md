@@ -20,7 +20,7 @@ f::  T, Args... -> ml::Bool<isConstructible> <-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::IsConstructible<>,
                 std::string,
                 ".....">;

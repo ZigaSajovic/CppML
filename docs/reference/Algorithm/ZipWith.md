@@ -26,10 +26,10 @@ With can be any template, which **does not** need to be variadic.
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::ZipWith<std::pair>,
-                     ml::ListT<int, char>,
-                     ml::ListT<float, double>>;
+using T0 = ml::f<
+                 ml::ZipWith<std::pair>,
+                 ml::ListT<int, char>,
+                 ml::ListT<float, double>>;
 static_assert(
               std::is_same_v<
                   T,

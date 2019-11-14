@@ -22,9 +22,9 @@ f::  I -> U
 ```c++
 using Extractor = ml::PackExtractor<int, char, bool>;
 
-using T = ml::Invoke<
-                   Extractor,
-                   ml::Int<1>>;
+using T = ml::f<
+               Extractor,
+               ml::Int<1>>;
 
 static_assert( std::is_same_v<T, char>);
 ```

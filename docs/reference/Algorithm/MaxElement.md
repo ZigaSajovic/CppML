@@ -27,12 +27,12 @@ f:: (T, U) -> ml::Bool<truth_value>
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::MaxElement<
-                          ml::Map<
-                                  ml::AligmentOf<>,
-                                  ml::Greater<>>>,
-                          int, double, char>;
+using T0 = ml::f<
+                 ml::MaxElement<
+                      ml::Map<
+                              ml::AligmentOf<>,
+                              ml::Greater<>>>,
+                 int, double, char>;
 static_assert(
               std::is_same_v<
                   T, double>);

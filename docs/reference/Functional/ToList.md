@@ -21,7 +21,7 @@ f:: Ts... -> ml::ListT<Ts...>
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::ToList,
                 int, char>;
 static_assert(

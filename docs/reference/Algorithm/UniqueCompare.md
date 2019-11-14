@@ -27,10 +27,10 @@ f:: (T, U) -> ml::Bool<truth_value>
 ### Example
 
 ```c++
-using T = ml::Invoke<
-                    ml::UniqueCompare<
-                        ml::IsSame<>>,
-                        int, double, int, long>;
+using T = ml::f<
+                ml::UniqueCompare<
+                    ml::IsSame<>>,
+                int, double, int, long>;
 static_assert(
               std::is_same_v<
                   T,

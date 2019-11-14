@@ -21,7 +21,7 @@ f:: Ts... -> ml::ListA<Ts::value...>
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::ToValue,
                 ml::Int<0>, ml::Int<1>>;
 static_assert(

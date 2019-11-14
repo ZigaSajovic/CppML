@@ -20,7 +20,7 @@ f::  From, To -> ml::Bool<isConvertible> <-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::IsConvertible<>,
                 int[],
                 int*>;

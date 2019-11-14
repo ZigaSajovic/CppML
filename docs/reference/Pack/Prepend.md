@@ -25,9 +25,9 @@ If you have a need to prepend more than one element to a parameter pack being pa
 
 ```c++
 using AF = ml::Prepend<int, ml::F<std::tuple>>;
-using T = ml::Invoke<
-                   AF,
-                   std::string>;
+using T = ml::f<
+               AF,
+               std::string>;
 static_assert(
               std::is_same_v<
                   T,

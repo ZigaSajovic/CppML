@@ -26,15 +26,15 @@ Types `T` and `U` need an `::value` alias, like [`ml::Value<Type, value>`](../Vo
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::Equals<>,
-                     ml::Int<0>, ml::Int<2>>;
+using T0 = ml::f<
+                 ml::Equals<>,
+                 ml::Int<0>, ml::Int<2>>;
 static_assert(
               std::is_same_v<T0, ml::Bool<false>);
 
-using T1 = ml::Invoke<
-                     ml::Equals< ml::Not<>>,
-                     ml::Int<0>, ml::Int<2>>;
+using T1 = ml::f<
+                 ml::Equals< ml::Not<>>,
+                 ml::Int<0>, ml::Int<2>>;
 static_assert(
               std::is_same_v<T1, ml::Bool<true>);
 ```

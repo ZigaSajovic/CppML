@@ -24,9 +24,9 @@ Types `T` needs an `::value` alias, like [`ml::Value<Type, value>`](../Vocabular
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::Decrement<>,
-                     ml::Int<1>>;
+using T0 = ml::f<
+                 ml::Decrement<>,
+                 ml::Int<1>>;
 static_assert(
               std::is_same_v<T0, ml::Int<0>);
 ```

@@ -27,9 +27,9 @@ f:: T -> ml::Bool<truth_value>
 ### Example
 
 ```c++
-using T = ml::Invoke<
-                     ml::ReplaceIf<ml::IsClass<>, double>,
-                     int, char, std::string>;
+using T = ml::f<
+                 ml::ReplaceIf<ml::IsClass<>, double>,
+                 int, char, std::string>;
 static_assert(
               std::is_same_v<
                   T,

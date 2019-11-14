@@ -31,11 +31,11 @@ using Maker = ml::CurryR<
                     ml::AligmentOf<>,
                     ml::Greater<>>>;
 
-using IsMoreThanInt = ml::Invoke<Maker, int>;
-using IsMoreThanChar = ml::Invoke<Maker, char>;
+using IsMoreThanInt = ml::f<Maker, int>;
+using IsMoreThanChar = ml::f<Maker, char>;
 
-using T0 = ml::Invoke<IsMoreThanInt, float>;
-using T1 = ml::Invoke<IsMoreThanChar, float>;
+using T0 = ml::f<IsMoreThanInt, float>;
+using T1 = ml::f<IsMoreThanChar, float>;
 static_assert(
         std::is_same_v<
                 T0, ml::Bool<false>>);

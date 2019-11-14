@@ -19,7 +19,7 @@ f:: T -> T
 
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
               ml::Identity,
               int>;
 static_assert(

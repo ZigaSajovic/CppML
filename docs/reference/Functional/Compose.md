@@ -32,12 +32,12 @@ using Predicate = ml::IsSame<>;
 using NegatedPredicate = ml::Compose<
                                 ml::Not<>,
                                 Predicate>;
-using T0 = ml::Invoke<
-                  Predicate,
-                  int, int>;
-using T1 = ml::Invoke<
-                  NegatedPredicate,
-                  int, int>;
+using T0 = ml::f<
+                Predicate,
+                int, int>;
+using T1 = ml::f<
+                NegatedPredicate,
+                int, int>;
 static_assert(
         std::is_same_v<
               T0, ml::Bool<true>>);

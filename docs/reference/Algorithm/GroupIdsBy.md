@@ -27,9 +27,9 @@ f:: T -> U
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::GroupIdsBy<ml::AlignmentOf<>>,
-                     int, char, float, bool, double>;
+using T0 = ml::f<
+                 ml::GroupIdsBy<ml::AlignmentOf<>>,
+                 int, char, float, bool, double>;
 static_assert(
               std::is_same_v<
                   T,

@@ -19,7 +19,7 @@ f:: Ts... -> T
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
               ml::Constant<bool>,
               ml::Int<1>, char>;
 static_assert(

@@ -20,9 +20,9 @@ f:: Ts... -> Us... >-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
-                    ml::Unique<>,
-                        int, double, int, long>;
+using T = ml::f<
+                ml::Unique<>,
+                int, double, int, long>;
 static_assert(
               std::is_same_v<
                   T,

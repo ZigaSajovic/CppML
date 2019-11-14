@@ -36,7 +36,7 @@ Thus,
 template <typename Predicate>
 using MakeCounter = ml::ProductMap<ml::Identity<>, Predicate, ml::Add<>>;
 
-using T = ml::Invoke<
+using T = ml::f<
     ml::Reduce<
                MakeCounter<ml::CountIf<>>>,
     ml::Int<0>,                           // Init

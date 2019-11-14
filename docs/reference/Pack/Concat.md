@@ -24,16 +24,16 @@ Each input type needs to be a template class, `Ts<As...>...`.
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                   ml::Concat<>,
-                   ml::ListT<int>, ml::ListT<char, bool>>;
+using T0 = ml::f<
+                 ml::Concat<>,
+                 ml::ListT<int>, ml::ListT<char, bool>>;
 
 static_assert( std::is_same_v<
                           T0,
                           ml::ListT<int, char, bool>>);
-using T1 = ml::Invoke<
-                   ml::Concat<>,
-                   std::tuple<int>, std::tuple<char, bool>>;
+using T1 = ml::f<
+                 ml::Concat<>,
+                 std::tuple<int>, std::tuple<char, bool>>;
 
 static_assert( std::is_same_v<
                           T1,

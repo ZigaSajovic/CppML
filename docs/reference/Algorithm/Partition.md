@@ -19,7 +19,7 @@ f:: T -> U
 
 We partition a parameter pack, to those whose alignment is greater than 4, and those whose it is not.
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
               ml::Partition<
                     ml::AligmentOf<
                         ml::PartialRR<

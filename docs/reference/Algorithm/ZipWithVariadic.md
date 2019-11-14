@@ -26,10 +26,10 @@ With **must** be a variadic template.
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::ZipWithVariadic<std::pair>,
-                     ml::ListT<int, char>,
-                     ml::ListT<float, double>>;
+using T0 = ml::f<
+                 ml::ZipWithVariadic<std::pair>,
+                 ml::ListT<int, char>,
+                 ml::ListT<float, double>>;
 static_assert(
               std::is_same_v<
                   T,

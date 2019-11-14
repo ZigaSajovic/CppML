@@ -21,9 +21,9 @@ f:: First ... Middle ... Last -> Middle ... Last, First .... >-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
-                     ml::Rotate<1, 3, 4>,
-                     ml::Int<0>, ml::Int<1>, ml::Int<2>, ml::Int<3>>;
+using T = ml::f<
+                 ml::Rotate<1, 3, 4>,
+                 ml::Int<0>, ml::Int<1>, ml::Int<2>, ml::Int<3>>;
 static_assert(
               std::is_same_v<
                   T,

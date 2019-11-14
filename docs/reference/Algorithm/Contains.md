@@ -20,17 +20,17 @@ f:: Ts... -> ml::Bool<truth_value> >-> Pipe
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::Contains<int>,
-                     int, char, std::string>;
+using T0 = ml::f<
+                 ml::Contains<int>,
+                 int, char, std::string>;
 static_assert(
               std::is_same_v<T, ml::Bool<true>);
 
-using T1 = ml::Invoke<
-                     ml::Contains<
-                               int,
-                               ml::Not<>>,
-                     int, char, std::string>;
+using T1 = ml::f<
+                 ml::Contains<
+                           int,
+                           ml::Not<>>,
+                 int, char, std::string>;
 static_assert(
               std::is_same_v<T, ml::Bool<false>);
 ```

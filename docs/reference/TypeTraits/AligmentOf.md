@@ -20,7 +20,7 @@ f::  T ->  ml::Int<alignmentOf(T)> <-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::AligmentOf<>,
                 double>;
 static_assert( std::is_same_v<

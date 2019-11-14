@@ -25,7 +25,7 @@ f::  From, To -> T <-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::CopyRefness<>,
                 double&, int&&>;
 static_assert( std::is_same_v<

@@ -20,7 +20,7 @@ f:: Ts... -> F(Ts)... >-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
               ml::Map<
                   ml::IsClass<>>,
               int, std::string, char>;

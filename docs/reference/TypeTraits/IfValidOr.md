@@ -12,10 +12,10 @@ template<typename Default, typename F, typename ...Args>
 ### `IfValidOr<Pipe>`
 
 Than `IfValidOr<Pipe>` is a metafunction that passes to `Pipe` the type `T`, which is either:
-* `T = ml::Invoke<F, Args...>`
-  * if `ml::Invoke<F, Args...>` is *valid* and not *ill-formed*, or
+* `T = ml::f<F, Args...>`
+  * if `ml::f<F, Args...>` is *valid* and not *ill-formed*, or
 * `T = Default`
-  * if `ml::Invoke<F, Args...>` is *not valid* and is *ill-formed*
+  * if `ml::f<F, Args...>` is *not valid* and is *ill-formed*
 
 `Pipe` defaults to [`ml::Identity`](../Functional/Identity.md).
 
@@ -34,16 +34,16 @@ struct B {};
 template <typename _T>
 using GetType = typename _T::ValueType;
 
-using T0 = ml::Invoke<ml::IfValidOr<>,
-                      ml::None,       // Default
-                      ml::F<GetType>, // make GetType a metafunction
-                      A               // type for which to check
-                      >;
-using T1 = ml::Invoke<ml::IfValidOr<>,
-                      ml::None,       // Default
-                      ml::F<GetType>, // make GetType a metafunction
-                      B               // type for which to check
-                      >;
+using T0 = ml::f<ml::IfValidOr<>,
+                 ml::None,       // Default
+                 ml::F<GetType>, // make GetType a metafunction
+                 A               // type for which to check
+                 >;
+using T1 = ml::f<ml::IfValidOr<>,
+                 ml::None,       // Default
+                 ml::F<GetType>, // make GetType a metafunction
+                 B               // type for which to check
+                 >;
 static_assert( std::is_same_v<
                           T0, int>);
 static_assert( std::is_same_v<

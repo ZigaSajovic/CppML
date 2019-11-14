@@ -58,7 +58,7 @@ using Bound = ml::Bind<
                 ml::_p1<ml::Int<1>>,
                 ml::_p3<ml::Int<3>>>;
 
-using T = ml::Invoke<
+using T = ml::f<
               Bound,
               ml::Int<0>, ml::Int<2>, ml::Int<4>>; 
 

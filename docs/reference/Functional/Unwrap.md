@@ -35,9 +35,9 @@ using cF1 = ml::Map<ml::Increment<>>;
 ```
 They cannot be composed, because `cF0` returns an [`ml::ListT`](../Vocabulary/List.md), and `cF1` expects a parameter pack. So we [`ml::Unwrap`](../Vocabulary/Unwrap.md).
 ```c++
-using T0 = ml::Invoke<
+using T0 = ml::f<
               ml::Unwrap<cF1>,
-              ml::Invoke<
+              ml::f<
                   cF1,
                   ml::Int<0>, ml::Int<1>, ml::Int<2>>>
 ```
@@ -46,7 +46,7 @@ We can use [`ml::Compose`](./Compose.md), instead of invoking twice.
 using F = ml::Compose<
                 ml::Unwrap<cF1>,
                 cF0>;
-using T1 = ml::Invoke<
-                  F,
-                  ml::Int<0>, ml::Int<1>, ml::Int<2>>;
+using T1 = ml::f<
+                F,
+                ml::Int<0>, ml::Int<1>, ml::Int<2>>;
 ```

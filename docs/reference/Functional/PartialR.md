@@ -29,8 +29,8 @@ using IsMoreThanInt =
                 ml::Greater<>>,
               int>;
 
-using T0 = ml::Invoke<F, float>;
-using T1 = ml::Invoke<F, double>;
+using T0 = ml::f<F, float>;
+using T1 = ml::f<F, double>;
 static_assert(
         std::is_same_v<
                 T0, ml::Bool<false>>);

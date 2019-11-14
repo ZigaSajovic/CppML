@@ -28,7 +28,7 @@ f:: Init, T -> Init'
 We implement [`ml::CountIf`](./CountIf.md)[`<ml::IsClass>`](../TypeTraits/IsClass.md) using `Reduce`.
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
     ml::Reduce<
       ml::ProductMap<                     // Construct binary function F:
           ml::Identity,                   // Map first element (Init in F) by identity

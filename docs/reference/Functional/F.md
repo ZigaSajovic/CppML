@@ -23,7 +23,7 @@ If we want to `Pipe` the result of a metacomputation into a `std::tuple`, we can
 
 ```c++
 using F = ml::F<std::tuple>;
-using T = ml::Invoke<
+using T = ml::f<
               ml::Pivot<
                     2,
                     F>,

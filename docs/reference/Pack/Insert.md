@@ -24,9 +24,9 @@ Indexing starts at `0`.
 ### Example
 
 ```c++
-using T = ml::Invoke<
-                   ml::Insert<2, double>,
-                   int, char, bool>;
+using T = ml::f<
+               ml::Insert<2, double>,
+               int, char, bool>;
 static_assert(
               std::is_same_v<
                             T,

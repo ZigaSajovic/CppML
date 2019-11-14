@@ -24,11 +24,11 @@ It can be used to implement introspection. To demonstrate, we write a metafuncti
 ```c++
 template <typename _T>
 using HasSize = decltype(std::declval<_T>().size());
-using T0 = ml::Invoke<
+using T0 = ml::f<
                 ml::IsValid<>,
                 ml::F<HasSize>,   // make HasSize a metafunction
                 std::vector<int>>;
-using T1 = ml::Invoke<
+using T1 = ml::f<
                 ml::IsValid<>,
                 ml::F<HasSize>,   // make HasSize a metafunction
                 int>;

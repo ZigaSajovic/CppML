@@ -28,7 +28,7 @@ struct Holder : {
   Object object;
 };
 
-using U = ml::Invoke<
+using U = ml::f<
               BranchPipe<
                     ml::IsClass<>,
                     ml::F<Baser>,

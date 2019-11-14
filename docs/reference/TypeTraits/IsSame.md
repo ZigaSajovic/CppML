@@ -20,7 +20,7 @@ f::  T, U -> ml::Bool<isSame> <-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::IsSame<>,
                 int,
                 double>;

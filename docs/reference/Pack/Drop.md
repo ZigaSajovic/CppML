@@ -21,9 +21,9 @@ f:: U0, ... U_{N-1}, Us... -> Us... >-> Pipe
 
 ```c++
 using AF = ml::Drop<2, ml::F<std::tuple>>;
-using T = ml::Invoke<
-                   AF,
-                   int, char, bool, double>;
+using T = ml::f<
+               AF,
+               int, char, bool, double>;
 static_assert(
               std::is_same_v<
                   T,

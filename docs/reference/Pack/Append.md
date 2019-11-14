@@ -26,9 +26,9 @@ If you have a need to append more than one element to a parameter pack being pas
 ```c++
 using AF = ml::Append<int, ml::F<std::tuple>>;
 
-using T = ml::Invoke<
-                   AF,
-                   std::string>;
+using T = ml::f<
+               AF,
+               std::string>;
 static_assert(
               std::is_same_v<
                   T,

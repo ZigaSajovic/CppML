@@ -24,13 +24,13 @@ The range `[From, To)` is half-open; i.e. it does not include `To`.
 ### Example
 
 ```c++
-using T0 = ml::TypeRange::f<0, 6, 2>;
+using T0 = ml::Range::f<0, 6, 2>;
 static_assert( std::is_same_v<
                           T0,
                           ml::ListT<
                             ml::Int<0>, ml::Int<2>, ml::Int<4>>>);
 
-using T1 = ml::TypeRange::f<6, 0, -2>;
+using T1 = ml::Range::f<6, 0, -2>;
 static_assert( std::is_same_v<
                           T0,
                           ml::ListT<

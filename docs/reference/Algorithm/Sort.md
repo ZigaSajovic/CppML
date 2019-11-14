@@ -29,12 +29,12 @@ f:: (T, U) -> ml::Bool<truth_value>
 We sort types by their alignment.
 
 ```c++
-using T = ml::Invoke<
-                    ml::Sort<
-                        ml::Map<
-                                ml::AligmentOf<>,
-                                ml::Greater<>>>,
-                        int, double, char, long>;
+using T = ml::f<
+                ml::Sort<
+                    ml::Map<
+                            ml::AligmentOf<>,
+                            ml::Greater<>>>,
+                int, double, char, long>;
 static_assert(
               std::is_same_v<
                   T,

@@ -21,9 +21,9 @@ f::  T0, T's... -> T0 >-> Pipe
 
 ```c++
 using AF = ml::Front<ml::F<std::tuple>>;
-using T = ml::Invoke<
-                   AF,
-                   int, char, bool, double>;
+using T = ml::f<
+               AF,
+               int, char, bool, double>;
 static_assert(
               std::is_same_v<
                   T,

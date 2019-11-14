@@ -20,7 +20,7 @@ f::  T -> ml::Bool<isClass> <-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::IsClass<>,
                 double>;
 static_assert( std::is_same_v<

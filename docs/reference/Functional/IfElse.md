@@ -20,7 +20,7 @@ f:: T0, T1 -> U
 ### Example
 
 ```c++
-using U = ml::Invoke<
+using U = ml::f<
               IfElse<ml::Bool<true>>,
               int,
               char;

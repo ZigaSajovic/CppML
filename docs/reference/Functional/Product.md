@@ -31,7 +31,7 @@ using Partition = ml::Product<
                       ml::Filter<Predicate>,
                       ml::RemoveIf<Predicate>,
                       ml::ToList>;
-using T = ml::Invoke<
+using T = ml::f<
               Partition<ml::IsClass<>>,
               int, std::string, char>;
 static_assert(

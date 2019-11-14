@@ -27,18 +27,18 @@ f:: T -> ml::Bool<truth_value>
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::Filter<ml::IsClass<>>,
-                     int, char, std::string>;
+using T0 = ml::f<
+                 ml::Filter<ml::IsClass<>>,
+                 int, char, std::string>;
 static_assert(
               std::is_same_v<
                   T,
                   ml::ListT<std::string>>);
 
-using T1 = ml::Invoke<
-                     ml::Filter<
-                               ml::IsClass<ml::Not<>>>,
-                     int, char, std::string>;
+using T1 = ml::f<
+                 ml::Filter<
+                           ml::IsClass<ml::Not<>>>,
+                 int, char, std::string>;
 static_assert(
               std::is_same_v<
                   T,

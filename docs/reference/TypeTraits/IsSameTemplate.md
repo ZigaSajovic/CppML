@@ -20,7 +20,7 @@ f::  T, U -> ml::Bool<isSameTemplate> <-> Pipe
 ### Example
 
 ```c++
-using T = ml::Invoke<
+using T = ml::f<
                 ml::IsSameTemplate<>,
                 std::vector<int>,
                 std::vector<bool>>;

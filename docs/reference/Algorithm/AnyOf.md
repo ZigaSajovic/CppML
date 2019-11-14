@@ -27,17 +27,17 @@ f: T -> ml::Bool<truth_value>
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                     ml::AnyOf<ml::IsClass<>>,
-                     int, char, std::string>;
+using T0 = ml::f<
+                 ml::AnyOf<ml::IsClass<>>,
+                 int, char, std::string>;
 static_assert(
               std::is_same_v<T, ml::Bool<true>);
 
-using T1 = ml::Invoke<
-                     ml::AnyOf<
-                               ml::IsClass<>,
-                               ml::Not<>>,
-                     int, char, std::string>;
+using T1 = ml::f<
+                 ml::AnyOf<
+                           ml::IsClass<>,
+                           ml::Not<>>,
+                 int, char, std::string>;
 static_assert(
               std::is_same_v<T, ml::Bool<false>);
 ```

@@ -24,14 +24,14 @@ To get  the number of template arguments of a type (e.g. `std::tuple<Args...>`),
 ### Example
 
 ```c++
-using T0 = ml::Invoke<
-                   ml::Length<>,
-                   int, char, bool>;
+using T0 = ml::f<
+                 ml::Length<>,
+                 int, char, bool>;
 
-using T1 = ml::Invoke<
-                   ml::Unwrap<
-                            ml::Length<>>,
-                   std::tuple<int, char, bool>>;
+using T1 = ml::f<
+                 ml::Unwrap<
+                          ml::Length<>>,
+                 std::tuple<int, char, bool>>;
 
 static_assert( std::is_same_v<T0, ml::Int<3>>);
 static_assert( std::is_same_v<T1, ml::Int<3>>);

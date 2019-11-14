@@ -10,7 +10,7 @@
 # (http://dominikberner.ch/cmake-interface-lib/)
 #--
 cmake_minimum_required(VERSION 3.12)
-project("CppML" VERSION 0.0
+project("CppML" VERSION 0.0.0
                 DESCRIPTION "A Meta Language for C++."
                 HOMEPAGE_URL "https://github.com/ZigaSajovic/CppML"
                 LANGUAGES CXX)

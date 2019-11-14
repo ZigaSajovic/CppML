@@ -3,7 +3,7 @@ from conans import ConanFile, CMake
 
 class CppMLConan(ConanFile):
   name = "CppML"
-  version = "0.1"
+  version = "0.0.0"
   license = "MIT"
   author = "Ziga Sajovic -- ziga.sajovic+conan@xlab.si"
   url = "https://github.com/bernedom/SI"

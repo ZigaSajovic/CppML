@@ -1,25 +1,25 @@
 # `CppML` Reference
 
-The constructs of `CppML` are divided in into several smaller headers, which are described below:
+The constructs of `CppML` are divided in into several smaller libraries, which are described below:
 
-| Header                        | Description                                                                                                                     |
-|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
-| [`Algorithm`](#algorithm)     | Algorithms over parameter packs (e.g. [`Sort`](./Algorithm/Sort.md), [`ZipWith`](./Algorithm/ZipWith.md), etc.)                 |
-| [`Arithmetic`](#arithmetic)   | Arithmetic operations on type-values (e.g. [`Greater`](./Arithmetic/Greater.md), [`Not`](./Arithmetic/Not.md), etc.)            |
-| [`Functional`](#functional)   | Manipulation of metafunctions (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), etc.)                       |
-| [`Pack`](#pack)               | Manipulation of parameter packs (e.g. [`Drop`](./Pack/Drop.md), [`Get`](./Pack/Get.md), etc.)                                   |
-| [`TypeTraits`](#typetraits)   | Insights into types (e.g. [`IsSame`](./TypeTraits/IsSame.md), [`IsClass`](./TypeTraits/IsClass.md), etc.)                       |
-| [`Vocabulary`](#vocabulary)   | Vocabulary types of `CppML`   (e.g. [`ListT`](./Vocabulary/ListT.md), [`Value`](./Vocabulary/Value.md), etc.)                   |
+| Library                     | Description                                                                                                              |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| [`Algorithm`](#algorithm)   | Algorithms over parameter packs (e.g. [`Sort`](./Algorithm/Sort.md), [`ZipWith`](./Algorithm/ZipWith.md), etc.)          |
+| [`Arithmetic`](#arithmetic) | Arithmetic operations on type-values (e.g. [`Greater`](./Arithmetic/Greater.md), [`Not`](./Arithmetic/Not.md), etc.) |
+| [`Functional`](#functional) | Manipulation of metafunctions (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), etc.)                |
+| [`Pack`](#pack)             | Manipulation of parameter packs (e.g. [`Drop`](./Pack/Drop.md), [`Get`](./Pack/Get.md), etc.)                            |
+| [`TypeTraits`](#typetraits) | Insights into types (e.g. [`IsSame`](./TypeTraits/IsSame.md), [`IsClass`](./TypeTraits/IsClass.md), etc.)                |
+| [`Vocabulary`](#vocabulary) | Vocabulary types of `CppML`   (e.g. [`ListT`](./Vocabulary/ListT.md), [`Value`](./Vocabulary/Value.md), etc.)            |
 
 
 
 ### Structure
 
 CppML is structured as follows:
-* each section has an associated header `.hpp` and a directory of the same name in the `CppML/` directory. For example, the `Algorithm` section has an `Algorithm.hpp` header located in the `include/CppML`
-* every component of each section has a dedicated `.hpp` header inside the libraries associated directory. For example, `Sort`, a component of the `Algorithm` section, has a header located at `include/CppML/Algorithm/Sort.hpp`.
+* each library has an associated header `.hpp` and a directory of the same name in the `CppML/` directory. For example, the `Algorithm` library has an `Algorithm.hpp` header located in the `include/CppML`
+* every component of each library has a dedicated `.hpp` header inside the libraries associated directory. For example, `Sort`, a component of the `Algorithm` library, has a header located at `include/CppML/Algorithm/Sort.hpp`.
 
-Thus, to use any component, you can either include its specific header (e.g. `#include <CppML/Algorithm/Sort.hpp>`), or include its containing header `#include <CppML/Algorithm.hpp>`. Note that you may include all of them at once using `#include <CppML/CppML.hpp>`.
+Thus, to use any component, you can either include its specific header (e.g. `#include <CppML/Algorithm/Sort.hpp>`), or include its libraries header `#include <CppML/Algorithm.hpp>`. Note that you may include all libraries at once using `#include <CppML/CppML.hpp>`.
 
 
 

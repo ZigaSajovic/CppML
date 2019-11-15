@@ -47,14 +47,14 @@
 
 ---
 
-`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](#pipes) through which [`parameter packs`](#parameter-pack) can flow **without instantiating** new **types**.
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](#pipe) through which [`parameter packs`](#parameter-pack) can flow **without instantiating** new **types**.
 
 Our goal is to **give** library developers **programmatic control** over the creation of **class hierarchies** with **metaprograms** that shape their **structure and behaviour** through **metafunctional logic**.
 This way constructions of **complex designs** are easily encoded in **elegant** and **concise** functional **expressions**.
 
 ---
 
-In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](#pipes) and the flow of [`parameter packs`](#parameter-pack) through them. You will learn about the structure of [`metafunctions`](#metafunction), how to understand their [`metafunction type`](#metafunction-type), and how they [`integrate with pipelines`](#using-pipes).
+In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](#pipe) and the flow of [`parameter packs`](#parameter-pack) through them. You will learn about the structure of [`metafunctions`](#metafunction), how to understand their [`metafunction type`](#metafunction-type), and how they [`integrate with pipelines`](#using-pipes).
 You will learn how to [`manipulate metafunctions`](#manipulating-metafunctions) using concepts like [`Currying`](#currying), [`Product Maps`](#product-map) and [`Branch Pipes`](#functional-branching), and how to compose them into algorithms that will build your class designs.
 
 Interspersed throughout the tutorial are *use-cases*, where we will formulate a problem and break down its solution into steps, and than translate them into `CppML`. Through them you will learn how to encode construction of (increasingly) complex designs into  **elegant** and **concise** functional **expressions**.
@@ -219,7 +219,7 @@ static_assert(
                   std::tuple<int, char>>);
 ```
 
-We can now alter the previous example, and use `TupleF`, as the [`Pipe`](#pipes) of [`ml::Filter`](../reference/Algorithm/Filter.md)
+We can now alter the previous example, and use `TupleF`, as the [`Pipe`](#pipe) of [`ml::Filter`](../reference/Algorithm/Filter.md)
 
 ```c++
 using T2 = ml::f<
@@ -800,14 +800,14 @@ using IsInt_f = ml::f<ml::IsSame<>, T, int>;
 using IsInt = ml::F<IsInt_f>;
 ```
 
-Note that [`ml::F`](../reference/Functional/F.md) also accepts a [`Pipe`](#pipes), allowing us to turn the `alias template` `IsInt_f` into a proper [`metafunction`](#metafunction)
+Note that [`ml::F`](../reference/Functional/F.md) also accepts a [`Pipe`](#pipe), allowing us to turn the `alias template` `IsInt_f` into a proper [`metafunction`](#metafunction)
 
 ```c++
 template <typename Pipe = ml::Identity>
 using IsInt = ml::F<IsInt_f, Pipe>;
 ```
 
-which has standard [`pipe`](#pipes)-ing syntax.
+which has standard [`pipe`](#pipe)-ing syntax.
 
 ```c++
 using T = ml::f<
@@ -928,7 +928,7 @@ The constructs presented in this section live in the [`Functional`](../reference
 
 ## Manipulating parameter packs
 
-[`Parameter packs`](#parameter-pack) are the streams of types that flow through our [`pipelines`](#pipes). As such, it is necessary to have a good grasp of the mechanics that control them, as you are sending them through pipes.
+[`Parameter packs`](#parameter-pack) are the streams of types that flow through our [`pipelines`](#pipe). As such, it is necessary to have a good grasp of the mechanics that control them, as you are sending them through pipes.
 
 ### Choosing and Sub-packing
 

@@ -2,7 +2,7 @@
 
 A Meta Language for C++
 
-`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./docs/tutorial/index.md#pipes) through which [`parameter packs`](./docs/tutorial/index.md#parameter-pack) can flow **without instantiating** new **types**.
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./docs/tutorial/index.md#pipe) through which [`parameter packs`](./docs/tutorial/index.md#parameter-pack) can flow **without instantiating** new **types**.
 
 Our goal is to **give** library developers **programmatic control** over the creation of **class hierarchies** with **metaprograms** that shape their **structure and behaviour** through **metafunctional logic**.
 This way constructions of **complex designs** are easily encoded in **elegant** and **concise** functional **expressions**.
@@ -30,7 +30,7 @@ Please see the [`Installation Guide`](./docs/installation/index.md) for addition
 ---
 #### Abstract
 
-In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](./docs/tutorial/index.md#pipes) and the flow of [`parameter packs`](./docs/tutorial/index.md#parameter-pack) through them. You will learn about the structure of [`metafunctions`](./docs/tutorial/index.md#metafunction), how to understand their [`metafunction type`](./docs/tutorial/index.md#metafunction-type), and how they [`integrate with pipelines`](./docs/tutorial/index.md#using-pipes).
+In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](./docs/tutorial/index.md#pipe) and the flow of [`parameter packs`](./docs/tutorial/index.md#parameter-pack) through them. You will learn about the structure of [`metafunctions`](./docs/tutorial/index.md#metafunction), how to understand their [`metafunction type`](./docs/tutorial/index.md#metafunction-type), and how they [`integrate with pipelines`](./docs/tutorial/index.md#using-pipes).
 You will learn how to [`manipulate metafunctions`](./docs/tutorial/index.md#manipulating-metafunctions) using concepts like [`Currying`](./docs/tutorial/index.md#currying), [`Product Maps`](./docs/tutorial/index.md#product-map) and [`Branch Pipes`](./docs/tutorial/index.m#functional-branching), and how to compose them into algorithms that will build your class designs.
 
 Interspersed throughout the tutorial are *use-cases*, where we will formulate a problem and break down its solution into steps, and than translate them into `CppML`. Through them you will learn how to encode construction of (increasingly) complex designs into  **elegant** and **concise** functional **expressions**.

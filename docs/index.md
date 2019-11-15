@@ -32,26 +32,26 @@ Please see the [`Tutorial of the CppML language`](./tutorial/index.md).
 
 ## CppML Reference
 
-[CppML](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs are divided in the following headers:
+[CppML](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs of `CppML` are divided in into several smaller libraries, which are described below:
 
-| Header                                            | Description                                                                                                                                         |
-|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`Algorithm`](./reference/index.md#algorithm)     | Algorithms over parameter packs (e.g. [`Sort`](./reference/Algorithm/Sort.md), [`ZipWith`](./reference/Algorithm/ZipWith.md), etc.)                 |
-| [`Arithmetic`](./reference/index.md#arithmetic)   | Arithmetic operations on type-values (e.g. [`Greater`](./reference/Arithmetic/Greater.md), [`Not`](./reference/Arithmetic/Not.md), etc.)            |
-| [`Functional`](./reference/index.md#functional)   | Manipulation of metafunctions (e.g. [`Curry`](./reference/Functional/Curry.md), [`Map`](./reference/Functional/Map.md), etc.)                       |
-| [`Pack`](./reference/index.md#pack)               | Manipulation of parameter packs (e.g. [`Drop`](./reference/Pack/Drop.md), [`Get`](./reference/Pack/Get.md), etc.)                                   |
-| [`TypeTraits`](./reference/index.md#typetraits)   | Insights into types (e.g. [`IsSame`](./reference/TypeTraits/IsSame.md), [`IsClass`](./reference/TypeTraits/IsClass.md), etc.)                       |
-| [`Vocabulary`](./reference/index.md#vocabulary)   | Vocabulary types of `CppML`   (e.g. [`ListT`](./reference/Vocabulary/ListT.md), [`Value`](./reference/Vocabulary/Value.md), etc.)                   |
+| Library                                         | Description                                                                                                                              |
+|-------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| [`Algorithm`](./reference/index.md#algorithm)   | Algorithms over parameter packs (e.g. [`Sort`](./reference/Algorithm/Sort.md), [`ZipWith`](./reference/Algorithm/ZipWith.md), etc.)      |
+| [`Arithmetic`](./reference/index.md#arithmetic) | Arithmetic operations on type-values (e.g. [`Greater`](./reference/Arithmetic/Greater.md), [`Not`](./reference/Arithmetic/Not.md), etc.) |
+| [`Functional`](./reference/index.md#functional) | Manipulation of metafunctions (e.g. [`Curry`](./reference/Functional/Curry.md), [`Map`](./reference/Functional/Map.md), etc.)            |
+| [`Pack`](./reference/index.md#pack)             | Manipulation of parameter packs (e.g. [`Drop`](./reference/Pack/Drop.md), [`Get`](./reference/Pack/Get.md), etc.)                        |
+| [`TypeTraits`](./reference/index.md#typetraits) | Insights into types (e.g. [`IsSame`](./reference/TypeTraits/IsSame.md), [`IsClass`](./reference/TypeTraits/IsClass.md), etc.)            |
+| [`Vocabulary`](./reference/index.md#vocabulary) | Vocabulary types of `CppML`   (e.g. [`ListT`](./reference/Vocabulary/ListT.md), [`Value`](./reference/Vocabulary/Value.md), etc.)        |
 
 The complete `CppML reference` can be found [here](./reference/index.md).
 
 ### Structure
 
-CppML is structured as follows:
-* each section has an associated header `.hpp` and a directory of the same name in the `CppML/` directory. For example, the `Algorithm` section has an `Algorithm.hpp` header located in the `include/CppML`
-* every component of each section has a dedicated `.hpp` header inside the libraries associated directory. For example, `Sort`, a component of the `Algorithm` section, has a header located at `include/CppML/Algorithm/Sort.hpp`.
+`CppML` is structured as follows:
+* each library has an associated header `.hpp` and a directory of the same name in the `CppML/` directory. For example, the `Algorithm` library has an `Algorithm.hpp` header located in the `include/CppML`
+* every component of each library has a dedicated `.hpp` header inside the libraries associated directory. For example, `Sort`, a component of the `Algorithm` library, has a header located at `include/CppML/Algorithm/Sort.hpp`.
 
-Thus, to use any component, you can either include its specific header (e.g. `#include <CppML/Algorithm/Sort.hpp>`), or include its containing header `#include <CppML/Algorithm.hpp>`. Note that you may include all of them at once using `#include <CppML/CppML.hpp>`.
+Thus, to use any component, you can either include its specific header (e.g. `#include <CppML/Algorithm/Sort.hpp>`), or include its libraries header `#include <CppML/Algorithm.hpp>`. Note that you may include all libraries at once using `#include <CppML/CppML.hpp>`.
 
 
 

@@ -2,14 +2,14 @@
 
 The constructs of `CppML` are divided in into several smaller libraries, which are described below:
 
-| Library                     | Description                                                                                                              |
-|-----------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| [`Algorithm`](#algorithm)   | Algorithms over parameter packs (e.g. [`Sort`](./Algorithm/Sort.md), [`ZipWith`](./Algorithm/ZipWith.md), etc.)          |
+| Library                     | Description                                                                                                          |
+|-----------------------------|----------------------------------------------------------------------------------------------------------------------|
+| [`Algorithm`](#algorithm)   | Algorithms over parameter packs (e.g. [`Sort`](./Algorithm/Sort.md), [`ZipWith`](./Algorithm/ZipWith.md), etc.)      |
 | [`Arithmetic`](#arithmetic) | Arithmetic operations on type-values (e.g. [`Greater`](./Arithmetic/Greater.md), [`Not`](./Arithmetic/Not.md), etc.) |
-| [`Functional`](#functional) | Manipulation of metafunctions (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), etc.)                |
-| [`Pack`](#pack)             | Manipulation of parameter packs (e.g. [`Drop`](./Pack/Drop.md), [`Get`](./Pack/Get.md), etc.)                            |
-| [`TypeTraits`](#typetraits) | Insights into types (e.g. [`IsSame`](./TypeTraits/IsSame.md), [`IsClass`](./TypeTraits/IsClass.md), etc.)                |
-| [`Vocabulary`](#vocabulary) | Vocabulary types of `CppML`   (e.g. [`ListT`](./Vocabulary/ListT.md), [`Value`](./Vocabulary/Value.md), etc.)            |
+| [`Functional`](#functional) | Manipulation of metafunctions (e.g. [`Curry`](./Functional/Curry.md), [`Map`](./Functional/Map.md), etc.)            |
+| [`Pack`](#pack)             | Manipulation of parameter packs (e.g. [`Drop`](./Pack/Drop.md), [`Get`](./Pack/Get.md), etc.)                        |
+| [`TypeTraits`](#typetraits) | Insights into types (e.g. [`IsSame`](./TypeTraits/IsSame.md), [`IsClass`](./TypeTraits/IsClass.md), etc.)            |
+| [`Vocabulary`](#vocabulary) | Vocabulary types of `CppML`   (e.g. [`ListT`](./Vocabulary/ListT.md), [`Value`](./Vocabulary/Value.md), etc.)        |
 
 
 

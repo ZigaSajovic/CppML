@@ -39,7 +39,7 @@
   * [`Reference: Pack`](#reference-pack)
 * [`Algorithms on parameter packs`](#algorithms-on-parameter-packs)
   * [`Reference: Algorithm`](#reference-algorithm)
-* [`Further examples`](#further-examples)
+* [`Examples`](#further-examples)
   * [`Optimizing the memory layout of std::tuple`](#optimizing-the-memory-layout-of-stdtuple)
 
 
@@ -705,7 +705,9 @@ We will accomplish this by using `BranchPipe`, which will choose between two met
     * [`ml::ListT`](../reference/Vocabulary/List.md)`<Ts...>`
 * [`ml::Map`](../reference/Functional/Map.md) the resulting parameter pack `Param<ml::Int<Is>, Ts>...`, by the metafunction we get by:
   * Branching on the `Predicate` (using [`ml::BranchPipe`](../reference/Functional/BranchPipe.md)) we get by:
-    * Extract the `T` from `Param<Int<I>, T>`, using [`ml::Get`](../reference/Pack/Get.md)`<0>`, and `Pipe` it to [`ml::IsClass`](../reference/TypeTraits/IsClass.md)
+    * Extract the `T` from `Param<Int<I>, T>`
+      * [`ml::Unwrap`](../reference/Functional/Unwrap.md) the parameter pack from `Param<Int<I>, T>` (see [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)) into
+      * [`ml::Get`](../reference/Pack/Get.md)`<0>`, and `Pipe` it to [`ml::IsClass`](../reference/TypeTraits/IsClass.md)
   * If `T` *is a class type*:
     * Currying the metafunction (using [`ml::Curry`](../reference/Functional/Curry.md))
       * made from `BaseHolder` (using [`ml::F`](../reference/Functional/F.md); see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions))
@@ -1121,14 +1123,16 @@ We provide a detailed [`CppML reference`](../reference/index.md), which also con
 | [`ZipWithVariadic`](../reference/Algorithm/ZipWithVariadic.md) | Zips two lists with a variadic `With` template.                | `Ts... -> With<Us...>...`       |
 
 
-## Further examples
+## Examples
 
 ### Optimizing the memory layout of `std::tuple`
 
-A detailed post about optimizing the memory layout of `std::tuple` using `CppML` can be found [here](https://github.com/ZigaSajovic/optimizing-the-memory-layout-of-std-tuple). The optimization comes from considering the way in which objects are laid out in memory (remember that they must be [naturally aligned](https://en.wikipedia.org/wiki/Data_structure_alignment) and thus padding may be required).
-We implement a class `Tuple`, which is an interface wrapper around `std::tuple`. It works by computing the permutation of the element of the tuple, that minimizes the needed padding and lays them out in memory in that order. It memorizes the permutation as an `ml::ListT<ml::Int<Is>...>`, and computes its inverse permutation. Using the inverse permutation, it than internally redirects the user to the correct element upon use (hence the user can be oblivious to the permutation).
+The following is a condensed version of the post [Optimizing the memory layout of `std::tuple`](https://github.com/ZigaSajovic/optimizing-the-memory-layout-of-std-tuple). The optimization comes from considering the way in which objects are laid out in memory (remember that they must be [naturally aligned](https://en.wikipedia.org/wiki/Data_structure_alignment) and thus padding may be required).
+We implement a class `Tuple`, which is an interface wrapper around `std::tuple`. It works by approximating the optimal permutation by the `Permutation` that sorts the types by their `alignment`. It than lays the objects out in memory in that order. It holds the `Permutation` as its template argument, and uses it to internally redirect the users indexing (hence the user can be oblivious to the permutation).
 
-Please see the original post [Optimizing the memory layout of `std::tuple`](https://github.com/ZigaSajovic/optimizing-the-memory-layout-of-std-tuple), where the entire solution is constructed step by step. Here, we present the results.
+Please see the original post [Optimizing the memory layout of `std::tuple`](https://github.com/ZigaSajovic/optimizing-the-memory-layout-of-std-tuple), where the entire solution is constructed step by step.
+
+Before we begin, take a look at the result.
 
 ```c++
 
@@ -1161,3 +1165,135 @@ We notice that the *std::tuple* has **20 Bytes** of **wasted** space (making it 
 | Data       | 20           | 1              |  
 | Tuple      | 24           | 0.84           |  
 | std::tuple | 40           | 0.5            |  
+
+
+#### Class Building Metaprogram
+
+We want a `TupleBase` wrapper of a `std::tuple`, which will
+
+```c++
+template <typename Permutation, typename StdTuple> struct TupleBase;
+template<int ...Is, typename ...Ts>
+struct TupleBase<
+            ml::ListT<ml::Int<Is>...>,
+            std::tuple<Ts...>> {
+/* Implementation */
+};
+```
+
+have the `Permuatation` that sorts the types by their `alignment` as its first template parameter, and the already permuted `std::tuple` as its second. Hence, we need a `MakeBase` metafunction, which will allow us to implement `Tuple` class like
+
+```c++
+template <typename... Ts> struct Tuple : MakeBase<Ts...> {
+  using MakeBase<Ts...>::MakeBase;
+};
+```
+
+On a concrete example, we want `MakeBase`
+
+```c++
+using TB0 = MakeBase<char, int, char, int, char, double, char>;
+using TB1 = 
+    TupleBase<ml::ListT<ml::Int<5>, ml::Int<3>, ml::Int<1>, ml::Int<6>, ml::Int<4>,
+                        ml::Int<2>, ml::Int<0>>,
+              std::tuple<double, int, int, char, char, char, char>>;
+static_assert(
+      std::is_same_v<TB0, TB1>);
+```
+
+This is achieved by the following sequence:
+
+* Zip with `Param` (using [`ml::ZipWith`](../reference/Algorithm/ZipWith.md))
+  * the list of type-integers in the range `[0, sizeof...(Ts))`, (which is created using [`ml::Range`](../reference/Pack/Range.md))
+    * [`ml::ListT`](../reference/Vocabulary/List.md)`<`[`ml::Int`](../reference/Vocabulary/Value.md)`<0>, ..., `[`ml::Int`](../reference/Vocabulary/Value.md)`<sizeof...(Ts) - 1>>`, and
+  * the list made from `Ts...`
+    * [`ml::ListT`](../reference/Vocabulary/List.md)`<Ts...>`
+* [`ml::Sort`](../reference/Algorithm/Sort.md) the resulting parameter pack `Param<ml::Int<Is>, Ts>...`, with the `Comparator` that takes the `alignment`of the `T`.
+  * `Comparator: P0, P1 -> Bool<t>`
+  * We [`ml::Map`](../reference/Functional/Map.md) (the `P0` and `P1`) by:
+    * [`ml::Unwrap`](../reference/Functional/Unwrap.md) the parameter pack from `Param<Int<I>, T>` (see [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)), and
+    * extract the second element (`T`) using [`ml::Get`](../reference/Pack/Get.md), and
+    * pipe the extracted `T` into [`ml::AlignOf`](../reference/TypeTraits/AlignOf.md)
+  * and pipe the alignments into [`ml::Greater`](../reference/Arithmetic/Greater.md)
+* We than split the sorted parameter pack `Param<ml::Int<Is>, Ts>...` into `TupleBase<ml::ListT<ml::Int<Is>...>, std::tuple<Ts...>>` by:
+  * create a [`ml::ProductMap`](../reference/Functional/ProductMap.md) of:
+    * [`ml::Map`](../reference/Functional/Map.md) of extractors of the `ml::Int<i>`:
+      * [`ml::Unwrap`](../reference/Functional/Unwrap.md) the parameter pack from `Param<Int<I>, T>` (see [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)), and
+      * extract the first element (`ml::Int<I>`) using [`ml::Get`](../reference/Pack/Get.md), and
+      * pipe into [`ml::ToList`](../reference/Functional/ToList.md)
+    * [`ml::Map`](../reference/Functional/Map.md) of extractors of the `T`:
+      * [`ml::Unwrap`](../reference/Functional/Unwrap.md) the parameter pack from `Param<Int<I>, T>` (see [`Unwrapping template arguments into metafunctions`](#unwrapping-template-arguments-into-metafunctions)), and
+      * extract the second element (`T`) using [`ml::Get`](../reference/Pack/Get.md), and
+      * pipe into the metafunction created from `std::tuple` (using [`ml::F`](../reference/Functional/F.md); see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions)),
+    * and `Pipe`into the metafunction created from `TupleBase` (using [`ml::F`](../reference/Functional/F.md); see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions))
+
+This sequence is easily translated to `CppML`:
+
+```c++
+using MakeBase = ml::f<
+    ml::ZipWith<
+        Param,
+        ml::Sort<ml::Map<ml::Unwrap<ml::Get<1, ml::AlignOf<>>>, ml::Greater<>>,
+                 ml::Product<ml::Map<ml::Unwrap<ml::Get<0>>>,
+                             ml::Map<ml::Unwrap<ml::Get<1>>, ml::F<std::tuple>>,
+                             ml::F<TupleBase>>>>,
+    ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>;
+```
+
+We will also need a metafunction that will compute the inverse permutation for an index `I`, which will allow us to internally redirect users indexing. This is done by locating the index of `I` in the permutation (using [`ml::FindIf`](../reference/Algorithm/FindIf.md). Assuming access to `Permutation` indexes `Is...` (inside the `TupleBase`, this is done by
+
+```c++
+template <typename I>
+using Index = ml::f<ml::FindIf<ml::Partial<ml::IsSame<>, I>>, Is...>;
+```
+
+#### TupleBase interface
+
+The `TupleBase` implementation is minimal. It will have:
+* the permuted `std::tuple` member `_tuple`
+  * from its second template argument
+* `f` alias which will compute the inverse permutation for an index `I`
+* a delegate constructor:
+  * It will forward the arguments `Us...` as a tuple to the `work construcotr`
+* a `work constructor`:
+  * it will initialize the `_tuple` member by:
+    * permuting the arguments of the forwarding tuple into its initializer
+      * `std::get<Is>(fwd)...` 
+* the `get<I>()` friend function, which:
+  * will use the `f` alias to invert `I` in the `Permutation`
+  * and forward the inverted index to `std::get`
+
+In code, this looks like this:
+
+```c++
+template <int... Is, typename... Ts>
+struct TupleBase<ml::ListT<ml::Int<Is>...>, std::tuple<Ts...>> {
+private:
+  template <typename I> // Compute the inverse index
+  using f = ml::f<ml::FindIf<ml::Partial<ml::IsSame<>, I>>, ml::Int<Is>...>;
+  std::tuple<Ts...> _tuple;
+  template <typename... Us>
+  TupleBase(ml::_, std::tuple<Us...> &&fwd) // work constructor
+      : _tuple{
+            static_cast<ml::f<ml::Get<Is>, Us...> &&>(std::get<Is>(fwd))...} {}
+
+public:
+  template <typename... Us>
+  TupleBase(Us &&... us) // delegate constructor
+      : TupleBase{ml::_{}, std::forward_as_tuple(static_cast<Us &&>(us)...)} {}
+  template <int I, typename... Us>
+  friend decltype(auto) get(TupleBase<Us...> &tup);
+};
+
+template <int I, typename... Us> decltype(auto) get(TupleBase<Us...> &tup) {
+  return std::get<ml::f<TupleBase<Us...>, ml::Int<I>>::value>(tup._tuple);
+}
+```
+
+Which concludes the implementation
+
+```c++
+template <typename... Ts> struct Tuple : MakeBase<Ts...> {
+  using MakeBase<Ts...>::MakeBase;
+};
+```

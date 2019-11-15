@@ -11,7 +11,7 @@ This way constructions of **complex designs** are easily encoded in **elegant** 
 
 ### Installation
 
-`CppML` provides detailed [`User documentation`](./docs/index.md), which you are invited explore. It provides an [`Installation Guide`](./docs/installation/index.md) which will have you up and running in moments. To quickly install `CppML` as a cmake `INTERFACE` library, run
+`CppML` provides an [`Installation Guide`](./docs/installation/index.md) which will have you up and running in moments. To quickly install `CppML` as a cmake `INTERFACE` library, run
 
 ```bash
 git clone https://github.com/ZigaSajovic/CppML; cd CppML
@@ -25,19 +25,19 @@ Please see the [`Installation Guide`](./docs/installation/index.md) for addition
 
 ### Tutorial
 
-We provide an in-depth [`tutorial of the CppML language`](./tutorial/index.md).
+`CppML` provides an in-depth [`tutorial of the CppML language`](./docs/tutorial/index.md) and its libraries.
 
 ---
 #### Abstract
 
-In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](#pipes) and the flow of [`parameter packs`](#parameter-pack) through them. You will learn about the structure of [`metafunctions`](#metafunction), how to understand their [`metafunction type`](#metafunction-type), and how they [`integrate with pipelines`](#using-pipes).
-You will learn how to [`manipulate metafunctions`](#manipulating-metafunctions) using concepts like [`Currying`](#currying), [`Product Maps`](#product-map) and [`Branch Pipes`](#functional-branching), and how to compose them into algorithms that will build your class designs.
+In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](./docs/tutorial/index.md#pipes) and the flow of [`parameter packs`](./docs/tutorial/index.md#parameter-pack) through them. You will learn about the structure of [`metafunctions`](./docs/tutorial/index.md#metafunction), how to understand their [`metafunction type`](./docs/tutorial/index.md#metafunction-type), and how they [`integrate with pipelines`](./docs/tutorial/index.md#using-pipes).
+You will learn how to [`manipulate metafunctions`](./docs/tutorial/index.md#manipulating-metafunctions) using concepts like [`Currying`](./docs/tutorial/index.md#currying), [`Product Maps`](./docs/tutorial/index.md#product-map) and [`Branch Pipes`](./docs/tutorial/index.m#functional-branching), and how to compose them into algorithms that will build your class designs.
 
 Interspersed throughout the tutorial are *use-cases*, where we will formulate a problem and break down its solution into steps, and than translate them into `CppML`. Through them you will learn how to encode construction of (increasingly) complex designs into  **elegant** and **concise** functional **expressions**.
 
 ---
 
-You can find the [`tutorial of the CppML language`](./tutorial/index.md) following the link.
+Please see the [`tutorial of the CppML language`](./docs/tutorial/index.md).
 
 ### User Documentation
 

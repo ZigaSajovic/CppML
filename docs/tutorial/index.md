@@ -1181,7 +1181,7 @@ struct TupleBase<
 };
 ```
 
-have the `Permuatation` that sorts the types by their `alignment` as its first template parameter, and the already permuted `std::tuple` as its second. Hence, we need a `MakeBase` metafunction, which will allow us to implement `Tuple` class like
+have the `Permutation` that sorts the types by their `alignment` as its first template parameter, and the already permuted `std::tuple` as its second. Hence, we need a `MakeBase` metafunction, which will allow us to implement `Tuple` class like
 
 ```c++
 template <typename... Ts> struct Tuple : MakeBase<Ts...> {
@@ -1230,6 +1230,7 @@ This is achieved by the following sequence:
 This sequence is easily translated to `CppML`:
 
 ```c++
+template <typename ...Ts>
 using MakeBase = ml::f<
     ml::ZipWith<
         Param,
@@ -1269,8 +1270,6 @@ In code, this looks like this:
 template <int... Is, typename... Ts>
 struct TupleBase<ml::ListT<ml::Int<Is>...>, std::tuple<Ts...>> {
 private:
-  template <typename I> // Compute the inverse index
-  using f = ml::f<ml::FindIf<ml::Partial<ml::IsSame<>, I>>, ml::Int<Is>...>;
   std::tuple<Ts...> _tuple;
   template <typename... Us>
   TupleBase(ml::_, std::tuple<Us...> &&fwd) // work constructor
@@ -1281,6 +1280,8 @@ public:
   template <typename... Us>
   TupleBase(Us &&... us) // delegate constructor
       : TupleBase{ml::_{}, std::forward_as_tuple(static_cast<Us &&>(us)...)} {}
+  template <typename I> // Compute the inverse index
+  using f = ml::f<ml::FindIf<ml::Partial<ml::IsSame<>, I>>, ml::Int<Is>...>;
   template <int I, typename... Us>
   friend decltype(auto) get(TupleBase<Us...> &tup);
 };

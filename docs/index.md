@@ -16,9 +16,19 @@ You may follow the [installation guide](./installation/index.md) for your conven
 
 ## Tutorial
 
-`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./tutorial/index#pipes) through which [`parameter packs`](./tutorial/index#parameter-pack) can flow **without instantiating** new **types**.
+We provide an in-depth [`tutorial of the CppML language`](./tutorial/index.md).
 
-You can follow the [`Metaprogramming Tutorial`](./tutorial/index.md) and learn how you can bring *elegant one-liners* to your class design.
+---
+#### Abstract
+
+In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](#pipes) and the flow of [`parameter packs`](#parameter-pack) through them. You will learn about the structure of [`metafunctions`](#metafunction), how to understand their [`metafunction type`](#metafunction-type), and how they [`integrate with pipelines`](#using-pipes).
+You will learn how to [`manipulate metafunctions`](#manipulating-metafunctions) using concepts like [`Currying`](#currying), [`Product Maps`](#product-map) and [`Branch Pipes`](#functional-branching), and how to compose them into algorithms that will build your class designs.
+
+Interspersed throughout the tutorial are *use-cases*, where we will formulate a problem and break down its solution into steps, and than translate them into `CppML`. Through them you will learn how to encode construction of (increasingly) complex designs into  **elegant** and **concise** functional **expressions**.
+
+---
+
+You can find the [`tutorial of the CppML language`](./tutorial/index.md) following the link.
 
 ## CppML Reference
 

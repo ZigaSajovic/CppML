@@ -7,7 +7,9 @@ A Meta Language for C++
 Our goal is to **give** library developers **programmatic control** over the creation of **class hierarchies** with **metaprograms** that shape their **structure and behaviour** through **metafunctional logic**.
 This way constructions of **complex designs** are easily encoded in **elegant** and **concise** functional **expressions**.
 
-### Getting Started
+## Getting Started
+
+### Installation
 
 `CppML` provides detailed [`User documentation`](./docs/index.md), which you are invited explore. It provides an [`Installation Guide`](./docs/installation/index.md) which will have you up and running in moments. To quickly install `CppML` as a cmake `INTERFACE` library, run
 
@@ -21,9 +23,21 @@ make install
 Please see the [`Installation Guide`](./docs/installation/index.md) for additional details and options.
 
 
-## Tutorial
+### Tutorial
 
+We provide an in-depth [`tutorial of the CppML language`](./tutorial/index.md).
 
+---
+#### Abstract
+
+In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](#pipes) and the flow of [`parameter packs`](#parameter-pack) through them. You will learn about the structure of [`metafunctions`](#metafunction), how to understand their [`metafunction type`](#metafunction-type), and how they [`integrate with pipelines`](#using-pipes).
+You will learn how to [`manipulate metafunctions`](#manipulating-metafunctions) using concepts like [`Currying`](#currying), [`Product Maps`](#product-map) and [`Branch Pipes`](#functional-branching), and how to compose them into algorithms that will build your class designs.
+
+Interspersed throughout the tutorial are *use-cases*, where we will formulate a problem and break down its solution into steps, and than translate them into `CppML`. Through them you will learn how to encode construction of (increasingly) complex designs into  **elegant** and **concise** functional **expressions**.
+
+---
+
+You can find the [`tutorial of the CppML language`](./tutorial/index.md) following the link.
 
 ### User Documentation
 
@@ -31,7 +45,7 @@ Complete [`User documentation`](./docs/index.md) can be found in the [`docs/`](.
 
 ### CppML Reference
 
-[CppML](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs of `CppML` are divided in into several smaller libraries, which are described below:
+[`CppML`](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs of `CppML` are divided in into several smaller libraries, which are described below:
 
 | Library                                         | Description                                                                                                                                       |
 |-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|

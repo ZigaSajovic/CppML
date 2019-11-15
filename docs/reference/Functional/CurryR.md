@@ -23,12 +23,12 @@ This is similar to [`ml::Curry`](./Curry.md), with the order of the parameter pa
 
 ### Example
 
-We can create a metafunction that checks if alignment of a type `T` is **greater** than alignment of *some other type* `U`, by taking [`ml::Map`](./Map.md) of [`ml::AligmentOf`](../TypeTraits/AligmentOf.md)  that has [`ml::Greater`](../Arithmetic/Greater.md) as `Pipe`, and curry it on the right with `U`.
+We can create a metafunction that checks if alignment of a type `T` is **greater** than alignment of *some other type* `U`, by taking [`ml::Map`](./Map.md) of [`ml::AlignOf`](../TypeTraits/AligmentOf.md)  that has [`ml::Greater`](../Arithmetic/Greater.md) as `Pipe`, and curry it on the right with `U`.
 
 ```c++
 using Maker = ml::CurryR<
                 ml::Map<
-                    ml::AligmentOf<>,
+                    ml::AlignOf<>,
                     ml::Greater<>>>;
 
 using IsMoreThanInt = ml::f<Maker, int>;

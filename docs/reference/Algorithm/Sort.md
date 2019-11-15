@@ -32,7 +32,7 @@ We sort types by their alignment.
 using T = ml::f<
                 ml::Sort<
                     ml::Map<
-                            ml::AligmentOf<>,
+                            ml::AlignOf<>,
                             ml::Greater<>>>,
                 int, double, char, long>;
 static_assert(
@@ -45,11 +45,11 @@ static_assert(
 **NOTE** that
 ```c++
 ml::Map<
-        ml::AligmentOf<>, // maps each element by taking its alignment
+        ml::AlignOf<>, // maps each element by taking its alignment
         ml::Greater<>>      // and pipes the resulting parameter pack into greater
 ```
 is a metafunction of type
 ```
-(T, U) -> (AligmentOf(T), AligmentOf(U)) >-> ml::Greater
+(T, U) -> (AlignOf(T), AligmentOf(U)) >-> ml::Greater
 ```
 and is as such a valid [compare](#compare) metafunction. See [`ml::Map`](../Functional/Map.md).

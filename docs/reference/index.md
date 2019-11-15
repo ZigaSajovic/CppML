@@ -127,7 +127,7 @@ Contains metafunctions that *reason* about the input *types*. You can include an
 
 | Construct                                            | Description                                               | Type of `f` in `::f >-> Pipe`   |
 |------------------------------------------------------|-----------------------------------------------------------|---------------------------------|
-| [`AligmentOf`](./TypeTraits/AligmentOf.md)           | Get alignment of `T`                                      | `T -> Int<alignof(T)>`          |
+| [`AlignOf`](./TypeTraits/AligmentOf.md)           | Get alignment of `T`                                      | `T -> Int<alignof(T)>`          |
 | [`IsClass`](./TypeTraits/IsClass.md)                 | Checks if `T` is a class type                             | `T -> Bool<t>`                  |
 | [`IsConstructible`](./TypeTraits/IsConstructible.md) | Checks if `T` is constructable from `Ts...`               | `T, Ts... -> Bool<t>`           |
 | [`IsConvertible`](./TypeTraits/IsConvertible.md)     | Checks if `T` is convertible to `U`                       | `T, U -> Bool<t>`               |

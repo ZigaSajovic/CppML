@@ -6,7 +6,7 @@
  **/
 #ifndef CPPML_TYPE_TRAITS_HPP
 #define CPPML_TYPE_TRAITS_HPP
-#include "./TypeTraits/AligmentOf.hpp"
+#include "./TypeTraits/AlignOf.hpp"
 #include "./TypeTraits/CopyRefness.hpp"
 #include "./TypeTraits/IfValidOr.hpp"
 #include "./TypeTraits/IsClass.hpp"

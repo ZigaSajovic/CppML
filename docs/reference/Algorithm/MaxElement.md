@@ -30,7 +30,7 @@ f:: (T, U) -> ml::Bool<truth_value>
 using T0 = ml::f<
                  ml::MaxElement<
                       ml::Map<
-                              ml::AligmentOf<>,
+                              ml::AlignOf<>,
                               ml::Greater<>>>,
                  int, double, char>;
 static_assert(
@@ -41,11 +41,11 @@ static_assert(
 **NOTE** that
 ```c++
 ml::Map<
-        ml::AligmentOf<>, // maps each element by taking its aligment
+        ml::AlignOf<>, // maps each element by taking its aligment
         ml::Greater<>>      // and pipes the resulting parameter pack into greater
 ```
 is a metafunction of type
 ```
-(T, U) -> (AligmentOf(T), AligmentOf(U)) >-> Greater
+(T, U) -> (AlignOf(T), AligmentOf(U)) >-> Greater
 ```
 and is as such a valid [compare](#compare) metafunction. See [`ml::Map`](../Functional/Map.md).

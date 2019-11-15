@@ -21,7 +21,7 @@ We partition a parameter pack, to those whose alignment is greater than 4, and t
 ```c++
 using T = ml::f<
               ml::Partition<
-                    ml::AligmentOf<
+                    ml::AlignOf<
                         ml::PartialRR<
                             ml::Greater<>,
                             ml::Int<4>>>>,
@@ -35,13 +35,13 @@ static_assert(
 ```
 **NOTE** that
 ```
-ml::AligmentOf<          // take aligment of the input and pipe into
+ml::AlignOf<          // take aligment of the input and pipe into
       ml::PartialRR<       // a partial evaluation of the metafunction
           ml::Greater<>, // greater
           ml::Int<4>>>   // on ml::Int<4>
 ```
 is a metafunction of the type
 ```
-f:: T -> AligmentOf(T) >-> Curry<Greater>(4)
+f:: T -> AlignOf(T) >-> Curry<Greater>(4)
 ```
 and conforms to the [predicate](#predicate) constraints.

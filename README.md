@@ -2,7 +2,7 @@
 
 A Meta Language for C++
 
-`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./docs/tutorial/index#pipes) through which [`parameter packs`](./docs/tutorial/index#parameter-pack) can flow **without instantiating** new **types**.
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./docs/tutorial/index.md#pipes) through which [`parameter packs`](./docs/tutorial/index.md#parameter-pack) can flow **without instantiating** new **types**.
 
 Our goal is to **give** library developers **programmatic control** over the creation of **class hierarchies** with **metaprograms** that shape their **structure and behaviour** through **metafunctional logic**.
 This way constructions of **complex designs** are easily encoded in **elegant** and **concise** functional **expressions**.

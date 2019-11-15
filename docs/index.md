@@ -10,13 +10,13 @@
 
 ## Installation
 
-[CppML](https://github.com/ZigaSajovic/CppML) can be installed in two ways. You can [install it using cmake](./installation/index.md#installing-using-cmake) as an `INTERFACE` library, or you can [embed it in your project](./installation/index.md#project-embedding) (e.g. via `git submodules` or *direct-copy*).
+[CppML](https://github.com/ZigaSajovic/CppML) can be installed in two ways. You can [`install it using cmake`](./installation/index.md#installing-using-cmake) as an `INTERFACE` library, or you can [`embed it in your project`](./installation/index.md#project-embedding) (e.g. via `git submodules` or *direct-copy*).
 
-You may follow the [installation guide](./installation/index.md) for your convenience.
+You may follow the [`Installation Guide`](./installation/index.md) for your convenience.
 
 ## Tutorial
 
-`CppML` provides an in-depth [`tutorial of the CppML language`](./tutorial/index.md) and its libraries.
+`CppML` provides an in-depth [`Tutorial of the CppML language`](./tutorial/index.md) and its libraries.
 
 ---
 #### Abstract
@@ -28,7 +28,7 @@ Interspersed throughout the tutorial are *use-cases*, where we will formulate a 
 
 ---
 
-Please see the [`tutorial of the CppML language`](./tutorial/index.md).
+Please see the [`Tutorial of the CppML language`](./tutorial/index.md).
 
 ## CppML Reference
 

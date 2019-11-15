@@ -25,7 +25,7 @@ Please see the [`Installation Guide`](./docs/installation/index.md) for addition
 
 ### Tutorial
 
-`CppML` provides an in-depth [`tutorial of the CppML language`](./docs/tutorial/index.md) and its libraries.
+`CppML` provides an in-depth [`Tutorial of the CppML language`](./docs/tutorial/index.md) and its libraries.
 
 ---
 #### Abstract
@@ -37,7 +37,7 @@ Interspersed throughout the tutorial are *use-cases*, where we will formulate a 
 
 ---
 
-Please see the [`tutorial of the CppML language`](./docs/tutorial/index.md).
+Please see the [`Tutorial of the CppML language`](./docs/tutorial/index.md).
 
 ### User Documentation
 

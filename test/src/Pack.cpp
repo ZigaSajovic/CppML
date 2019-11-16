@@ -3,6 +3,7 @@
 #include "./Pack/Drop.hpp"
 #include "./Pack/Front.hpp"
 #include "./Pack/Get.hpp"
+#include "./Pack/Head.hpp"
 #include "./Pack/Prepend.hpp"
 
 int main() {
@@ -11,5 +12,6 @@ int main() {
   DropTest::run();
   FrontTest::run();
   GetTest::run();
+  HeadTest::run();
   PrependTest::run();
 }

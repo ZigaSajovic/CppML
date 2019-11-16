@@ -100,7 +100,7 @@ as *variadic* [`parameter packs`](#parameter-pack) with minimal length. This is 
 
 ### Pipe
 
-One of the pillars of [CppML](https://github.com/ZigaSajovic/CppML) is composability. As such, the ability to chain transformations on [`parameter packs`](#parameter-pack) is a core feature of the language. Concretely, every [`metafunction`](#metafunction) template has, as their last template parameter, a `Pipe` into which it passes the transformed parameter pack. Please see the [`metafunction`](#metafunction) section for a more in-depth explanation.
+One of the pillars of [CppML](https://github.com/ZigaSajovic/CppML) is composability. As such, the ability to chain transformations on [`parameter packs`](#parameter-pack) is a core feature of the language. Concretely, every [`metafunction`](#metafunction) template has, as their last template parameter, a `Pipe` into which it passes the transformed parameter pack. Please see the [`metafunction`](#metafunction) section to see how `pipelines` integrate with `metafunctions` and the [`Using Pipes`](#using-pipes) section for a detailed demonstration of building pipelines.
 
 The reader might be familiar with the concept of pipes from bash ([`operator |`](https://stackoverflow.com/questions/9834086/what-is-a-simple-explanation-for-how-pipes-work-in-bash)), or from R ([`operator %>%`](https://www.rdocumentation.org/packages/pipeR/versions/0.6.1.3/topics/Pipe)), or from Haskel ([`operator >->`](http://hackage.haskell.org/package/pipes)).
 
@@ -181,6 +181,26 @@ Suppose we want a metafunction that takes the elements of the [`parameter pack`]
 using F = ml::Pivot<2,                                    // make third element the first
           /* Pipe*/ ml::Head<4,                           // take first 4 elements
           /* Pipe*/          ml::RemoveIf<ml::IsClass<>>; // filter them
+```
+
+To illustrate the flow of parameter packs through the `pipelines`, lets take the concrete example of `int, char, vector<int>, int, string, double, float`, and send it through `F`.
+
+```c++
+int, char, vector<int>, int, string, double, float 
+->                                                  // Pivot<2>
+vector<int>, int, string, double, float, int, char 
+>->                                                 // Pipe to
+vector<int>, int, string, double, float, int, char
+->                                                  // Head<4>
+vector<int>, int, string, double 
+>->                                                 // Pipe to
+vector<int>, int, string, double 
+->                                                  // RemoveIf<IsClass<>>
+int, double                                        
+>->                                                 // Default Pipe to
+int, double
+->                                                  // ToList
+ml::ListT<int, double>
 ```
 
 See also [`ml::Pivot`](../reference/Algorithm/Pivot.md), and [`ml::Head`](../reference/Pack/Head.md) (defined in the [`Pack`](../reference/index.md#pack) header).

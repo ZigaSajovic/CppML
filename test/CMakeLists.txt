@@ -7,3 +7,11 @@ target_sources(CppML_Algorithm_Test
 target_include_directories(
   CppML_Algorithm_Test
   PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+
+add_executable(CppML_Pack_Test)
+target_sources(CppML_Pack_Test
+               PRIVATE
+               src/Pack.cpp)
+target_include_directories(
+  CppML_Pack_Test
+  PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)

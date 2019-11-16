@@ -5,6 +5,7 @@
 #include "./Pack/Get.hpp"
 #include "./Pack/Head.hpp"
 #include "./Pack/Insert.hpp"
+#include "./Pack/Length.hpp"
 #include "./Pack/Prepend.hpp"
 
 int main() {
@@ -15,5 +16,6 @@ int main() {
   GetTest::run();
   HeadTest::run();
   InsertTest::run();
+  LengthTest::run();
   PrependTest::run();
 }

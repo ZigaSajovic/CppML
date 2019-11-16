@@ -19,6 +19,8 @@
 #include "./Algorithm/RemoveIf.hpp"
 #include "./Algorithm/ReplaceIf.hpp"
 #include "./Algorithm/Rotate.hpp"
+#include "./Algorithm/UniqueCompare.hpp"
+#include "./Algorithm/Unique.hpp"
 
 int main() {
   AllOfTest::run();
@@ -42,4 +44,6 @@ int main() {
   RemoveIfTest::run();
   ReplaceIfTest::run();
   RotateTest::run();
+  UniqueCompareTest::run();
+  UniqueTest::run();
 }

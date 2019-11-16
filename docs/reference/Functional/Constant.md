@@ -9,7 +9,7 @@ struct Constant {
   using f = /* .... */;
 };
 ```
-### `Constant<T>`
+### `Constant<T, Pipe>`
 
 `Constant<T>` is a metafunction that always passes `T` to `Pipe`. `Pipe` default to [`ml::Identity`](./Identity.md).
 

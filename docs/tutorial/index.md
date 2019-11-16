@@ -927,7 +927,7 @@ The constructs presented in this section live in the [`Functional`](../reference
 | [`Bind`](../reference/Functional/Bind.md)               | Metafunction with args bound to specific positions.  | `Ts... -> Us...`               |
 | [`BranchPipe`](../reference/Functional/BranchPipe.md)   | Branches to one of two `Pipes`, given a `Predicate`. | `Ts... -> Ts...`               |
 | [`Compose`](../reference/Functional/Compose.md)         | Composition of metafunctions `Fs...`.                | `Ts... -> F0(F1(...(Fn(Us...)` |
-| [`Constant`](../reference/Functional/Constant.md)       | Metafunction that always returns `U`.                | `Ts... -> U`                   |
+| [`Constant`](../reference/Functional/Constant.md)       | Metafunction that always forwards `U`.               | `Ts... -> U`                   |
 | [`Curry`](../reference/Functional/Curry.md)             | The Curry (from the left) operator                   | `T0s... -> T1s... -> Us...`    |
 | [`CurryR`](../reference/Functional/CurryR.md)           | The Curry (from the right) operator                  | `T1s... -> T0s... -> Us...`    |
 | [`DelayedEval`](../reference/Functional/DelayedEval.md) | Delays an evaluation until compiler knows the arity. | `Ts... -> Us...`               |

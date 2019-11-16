@@ -33,9 +33,14 @@ struct ZipStart {
   template <typename Pipe, template <class...> class With, typename T,
             typename... Ts>
   using f = typename Zip<
-      Pipe, typename ml::Unwrap<ml::Map<ml::F<With>>>::template f<T>,
-      Ts...>::f;
+      Pipe, typename ml::Unwrap<ml::Map<ml::F<With>>>::template f<T>, Ts...>::f;
 };
+
+struct ZipForward {
+  template <typename Pipe, template <class...> class With, typename... Ts>
+  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+};
+
 } // namespace Implementations
 
 /*
@@ -55,9 +60,10 @@ struct ZipStart {
 template <template <class...> class With, typename Pipe = ml::ToList>
 struct ZipWith {
   template <typename... Ts>
-  using f = typename ml::Implementations::IfElse<(
-      sizeof...(Ts) < 10000)>::template f<Implementations::ZipStart, void>::
-      template f<ml::Map<ml::Unwrap<ml::F<With>>, Pipe>, ml::ListT, Ts...>;
+  using f =
+      typename ml::Implementations::IfElse<(sizeof...(Ts) > 0)>::template f<
+          Implementations::ZipStart, Implementations::ZipForward>::
+          template f<ml::Map<ml::Unwrap<ml::F<With>>, Pipe>, ml::ListT, Ts...>;
 };
 } // namespace ml
 #endif

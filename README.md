@@ -42,15 +42,15 @@ Complete [`User documentation`](./docs/index.md) can be found in the [`docs/`](.
 
 ### CppML Reference
 
-[`CppML`](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs of `CppML` are divided in into several smaller libraries, which are described below:
+[`CppML`](https://github.com/ZigaSajovic/CppML) comes with a detailed [`CppML reference`](./docs/reference/index.md). Each construct provides a specification of its *structure*, a definition of its *metafunction type*, and an *example* of use. The constructs of `CppML` are divided in into several smaller libraries, which are described below:
 
-| Library                                         | Description                                                                                                                              |
-|-------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| [`Algorithm`](./reference/index.md#algorithm)   | Algorithms over parameter packs (e.g. [`Sort`](./reference/Algorithm/Sort.md), [`ZipWith`](./reference/Algorithm/ZipWith.md), etc.)      |
-| [`Arithmetic`](./reference/index.md#arithmetic) | Arithmetic operations on type-values (e.g. [`Greater`](./reference/Arithmetic/Greater.md), [`Not`](./reference/Arithmetic/Not.md), etc.) |
-| [`Functional`](./reference/index.md#functional) | Manipulation of metafunctions (e.g. [`Curry`](./reference/Functional/Curry.md), [`Map`](./reference/Functional/Map.md), etc.)            |
-| [`Pack`](./reference/index.md#pack)             | Manipulation of parameter packs (e.g. [`Drop`](./reference/Pack/Drop.md), [`Get`](./reference/Pack/Get.md), etc.)                        |
-| [`TypeTraits`](./reference/index.md#typetraits) | Insights into types (e.g. [`IsSame`](./reference/TypeTraits/IsSame.md), [`IsClass`](./reference/TypeTraits/IsClass.md), etc.)            |
-| [`Vocabulary`](./reference/index.md#vocabulary) | Vocabulary types of `CppML`   (e.g. [`ListT`](./reference/Vocabulary/ListT.md), [`Value`](./reference/Vocabulary/Value.md), etc.)        |
+| Library                                              | Description                                                                                                                                        |
+|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`Algorithm`](./docs/reference/index.md#algorithm)   | Algorithms over parameter packs (e.g. [`Sort`](./docs/reference/Algorithm/Sort.md), [`ZipWith`](./docs/reference/Algorithm/ZipWith.md), etc.)      |
+| [`Arithmetic`](./docs/reference/index.md#arithmetic) | Arithmetic operations on type-values (e.g. [`Greater`](./docs/reference/Arithmetic/Greater.md), [`Not`](./docs/reference/Arithmetic/Not.md), etc.) |
+| [`Functional`](./docs/reference/index.md#functional) | Manipulation of metafunctions (e.g. [`Curry`](./docs/reference/Functional/Curry.md), [`Map`](./docs/reference/Functional/Map.md), etc.)            |
+| [`Pack`](./docs/reference/index.md#pack)             | Manipulation of parameter packs (e.g. [`Drop`](./docs/reference/Pack/Drop.md), [`Get`](./docs/reference/Pack/Get.md), etc.)                        |
+| [`TypeTraits`](./docs/reference/index.md#typetraits) | Insights into types (e.g. [`IsSame`](./docs/reference/TypeTraits/IsSame.md), [`IsClass`](./docs/reference/TypeTraits/IsClass.md), etc.)            |
+| [`Vocabulary`](./docs/reference/index.md#vocabulary) | Vocabulary types of `CppML`   (e.g. [`ListT`](./docs/reference/Vocabulary/ListT.md), [`Value`](./docs/reference/Vocabulary/Value.md), etc.)        |
 
-The complete `CppML reference` can be found [here](./reference/index.md).
+The complete `CppML reference` can be found [here](./docs/reference/index.md).

@@ -1,15 +1,19 @@
 #include "CppML/CppML.hpp"
 
 namespace ZipWithTest {
-template <typename T0, typename T1> struct Zipper {};
+template <typename T0, typename T1, typename T2> struct Zipper {};
 void run() {
   {
     using T = ml::f<ml::ZipWith<Zipper>, ml::ListT<int, char>,
-                    ml::ListT<float, double>>;
-    static_assert(
-        std::is_same<
-            T, ml::ListT<Zipper<int, float>, Zipper<char, double>>>::value,
-        "ZipWith with non-empty pack");
+                    ml::ListT<float, double>, ml::ListT<char, bool>>;
+    static_assert(std::is_same<T, ml::ListT<Zipper<int, float, char>,
+                                            Zipper<char, double, bool>>>::value,
+                  "ZipWith with non-empty pack");
+  }
+  {
+    using T = ml::f<ml::ZipWith<Zipper>>;
+    static_assert(std::is_same<T, ml::ListT<>>::value,
+                  "ZipWith with an empty pack");
   }
 }
 } // namespace ZipWithTest

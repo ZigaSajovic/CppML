@@ -22,6 +22,7 @@
 #include "./Algorithm/Unique.hpp"
 #include "./Algorithm/UniqueCompare.hpp"
 #include "./Algorithm/ZipWith.hpp"
+#include "./Algorithm/ZipWithVariadic.hpp"
 
 int main() {
   AllOfTest::run();
@@ -48,4 +49,5 @@ int main() {
   UniqueCompareTest::run();
   UniqueTest::run();
   ZipWithTest::run();
+  ZipWithVariadicTest::run();
 }

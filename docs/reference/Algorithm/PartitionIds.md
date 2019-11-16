@@ -22,7 +22,7 @@ We partition indexes a parameter pack, to those whose alignment is greater than 
 using T = ml::f<
               ml::PartitionIds<
                     ml::AlignOf<
-                        ml::PartialRR<
+                        ml::PartialR<
                             ml::Greater<>,
                             ml::Int<4>>>>,
               int, char, long, bool, double>;

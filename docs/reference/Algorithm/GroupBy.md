@@ -28,13 +28,13 @@ f:: T -> U
 
 ```c++
 using T0 = ml::f<
-                 ml::GroupBy<ml::AlignmentOf<>>,
+                 ml::GroupBy<ml::AlignOf<>>,
                  int, char, float, bool, double>;
 static_assert(
               std::is_same_v<
                   T,
                   ml::ListT<
-                      ml::ListT<char, bool>,
                       ml::ListT<int, float>,
-                      ml::ListT<double>>);
+                      ml::ListT<char, bool>,
+                      ml::ListT<double>>>);
 ```

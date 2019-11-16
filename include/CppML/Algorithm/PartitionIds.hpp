@@ -16,7 +16,7 @@ namespace ml {
  * Paritions indexes of the parameter pack, given a predicate, into two Lists.
  */
 template <typename Predicate, typename Pipe = ml::ToList>
-struct PartitionId
+struct PartitionIds
     : ml::Product<ml::FilterIds<Predicate>, ml::RemoveIdsIf<Predicate>, Pipe> {
 };
 } // namespace ml

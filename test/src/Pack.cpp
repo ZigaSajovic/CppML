@@ -4,6 +4,7 @@
 #include "./Pack/Front.hpp"
 #include "./Pack/Get.hpp"
 #include "./Pack/Head.hpp"
+#include "./Pack/Insert.hpp"
 #include "./Pack/Prepend.hpp"
 
 int main() {
@@ -13,5 +14,6 @@ int main() {
   FrontTest::run();
   GetTest::run();
   HeadTest::run();
+  InsertTest::run();
   PrependTest::run();
 }

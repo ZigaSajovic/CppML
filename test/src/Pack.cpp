@@ -6,7 +6,9 @@
 #include "./Pack/Head.hpp"
 #include "./Pack/Insert.hpp"
 #include "./Pack/Length.hpp"
+#include "./Pack/PackExtractor.hpp"
 #include "./Pack/Prepend.hpp"
+#include "./Pack/Range.hpp"
 
 int main() {
   AppendTest::run();
@@ -17,5 +19,7 @@ int main() {
   HeadTest::run();
   InsertTest::run();
   LengthTest::run();
+  PackExtractorTest::run();
   PrependTest::run();
+  RangeTest::run();
 }

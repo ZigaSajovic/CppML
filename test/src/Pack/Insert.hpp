@@ -27,7 +27,7 @@ void run() {
                     ml::Int<30>, ml::Int<31>, ml::Int<32>, ml::Int<33>,
                     ml::Int<34>, ml::Int<35>, ml::Int<36>, ml::Int<37>,
                     ml::Int<38>>>::value,
-        "Head with a non-empty pack 37");
+        "Insert with a non-empty pack 37");
   }
 }
 }; // namespace InsertTest

@@ -17,6 +17,7 @@
 #include "./Algorithm/Reduce.hpp"
 #include "./Algorithm/RemoveIdsIf.hpp"
 #include "./Algorithm/RemoveIf.hpp"
+#include "./Algorithm/ReplaceIf.hpp"
 #include "./Algorithm/Rotate.hpp"
 
 int main() {
@@ -39,5 +40,6 @@ int main() {
   ReduceTest::run();
   RemoveIdsIfTest::run();
   RemoveIfTest::run();
+  ReplaceIfTest::run();
   RotateTest::run();
 }

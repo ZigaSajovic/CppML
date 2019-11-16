@@ -29,7 +29,7 @@ void run() {
                     ml::Int<27>, ml::Int<28>, ml::Int<29>, ml::Int<30>, Type2,
                     ml::Int<32>, ml::Int<33>, ml::Int<34>, ml::Int<35>,
                     ml::Int<36>, ml::Int<37>, ml::Int<38>>>::value,
-        "Insert with a non-empty pack 37");
+        "Bind test.");
   }
 }
 } // namespace BindTest

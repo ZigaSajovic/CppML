@@ -14,6 +14,7 @@
 #include "./Algorithm/Partition.hpp"
 #include "./Algorithm/PartitionIds.hpp"
 #include "./Algorithm/Pivot.hpp"
+#include "./Algorithm/Rotate.hpp"
 
 int main() {
   AllOfTest::run();
@@ -32,4 +33,5 @@ int main() {
   PartitionTest::run();
   PartitionIdsTest::run();
   PivotTest::run();
+  RotateTest::run();
 }

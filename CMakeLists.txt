@@ -22,6 +22,7 @@ add_library(${PROJECT_NAME} INTERFACE)
 # Allow linking when CppML is a subproject
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
+# To build tests, add the flag -DBUILD_TESTS=True
 if(BUILD_TESTS)
   add_subdirectory(./test)
 endif()

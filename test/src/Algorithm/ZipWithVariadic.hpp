@@ -2,17 +2,19 @@
 
 namespace ZipWithVariadicTest {
 template <typename... Ts> struct Zipper {};
+template <typename... Ts> struct List {};
 void run() {
   {
-    using T = ml::f<ml::ZipWithVariadic<Zipper>, ml::ListT<int, char>,
-                    ml::ListT<float, double>, ml::ListT<char, bool>>;
-    static_assert(std::is_same<T, ml::ListT<Zipper<int, float, char>,
-                                            Zipper<char, double, bool>>>::value,
+    using T =
+        ml::f<ml::ZipWithVariadic<Zipper, ml::F<List>>, ml::ListT<int, char>,
+              ml::ListT<float, double>, ml::ListT<char, bool>>;
+    static_assert(std::is_same<T, List<Zipper<int, float, char>,
+                                       Zipper<char, double, bool>>>::value,
                   "ZipWithVariadic with non-empty pack");
   }
   {
-    using T = ml::f<ml::ZipWithVariadic<Zipper>>;
-    static_assert(std::is_same<T, ml::ListT<>>::value,
+    using T = ml::f<ml::ZipWithVariadic<Zipper, ml::F<List>>>;
+    static_assert(std::is_same<T, List<>>::value,
                   "ZipWithVariadic with an empty pack");
   }
 }

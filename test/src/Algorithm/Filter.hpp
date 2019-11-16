@@ -2,20 +2,22 @@
 
 namespace FilterTest {
 template <typename T> using Predicate = std::is_same<int, T>;
+template <typename... Ts> struct List {};
 void run() {
   {
-    using T = ml::f<ml::Filter<ml::F<Predicate>>, int, char, int>;
-    static_assert(std::is_same<T, ml::ListT<int, int>>::value,
+    using T = ml::f<ml::Filter<ml::F<Predicate>, ml::F<List>>, int, char, int>;
+    static_assert(std::is_same<T, List<int, int>>::value,
                   "Filter with a non-empty pack");
   }
   {
-    using T = ml::f<ml::Filter<ml::F<Predicate>>, float, char, bool>;
-    static_assert(std::is_same<T, ml::ListT<>>::value,
+    using T =
+        ml::f<ml::Filter<ml::F<Predicate>, ml::F<List>>, float, char, bool>;
+    static_assert(std::is_same<T, List<>>::value,
                   "Filter with a non-empty pack");
   }
   {
-    using T = ml::f<ml::Filter<ml::F<Predicate>>>;
-    static_assert(std::is_same<T, ml::ListT<>>::value,
+    using T = ml::f<ml::Filter<ml::F<Predicate>, ml::F<List>>>;
+    static_assert(std::is_same<T, List<>>::value,
                   "Filter with a non-empty pack");
   }
 }

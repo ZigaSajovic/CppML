@@ -6,7 +6,8 @@
  **/
 #ifndef CPPML_CONCAT_HPP
 #define CPPML_CONCAT_HPP
-#include "../Functional/ToList.hpp"
+#include "../Functional/Identity.hpp"
+#include "../Functional/Invoke.hpp"
 
 namespace ml {
 namespace Implementations {
@@ -29,10 +30,10 @@ template <> struct Concat_impl<false> { template <typename T> using f = T; };
  * # Concat:
  * Concats `n` **List**-like types.
  */
-struct Concat {
+template <typename Pipe = ml::Identity> struct Concat {
   template <typename T, typename... Ts>
-  using f = typename Implementations::Concat_impl<static_cast<bool>(
-      sizeof...(Ts))>::template f<T, Ts...>;
+  using f = ml::f<Pipe, typename Implementations::Concat_impl<static_cast<bool>(
+                            sizeof...(Ts))>::template f<T, Ts...>>;
 };
 } // namespace ml
 #endif

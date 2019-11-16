@@ -21,8 +21,10 @@ namespace ml {
 template <template <class...> class With, typename Pipe = ml::ToList>
 struct ZipWithVariadic {
   template <typename... Ts>
-  using f = typename ml::Implementations::IfElse<(sizeof...(Ts) < 10000)>::template f<
-      Implementations::ZipStart, void>::template f<Pipe, With, Ts...>;
+  using f =
+      typename ml::Implementations::IfElse<(sizeof...(Ts) > 0)>::template f<
+          Implementations::ZipStart,
+          Implementations::ZipForward>::template f<Pipe, With, Ts...>;
 };
 } // namespace ml
 #endif

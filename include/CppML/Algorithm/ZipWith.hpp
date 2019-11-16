@@ -16,24 +16,28 @@ namespace ml {
 namespace Implementations {
 template <typename...> struct Zip;
 
-template <typename Pipe, template <class...> class Result, typename... Rs>
-struct Zip<Pipe, Result<Rs...>> {
+template <typename With, typename Pipe, template <class...> class Result,
+          typename... Rs>
+struct Zip<With, Pipe, Result<Rs...>> {
   using f = typename Pipe::template f<Rs...>;
 };
-template <typename Pipe, template <class...> class Result, typename... Rs,
-          template <class...> class Next, typename... Ns, typename... Rest>
-struct Zip<Pipe, Result<Rs...>, Next<Ns...>, Rest...> {
-  using f =
-      typename Zip<Pipe,
-                   Result<typename ml::Unwrap<Append<Ns>>::template f<Rs>...>,
-                   Rest...>::f;
+template <typename With, typename Pipe, template <class...> class Result,
+          typename... Rs, template <class...> class Next, typename... Ns,
+          typename... Rest>
+struct Zip<With, Pipe, Result<Rs...>, Next<Ns...>, Rest...> {
+  using f = typename Zip<
+      With, Pipe,
+      Result<typename ml::Unwrap<Append<Ns, With>>::template f<Rs>...>,
+      Rest...>::f;
 };
 
 struct ZipStart {
   template <typename Pipe, template <class...> class With, typename T,
             typename... Ts>
-  using f = typename Zip<
-      Pipe, typename ml::Unwrap<ml::Map<ml::F<With>>>::template f<T>, Ts...>::f;
+  using f =
+      typename Zip<ml::F<With>, Pipe,
+                   typename ml::Unwrap<ml::Map<ml::F<With>>>::template f<T>,
+                   Ts...>::f;
 };
 
 struct ZipForward {

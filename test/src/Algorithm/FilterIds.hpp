@@ -1,7 +1,7 @@
 #include "CppML/CppML.hpp"
 
 namespace FilterIdsTest {
-template <typename T> using Predicate = ml::f<ml::IsSame<>, int, T>;
+template <typename T> using Predicate = std::is_same<int, T>;
 void run() {
   {
     using T = ml::f<ml::FilterIds<ml::F<Predicate>>, int, char, int>;

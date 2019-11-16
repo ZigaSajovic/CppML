@@ -15,6 +15,8 @@
 #include "./Algorithm/PartitionIds.hpp"
 #include "./Algorithm/Pivot.hpp"
 #include "./Algorithm/Reduce.hpp"
+#include "./Algorithm/RemoveIdsIf.hpp"
+#include "./Algorithm/RemoveIf.hpp"
 #include "./Algorithm/Rotate.hpp"
 
 int main() {
@@ -22,18 +24,20 @@ int main() {
   AnyOfTest::run();
   ContainsTest::run();
   CountIfTest::run();
-  FilterTest::run();
   FilterIdsTest::run();
-  FindIfTest::run();
+  FilterTest::run();
   FindIfNotTest::run();
+  FindIfTest::run();
   GroupByTest::run();
   GroupIdsByTest::run();
   InclusiveScanTest::run();
   MaxElementTest::run();
   NoneOfTest::run();
-  PartitionTest::run();
   PartitionIdsTest::run();
+  PartitionTest::run();
   PivotTest::run();
-  RotateTest::run();
   ReduceTest::run();
+  RemoveIdsIfTest::run();
+  RemoveIfTest::run();
+  RotateTest::run();
 }

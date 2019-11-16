@@ -21,6 +21,10 @@ include(CMakePackageConfigHelpers)
 add_library(${PROJECT_NAME} INTERFACE)
 # Allow linking when CppML is a subproject
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+if(BUILD_TESTS)
+  add_subdirectory(./test)
+endif()
  
 target_include_directories(
   ${PROJECT_NAME}

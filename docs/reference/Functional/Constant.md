@@ -3,18 +3,18 @@
 ## `Constant`
 
 ```c++
-template <typename T>
+template <typename T, typename Pipe = ml::Identity>
 struct Constant {
   template <typename ...Ts>
   using f = /* .... */;
 };
 ```
-### `Constant<T>`
+### `Constant<T, Pipe>`
 
-`Constant<T>` is a metafunction always evaluates to `T`.
+`Constant<T>` is a metafunction that always passes `T` to `Pipe`. `Pipe` default to [`ml::Identity`](./Identity.md).
 
 ```c++
-f:: Ts... -> T
+f:: Ts... -> T >-> Pipe
 ```
 ### Example
 

@@ -83,7 +83,7 @@ Find the construct of your interest in the table below. Each of them has it own 
 | [`Bind`](./Functional/Bind.md)               | Metafunction with args bound to specific positions.  | `Ts... -> Us...`               |
 | [`BranchPipe`](./Functional/BranchPipe.md)   | Branches to one of two `Pipes`, given a `Predicate`. | `Ts... -> Ts...`               |
 | [`Compose`](./Functional/Compose.md)         | Composition of metafunctions `Fs...`.                | `Ts... -> F0(F1(...(Fn(Us...)` |
-| [`Constant`](./Functional/Constant.md)       | Metafunction that always returns `U`.                | `Ts... -> U`                   |
+| [`Constant`](./Functional/Constant.md)       | Metafunction that always forwards `U`.               | `Ts... -> U`                   |
 | [`Curry`](./Functional/Curry.md)             | The Curry (from the left) operator                   | `T0s... -> T1s... -> Us...`    |
 | [`CurryR`](./Functional/CurryR.md)           | The Curry (from the right) operator                  | `T1s... -> T0s... -> Us...`    |
 | [`DelayedEval`](./Functional/DelayedEval.md) | Delays an evaluation until compiler knows the arity. | `Ts... -> Us...`               |

@@ -8,6 +8,14 @@ target_include_directories(
   CppML_Algorithm_Test
   PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
 
+add_executable(CppML_Functional_Test)
+target_sources(CppML_Functional_Test
+               PRIVATE
+               src/Functional.cpp)
+target_include_directories(
+  CppML_Functional_Test
+  PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+
 add_executable(CppML_Pack_Test)
 target_sources(CppML_Pack_Test
                PRIVATE

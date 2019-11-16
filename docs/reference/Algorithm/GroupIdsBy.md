@@ -28,13 +28,13 @@ f:: T -> U
 
 ```c++
 using T0 = ml::f<
-                 ml::GroupIdsBy<ml::AlignmentOf<>>,
+                 ml::GroupIdsBy<ml::AlignOf<>>,
                  int, char, float, bool, double>;
 static_assert(
               std::is_same_v<
                   T,
                   ml::ListT<
-                      ml::ListT<ml::Int<1>, ml::Int<3>>,
-                      ml::ListT<ml::Int<0>, ml::Int<2>>,
-                      ml::ListT<ml::Int<4>>>);
+                            ml::ListT<ml::Int<0>, ml::Int<2>>,
+                            ml::ListT<ml::Int<1>, ml::Int<3>>,
+                            ml::ListT<ml::Int<4>>>>);
 ```

@@ -9,6 +9,7 @@
 #include "./Pack/PackExtractor.hpp"
 #include "./Pack/Prepend.hpp"
 #include "./Pack/Range.hpp"
+#include "./Pack/Tail.hpp"
 
 int main() {
   AppendTest::run();
@@ -22,4 +23,5 @@ int main() {
   PackExtractorTest::run();
   PrependTest::run();
   RangeTest::run();
+  TailTest::run();
 }

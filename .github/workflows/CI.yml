@@ -3,40 +3,27 @@ name: C/C++ CI
 on: [push]
 
 jobs:
-  build-g++:
-  strategy:
-    matrix:
-      compiler: [g++]
+  build-ubuntu:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
     - name: configure
-      env:
-        CXX: ${{ matrix.compiler }}
       run: mkdir build && cd build && cmake .. -DBUILD_TESTS=True
     - name: test
-      env:
-        CXX: ${{ matrix.compiler }}
       run: cmake --build build
 
-jobs:
-  build-clang:
+  build-macos:
 
-  strategy:
-    matrix:
-      compiler: [clang++]
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
 
     steps:
     - uses: actions/checkout@v1
     - name: configure
-      env:
-        CXX: ${{ matrix.compiler }}
       run: mkdir build && cd build && cmake .. -DBUILD_TESTS=True
     - name: test
-      env:
-        CXX: ${{ matrix.compiler }}
       run: cmake --build build

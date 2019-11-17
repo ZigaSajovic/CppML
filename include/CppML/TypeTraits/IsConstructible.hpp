@@ -12,10 +12,10 @@
 
 namespace ml {
 /*
- * IsConstrucitble:
+ * IsConstructible:
  * Checks if a type is constructable from given arguments
  */
-template <typename Pipe = Identity> struct IsConstrucitble {
+template <typename Pipe = Identity> struct IsConstructible {
   template <typename T, typename... Args>
   using f =
       typename Pipe::template f<Bool<std::is_constructible<T, Args...>::value>>;

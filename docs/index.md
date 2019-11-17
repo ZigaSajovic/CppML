@@ -10,6 +10,7 @@ A Meta Language for C++
 * [Tutorial](#tutorial)
 * [CppML Reference](#cppml-reference)
   * [Structure](#structure)
+* [Testing](#testing)
 * [License](#license)
 
 ## Installation
@@ -57,8 +58,10 @@ The complete `CppML reference` can be found [here](./reference/index.md).
 
 Thus, to use any component, you can either include its specific header (e.g. `#include <CppML/Algorithm/Sort.hpp>`), or include its libraries header `#include <CppML/Algorithm.hpp>`. Note that you may include all libraries at once using `#include <CppML/CppML.hpp>`.
 
+## Testing
 
+`CppML` provides [`tests`](../../test) for each of its components, which are automatically built with [`Github Actions`](https://github.com/ZigaSajovic/CppML/actions?query=workflow%3ATests) on each push. Please see the [`Testing Guide`](./testing/index.md) for instructions on how to build them, and additional details.
 
 ## License
 
-`CppML` in distributed under the **MIT License**. Please see the accompanying [`LICENSE`](../LICENSE) in the root of the project.
+`CppML` is distributed under the **MIT License**. Please see the accompanying [`LICENSE`](../LICENSE) in the root of the project.

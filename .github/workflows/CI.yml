@@ -13,17 +13,3 @@ jobs:
       run: mkdir build && cd build && cmake .. -DBUILD_TESTS=True
     - name: test
       run: cmake --build build
-
-  build-macos:
-
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest]
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: configure
-      run: mkdir build && cd build && cmake .. -DBUILD_TESTS=True
-    - name: test
-      run: cmake --build build

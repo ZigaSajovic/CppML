@@ -19,7 +19,6 @@ make install
 
 Please see the [`Installation Guide`](./docs/installation/index.md) for additional details and options.
 
-
 ### Tutorial
 
 `CppML` provides an in-depth [`Tutorial of the CppML language`](./docs/tutorial/index.md) and its libraries.

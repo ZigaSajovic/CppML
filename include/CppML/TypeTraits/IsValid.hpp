@@ -6,24 +6,24 @@
  **/
 #ifndef CPPML_IS_VALID_HPP
 #define CPPML_IS_VALID_HPP
-#include "../Functional/Identity.hpp"
 #include "../Functional/DelayedEval.hpp"
+#include "../Functional/Identity.hpp"
 #include "../Vocabulary/Value.hpp"
-#include <type_traits>
+#include "./VoidT.hpp"
 namespace ml {
 namespace Implementations {
 template <typename, template <typename...> class T, class... Ts>
 struct IsValidT_impl : ml::Bool<false> {};
 
 template <template <typename...> class T, typename... Ts>
-struct IsValidT_impl<std::void_t<T<Ts...>>, T, Ts...> : ml::Bool<true> {};
+struct IsValidT_impl<ml::VoidT<T<Ts...>>, T, Ts...> : ml::Bool<true> {};
 
 template <typename, class T, class... Ts>
 struct IsValid_impl : ml::Bool<false> {};
 
 template <class T, typename... Ts>
-struct IsValid_impl<std::void_t<ml::DelayedEval<T, sizeof...(Ts), Ts...>>, T, Ts...>
-    : ml::Bool<true> {};
+struct IsValid_impl<ml::VoidT<ml::DelayedEval<T, sizeof...(Ts), Ts...>>, T,
+                    Ts...> : ml::Bool<true> {};
 }; // namespace Implementations
 
 /*

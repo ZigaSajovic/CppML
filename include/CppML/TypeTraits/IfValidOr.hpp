@@ -9,7 +9,7 @@
 #include "../Functional/DelayedEval.hpp"
 #include "../Functional/Identity.hpp"
 #include "../Vocabulary/Value.hpp"
-#include <type_traits>
+#include "./VoidT.hpp"
 namespace ml {
 namespace Implementations {
 template <typename T> struct R { using f = T; };
@@ -18,9 +18,8 @@ template <typename, class U, class T, class... Ts>
 struct IfValidOr_impl : R<U> {};
 
 template <class U, class F, typename... Ts>
-struct IfValidOr_impl<std::void_t<ml::DelayedEval<F, sizeof...(Ts), Ts...>>, U,
-                      F, Ts...> : R<ml::DelayedEval<F, sizeof...(Ts), Ts...>> {
-};
+struct IfValidOr_impl<VoidT<ml::DelayedEval<F, sizeof...(Ts), Ts...>>, U, F,
+                      Ts...> : R<ml::DelayedEval<F, sizeof...(Ts), Ts...>> {};
 }; // namespace Implementations
 /*
  * IfValidOr:

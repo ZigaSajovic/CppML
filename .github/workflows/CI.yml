@@ -1,29 +1,30 @@
-name: C/C++ CI
+name: Tests
 
 on: [push]
 
+env:
+  BUILD_TYPE: Release
+
 jobs:
-  build-ubuntu:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: configure
-      run: mkdir build && cd build && cmake .. -DBUILD_TESTS=True
-    - name: test
-      run: cmake --build build
-
-  build-macos:
+  build:
 
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [windows-latest, ubuntu-latest, macOS-latest]
 
     steps:
     - uses: actions/checkout@v1
-    - name: configure
-      run: mkdir build && cd build && cmake .. -DBUILD_TESTS=True
-    - name: test
-      run: cmake --build build
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DBUILD_TESTS=True -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE

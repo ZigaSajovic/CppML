@@ -1,3 +1,6 @@
+![](https://github.com/ZigaSajovic/CppML/workflows/Tests/badge.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/88ce1b00433b431ca01578c4c9744491)](https://www.codacy.com/manual/ZigaSajovic/CppML?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ZigaSajovic/CppML&amp;utm_campaign=Badge_Grade) 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/bernedom/SI/master/LICENSE)
+
 # CppML
 
 A Meta Language for C++

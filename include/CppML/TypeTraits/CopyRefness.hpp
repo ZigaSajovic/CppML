@@ -19,10 +19,11 @@ template <typename Pipe = ml::Identity> struct CopyRefness {
   template <typename From, typename To>
   using f = typename Pipe::template f<
       typename Implementations::IfElse<!std::is_reference<From>::value>::
-          template f<std::remove_reference_t<To>,
-                     typename Implementations::IfElse<
-                         std::is_rvalue_reference<From>::value>::
-                         template f<std::remove_reference_t<To> &&, To &>>>;
+          template f<
+              typename std::remove_reference<To>::type,
+              typename Implementations::
+                  IfElse<std::is_rvalue_reference<From>::value>::template f<
+                      typename std::remove_reference<To>::type &&, To &>>>;
 };
 } // namespace ml
 #endif

@@ -7,6 +7,7 @@ target_sources(CppML_Algorithm_Test
 target_include_directories(
   CppML_Algorithm_Test
   PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+target_compile_features(CppML_Algorithm_Test PRIVATE cxx_std_14)
 
 add_executable(CppML_Functional_Test)
 target_sources(CppML_Functional_Test
@@ -15,6 +16,7 @@ target_sources(CppML_Functional_Test
 target_include_directories(
   CppML_Functional_Test
   PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+target_compile_features(CppML_Functional_Test PRIVATE cxx_std_14)
 
 add_executable(CppML_Pack_Test)
 target_sources(CppML_Pack_Test
@@ -23,6 +25,7 @@ target_sources(CppML_Pack_Test
 target_include_directories(
   CppML_Pack_Test
   PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+target_compile_features(CppML_Pack_Test PRIVATE cxx_std_14)
 
 add_executable(CppML_TypeTraits_Test)
 target_sources(CppML_TypeTraits_Test
@@ -31,3 +34,4 @@ target_sources(CppML_TypeTraits_Test
 target_include_directories(
   CppML_TypeTraits_Test
   PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+target_compile_features(CppML_TypeTraits_Test PRIVATE cxx_std_14)

@@ -12,6 +12,18 @@ target_include_directories(
 )
 target_compile_features(CppML_Algorithm_Test PRIVATE cxx_std_14)
 
+add_executable(CppML_Arithmetic_Test)
+target_sources(
+  CppML_Arithmetic_Test
+  PRIVATE
+  src/Arithmetic.cpp
+)
+target_include_directories(
+  CppML_Arithmetic_Test
+  PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+)
+target_compile_features(CppML_Arithmetic_Test PRIVATE cxx_std_14)
+
 add_executable(CppML_Functional_Test)
 target_sources(
   CppML_Functional_Test

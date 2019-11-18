@@ -91,9 +91,9 @@ Find the construct of your interest in the table below. Each of them has it own 
 | [`DelayedEval`](./Functional/DelayedEval.md) | Delays an evaluation until compiler knows the arity. | `Ts... -> Us...`               |
 | [`f`](./Functional/Invoke.md)                | Invokes the `f` alias of the metafunction `F`        | `Ts... -> F::f<Ts...>`         |
 | [`F`](./Functional/F.md)                     | Lifts a template to a metafunction                   | `Ts... -> Template<Ts...>`     |
+| [`fx`](./Functional/InvokeWith.md)           | Invokes the metafunction on `Ts...`                  | `Ts... -> Us... -> Us...`      |
 | [`Identity`](./Functional/Identity.md)       | Identity metafunction.                               | `T -> T`                       |
 | [`IfElse`](./Functional/IfElse.md)           | Chooses between `T` and `U`.                         | `T, U -> V`                    |
-| [`InvokeWith`](./Functional/InvokeWith.md)   | Invokes the metafunction on `Ts...`                  | `Ts... -> Us... -> Us...`      |
 | [`Map`](./Functional/Map.md)                 | Maps `Ts...` by `F`.                                 | `Ts... -> F(Ts)...`            |
 | [`Partial`](./Functional/Partial.md)         | Partial evaluation of `F` on `T0s...` from the left  | `T1... -> F(T0..., T1...)`     |
 | [`PartialR`](./Functional/PartialR.md)       | Partial Evaluation of `F` on `T1s...` from the right | `T0... -> F(T0..., T1...)`     |

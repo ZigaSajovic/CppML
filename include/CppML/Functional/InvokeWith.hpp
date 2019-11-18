@@ -16,5 +16,13 @@ namespace ml {
 template <class... Ts> struct InvokeWith {
   template <typename F> using f = typename F::template f<Ts...>;
 };
+/*
+ * fx:
+ * A metafunction that will invoke the metafunction it is passed,
+ * with the arguments Ts
+ */
+template <class... Ts> struct fx {
+  template <typename F> using f = typename F::template f<Ts...>;
+};
 } // namespace ml
 #endif

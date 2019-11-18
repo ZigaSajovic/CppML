@@ -933,9 +933,9 @@ The constructs presented in this section live in the [`Functional`](../reference
 | [`DelayedEval`](../reference/Functional/DelayedEval.md) | Delays an evaluation until compiler knows the arity. | `Ts... -> Us...`               |
 | [`f`](../reference/Functional/Invoke.md)                | Invokes the `f` alias of the metafunction `F`        | `Ts... -> F::f<Ts...>`         |
 | [`F`](../reference/Functional/F.md)                     | Lifts a template to a metafunction                   | `Ts... -> Template<Ts...>`     |
+| [`fx`](../reference/Functional/InvokeWith.md)           | Invokes the metafunction on `Ts...`                  | `Ts... -> Us... -> Us...`      |
 | [`Identity`](../reference/Functional/Identity.md)       | Identity metafunction.                               | `T -> T`                       |
 | [`IfElse`](../reference/Functional/IfElse.md)           | Chooses between `T` and `U`.                         | `T, U -> V`                    |
-| [`InvokeWith`](../reference/Functional/InvokeWith.md)   | Invokes the metafunction on `Ts...`                  | `Ts... -> Us... -> Us...`      |
 | [`Map`](../reference/Functional/Map.md)                 | Maps `Ts...` by `F`.                                 | `Ts... -> F(Ts)...`            |
 | [`Partial`](../reference/Functional/Partial.md)         | Partial evaluation of `F` on `T0s...` from the left  | `T1... -> F(T0..., T1...)`     |
 | [`PartialR`](../reference/Functional/PartialR.md)       | Partial Evaluation of `F` on `T1s...` from the right | `T0... -> F(T0..., T1...)`     |

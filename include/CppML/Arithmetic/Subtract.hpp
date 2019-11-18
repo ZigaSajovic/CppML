@@ -10,10 +10,10 @@
 #include "../Vocabulary/Value.hpp"
 namespace ml {
 /*
- * Substract:
+ * Subtract:
  * Subtracts the underlying values
  */
-template <typename Pipe = Identity> struct Substract {
+template <typename Pipe = Identity> struct Subtract {
   template <typename T1, typename T2>
   using f = typename Pipe::template f<ml::Int<(T1::value - T2::value)>>;
 };

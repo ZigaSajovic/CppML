@@ -15,7 +15,7 @@ Elem<Tag<ml::Int<0>, T0>,
           Elem<Tag<ml::Int<2>, T2>, Elem<Tag<ml::Int<3>, T3>>>>>;
 ```
 
-In `CppML`, `MakeBase` is expressed as a simple meta-algorithm:
+Using `CppML` we can express `MakeBase` as a simple meta-algorithm:
 
 ```c++
 template <typename... Ts>

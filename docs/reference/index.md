@@ -65,10 +65,12 @@ Find the construct of your interest in the table below. Each of them has it own 
 |------------------------------------------|------------------------------|-----------------------------------------------|
 | [`Add`](./Arithmetic/Add.md)             | Adds two `Value`s.           | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
 | [`Decrement`](./Arithmetic/Decrement.md) | Decrements a `Value`         | `Value<t, T> -> Value<--t, T>`                |
+| [`Divide`](./Arithmetic/Divide.md)       | Divides two `Value`s.        | `Value<T, t>, Value<U, u> -> Value<V, t / u>` |
 | [`Equals`](./Arithmetic/Equals.md)       | Equality check for `Values`. | `Value<T, t>, Value<U, u> -> Bool<t>`         |
 | [`Greater`](./Arithmetic/Greater.md)     | Greater for `Values`.        | `Value<T, t>, Value<U, u> -> Bool<t>`         |
 | [`Increment`](./Arithmetic/Increment.md) | Increments a `Value`.        | `Value<t, T> -> Value<++t, T>`                |
 | [`Less`](./Arithmetic/Less.md)           | Less for `Values`.           | `Value<T, t>, Value<U, u> -> Bool<t>`         |
+| [`Multiply`](./Arithmetic/Multiply.md)   | Multiplies two `Value`s.     | `Value<T, t>, Value<U, u> -> Value<V, t * u>` |
 | [`Not`](./Arithmetic/Not.md)             | Negates a `Value`.           | `Bool<t> -> Bool< not t>`                     |
 | [`Subtract`](./Arithmetic/Subtract.md)   | Subtracts two `Value`s.      | `Value<T, t>, Value<U, u> -> Value<V, t + u>` |
 

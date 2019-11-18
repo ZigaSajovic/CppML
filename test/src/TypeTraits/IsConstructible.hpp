@@ -3,7 +3,7 @@
 namespace IsConstructibleTest {
 struct Class {
   int x;
-  Class(int x) : x{x} {}
+  explicit Class(int x) : x{x} {}
 };
 template <typename T> struct R {};
 void run() {

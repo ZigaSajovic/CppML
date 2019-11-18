@@ -2,7 +2,7 @@
 
 A Meta Language for C++
 
-`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./tutorial/index.md#pipe) through which [`parameter packs`](./tutorial/index.md#parameter-pack) can flow **without instantiating** new **types**. Our goal is to **give** library developers **programmatic control** over the creation of **class hierarchies** with **metaprograms** that shape their **structure and behaviour** through **metafunctional logic**. This way constructions of **complex designs** are easily encoded in **elegant** and **concise** functional **expressions**.
+`CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./tutorial/index.md#pipe) through which [`parameter packs`](./tutorial/index.md#parameter-pack) can flow **without instantiating** new **types**. Our goal is to **give** library developers **programmatic control** over the creation of **class hierarchies** with **metaprograms** that shape their **structure and behaviour** through **metafunctional logic**. This way constructions of **complex designs** are easily encoded in **concise** and **readable** functional **expressions**.
 
 #### Table of Contents
 
@@ -29,7 +29,7 @@ You may follow the [`Installation Guide`](./installation/index.md) for your conv
 In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](./tutorial/index.md#pipe) and the flow of [`parameter packs`](./tutorial/index.md#parameter-pack) through them. You will learn about the structure of [`metafunctions`](./tutorial/index.md#metafunction), how to understand their [`metafunction type`](./tutorial/index.md#metafunction-type), and how they [`integrate with pipelines`](./tutorial/index.md#using-pipes).
 You will learn how to [`manipulate metafunctions`](./tutorial/index.md#manipulating-metafunctions) using concepts like [`Currying`](./tutorial/index.md#currying), [`Product Maps`](./tutorial/index.md#product-map) and [`Branch Pipes`](./tutorial/index.md#functional-branching), and how to compose them into algorithms that will build your class designs.
 
-Interspersed throughout the tutorial are *use-cases*, where we will formulate a problem and break down its solution into steps, and than translate them into `CppML`. Through them you will learn how to encode construction of (increasingly) complex designs into  **elegant** and **concise** functional **expressions**.
+Interspersed throughout the tutorial are *use-cases*, where we will formulate a problem and break down its solution into steps, and than translate them into `CppML`. Through them you will learn how to encode construction of (increasingly) complex designs into  **concise** and **readable** functional **expressions**.
 
 ---
 

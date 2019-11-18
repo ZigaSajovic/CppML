@@ -1,11 +1,30 @@
-![](https://github.com/ZigaSajovic/CppML/workflows/Tests/badge.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/88ce1b00433b431ca01578c4c9744491)](https://www.codacy.com/manual/ZigaSajovic/CppML?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ZigaSajovic/CppML&amp;utm_campaign=Badge_Grade) 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ZigaSajovic/CppML/master/LICENSE)
+[![](https://github.com/ZigaSajovic/CppML/workflows/Tests/badge.svg)](https://github.com/ZigaSajovic/CppML/actions?query=workflow%3ATests) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/88ce1b00433b431ca01578c4c9744491)](https://www.codacy.com/manual/ZigaSajovic/CppML?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ZigaSajovic/CppML&amp;utm_campaign=Badge_Grade) 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/bernedom/SI/master/LICENSE)
 
 # CppML
 
 A Meta Language for C++
 
 `CppML` is a metalanguage for `C++`. It was designed to **simplify** the process of **creating** intricate **classes**, by letting the programmer **design** them through **expressions** that feel like **algorithms** in a **functional language**. It strives to be **easy** to **write** and **easy** to **read**, while being **efficient**. It does so by providing [`compositional pipelines`](./docs/tutorial/index.md#pipe) through which [`parameter packs`](./docs/tutorial/index.md#parameter-pack) can flow **without instantiating** new **types**. Our goal is to **give** library developers **programmatic control** over the creation of **class hierarchies** with **metaprograms** that shape their **structure and behaviour** through **metafunctional logic**. This way constructions of **complex designs** are easily encoded in **elegant** and **concise** functional **expressions**.
+
+An illustrative example is [`generating a tagged hierarchy of classes`](./docs/tutorial/index.md#use-case-a-generator-of-tagged-class-hierarchies), which is used by some implementations of a `tuple`. We want a metafunction `MakeBase`, where e.g. `MakeBase<T0, T1, T2, T3>` is equivalent to:
+
+```c++
+Elem<Tag<ml::Int<0>, T0>,
+     Elem<Tag<ml::Int<1>, T1>,
+          Elem<Tag<ml::Int<2>, T2>, Elem<Tag<ml::Int<3>, T3>>>>>;
+```
+
+Using `CppML` we can express `MakeBase` as a simple meta-algorithm:
+
+```c++
+template <typename... Ts>
+using MakeBase =
+    ml::f<ml::ZipWith<Tag, ml::Map<ml::Curry<ml::F<Elem>>, ml::F<ml::Compose>>>::
+              f<ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>>;
+```
+
+To get started please see our [`User Documentation`](./docs/index.md), where we provide an [`Instalation Guide`](./docs/installation/index.md), and in-depth [`Tutorial of the CppML language`](./docs/tutorial/index.md) and a detailed [`CppML Reference`](./docs/reference/index.md).
 
 ## Getting Started
 

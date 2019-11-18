@@ -1,11 +1,3 @@
-/**
- * Copyright Žiga Sajovic, XLAB 2019
- * Distributed under the MIT License
- *
- * https://github.com/ZigaSajovic/CppML
- **/
-#ifndef CPPML_ARITHMETIC_HPP
-#define CPPML_ARITHMETIC_HPP
 #include "./Arithmetic/Add.hpp"
 #include "./Arithmetic/Decrement.hpp"
 #include "./Arithmetic/Divide.hpp"
@@ -16,4 +8,16 @@
 #include "./Arithmetic/Multiply.hpp"
 #include "./Arithmetic/Not.hpp"
 #include "./Arithmetic/Subtract.hpp"
-#endif
+
+int main() {
+  AddTest::run();
+  DecrementTest::run();
+  DivideTest::run();
+  EqualsTest::run();
+  GreaterTest::run();
+  IncrementTest::run();
+  LessTest::run();
+  MultiplyTest::run();
+  NotTest::run();
+  SubtractTest::run();
+}

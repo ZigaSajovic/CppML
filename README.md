@@ -19,9 +19,10 @@ Using `CppML` we can express `MakeBase` as a simple meta-algorithm:
 
 ```c++
 template <typename... Ts>
-using MakeBase =
-    ml::f<ml::ZipWith<Tag, ml::Map<ml::Curry<ml::F<Elem>>, ml::F<ml::Compose>>>::
-              f<ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>>;
+using MakeBase = ml::f<
+    ml::ZipWith<Tag, ml::Map<ml::Curry<ml::F<Elem>>, ml::F<ml::Compose>>>::f<
+        ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>,
+    EmptyBase>;
 ```
 
 To get started please see our [`User Documentation`](./docs/index.md), where we provide an [`Instalation Guide`](./docs/installation/index.md), and in-depth [`Tutorial of the CppML language`](./docs/tutorial/index.md) and a detailed [`CppML Reference`](./docs/reference/index.md).

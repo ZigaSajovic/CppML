@@ -521,7 +521,7 @@ struct Policy_i : BasePolicy {
 which employ the *base-chaining* mechanism. Each of these policies defines some *public methods*. In order for the user to use them, he has to derive from them, by chaining them. For example, to use `Policy0`, `Policy1` and `Policy3`, he has to derive from
 
 ```c++
-struct Class0 : Policy0<Class0, Policy1<Class0, Policy3<Derived, EmptyBase>>> {};
+struct Class0 : Policy0<Class0, Policy1<Class0, Policy3<Class0, EmptyBase>>> {};
 ```
 
 which is limiting in a few ways:
@@ -545,10 +545,10 @@ using Class0_ = Class<Policy0, Policy1, Policy3>;
 `Class0_` is equivalent to `Class0` above.
 
 Using the mechanics described so far, this can be achieved by:
-* Transform each template policy into a metafunction using [`ml::F`](../reference/Functional/F.md), and
+* Transform each template policy into a metafunction using [`ml::F`](../reference/Functional/F.md)(see [`Lifting templates to metafunctions`](#lifting-templates-to-metafunctions)), and
 * Partially evaluate each of them on `Derived` using [`ml::Partial`](../reference/Functional/Partial.md), and
 * compose these partial evaluations using [`ml::Compose`](../reference/Functional/Compose.md), and
-* evaluate the composition on the `ml::None`, making it the bottom base class.
+* evaluate the composition on the [`ml::None`](../reference/Vocabulary/None.md), making it the bottom base class.
 
 This sequence is easily translated into `CppML`.
 

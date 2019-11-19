@@ -19,5 +19,5 @@ template <typename Pipe = Identity> struct IsConvertible {
   template <typename T, typename U>
   using f = typename Pipe::template f<Bool<std::is_convertible<T, U>::value>>;
 };
-}
+} // namespace ml
 #endif

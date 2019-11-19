@@ -18,8 +18,7 @@ namespace ml {
 template <typename Predicate, typename Pipe = ml::ToList> struct RemoveIf {
   template <typename... Ts>
   using f = ml::f<ml::DelayedEval<Implementations::Filter, sizeof...(Ts)>,
-                            ml::Compose<ml::Not<>, Predicate>, Pipe, ml::Get<0>,
-                            Ts...>;
+                  ml::Compose<ml::Not<>, Predicate>, Pipe, ml::Get<0>, Ts...>;
 };
 } // namespace ml
 #endif

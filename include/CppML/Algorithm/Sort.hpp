@@ -23,16 +23,16 @@ namespace Implementations {
 template <bool Continue> struct Sort {
   template <typename I, typename Pipe, typename Compare, typename... Ts>
   using f =
-      ml::Invoke<ml::Rotate<                            //
-                     ml::Invoke<                        //
-                         ml::FindIf<                    //
-                             ml::PartialR<              //
-                                 Compare,               //
+      ml::Invoke<ml::Rotate<                                  //
+                     ml::Invoke<                              //
+                         ml::FindIf<                          //
+                             ml::PartialR<                    //
+                                 Compare,                     //
                                  ml::f<ml::DelayedEval<       //
-                                     ml::Get<I::value>, //
-                                     sizeof...(Ts)>,     //
-                                     Ts...>>>,          //
-                         Ts...                          //
+                                           ml::Get<I::value>, //
+                                           sizeof...(Ts)>,    //
+                                       Ts...>>>,              //
+                         Ts...                                //
                          >::value +
                          3,
                      I::value + 3, I::value + 4,

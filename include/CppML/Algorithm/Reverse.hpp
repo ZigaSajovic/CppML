@@ -16,8 +16,9 @@ namespace ml {
  */
 template <typename Pipe = ml::ToList> struct Reverse {
   template <typename... Ts>
-  using f = typename ml::Range<ml::Map<ml::PackExtractor<Ts...>, Pipe>>::
-      template f<sizeof...(Ts) - 1, -1, -1>;
+  using f =
+      typename ml::Range<ml::Map<ml::PackExtractor<Ts...>, Pipe>>::template f<
+          sizeof...(Ts) - 1, -1, -1>;
 };
 } // namespace ml
 #endif

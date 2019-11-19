@@ -24,15 +24,15 @@ template <bool Take> struct FilterGet {
             typename Getter, typename T, typename... Ts>
   using f =
       ml::f<ml::DelayedEval<Detail::Filter<(I::value > 1)>, sizeof...(Ts)>,
-                      ml::Int<I::value - 1>, N, Predicate, Pipe, Getter, Ts...,
-                      ml::Invoke<Getter, T, ml::Int<N::value - I::value>>>;
+            ml::Int<I::value - 1>, N, Predicate, Pipe, Getter, Ts...,
+            ml::Invoke<Getter, T, ml::Int<N::value - I::value>>>;
 };
 template <> struct FilterGet<false> {
   template <typename I, typename N, typename Predicate, typename Pipe,
             typename Getter, typename T, typename... Ts>
   using f =
       ml::f<ml::DelayedEval<Detail::Filter<(I::value > 1)>, sizeof...(Ts)>,
-                      ml::Int<I::value - 1>, N, Predicate, Pipe, Getter, Ts...>;
+            ml::Int<I::value - 1>, N, Predicate, Pipe, Getter, Ts...>;
 };
 
 template <bool Continue> struct Filter {
@@ -40,7 +40,8 @@ template <bool Continue> struct Filter {
             typename Getter, typename T, typename... Ts>
   using f =
       ml::f<ml::DelayedEval<Detail::FilterGet<ml::Invoke<Predicate, T>::value>,
-                      sizeof...(Ts)>, I, N, Predicate, Pipe, Getter, T, Ts...>;
+                            sizeof...(Ts)>,
+            I, N, Predicate, Pipe, Getter, T, Ts...>;
 };
 template <> struct Filter<false> {
   template <typename I, typename N, typename Predicate, typename Pipe,
@@ -50,9 +51,11 @@ template <> struct Filter<false> {
 } // namespace Detail
 struct Filter {
   template <typename Predicate, typename Pipe, typename Getter, typename... Ts>
-  using f = ml::f<ml::DelayedEval<Detail::Filter<static_cast<bool>(sizeof...(Ts))>,
-                            sizeof...(Ts)>, ml::Int<sizeof...(Ts)>, ml::Int<sizeof...(Ts)>, Predicate,
-                            Pipe, Getter, Ts...>;
+  using f =
+      ml::f<ml::DelayedEval<Detail::Filter<static_cast<bool>(sizeof...(Ts))>,
+                            sizeof...(Ts)>,
+            ml::Int<sizeof...(Ts)>, ml::Int<sizeof...(Ts)>, Predicate, Pipe,
+            Getter, Ts...>;
 };
 }; // namespace Implementations
 /*
@@ -61,8 +64,8 @@ struct Filter {
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct Filter {
   template <typename... Ts>
-  using f = ml::f<ml::DelayedEval<Implementations::Filter, sizeof...(Ts)>, Predicate,
-                            Pipe, ml::Get<0>, Ts...>;
+  using f = ml::f<ml::DelayedEval<Implementations::Filter, sizeof...(Ts)>,
+                  Predicate, Pipe, ml::Get<0>, Ts...>;
 };
 
 } // namespace ml

@@ -31,8 +31,8 @@ template <bool Continue> struct InclusiveScan {
 template <> struct InclusiveScan<false> {
   template <typename I, typename F, typename Pipe, typename Result,
             typename... Ts>
-  using f = ml::f<ml::DelayedEval<Detail::InclusiveScan, sizeof...(Ts)>, I, F, Pipe,
-                            Ts..., Result>;
+  using f = ml::f<ml::DelayedEval<Detail::InclusiveScan, sizeof...(Ts)>, I, F,
+                  Pipe, Ts..., Result>;
 };
 } // namespace Implementations
 
@@ -44,11 +44,12 @@ template <> struct InclusiveScan<false> {
  */
 template <typename F, typename Pipe = ml::ToList> struct InclusiveScan {
   template <typename... Ts>
-  using f = ml::f<ml::f<ml::Implementations::IfElse<static_cast<bool>(sizeof...(Ts))>,
-                        Implementations::InclusiveScan<static_cast<bool>(
-                            sizeof...(Ts) > 1)>,
-                        Implementations::Detail::InclusiveScan>,
-                  ml::Int<0>, F, Pipe, Ts...>;
+  using f =
+      ml::f<ml::f<ml::Implementations::IfElse<static_cast<bool>(sizeof...(Ts))>,
+                  Implementations::InclusiveScan<static_cast<bool>(
+                      sizeof...(Ts) > 1)>,
+                  Implementations::Detail::InclusiveScan>,
+            ml::Int<0>, F, Pipe, Ts...>;
 };
 } // namespace ml
 #endif

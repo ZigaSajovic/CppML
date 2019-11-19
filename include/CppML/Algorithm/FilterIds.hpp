@@ -15,8 +15,8 @@ namespace ml {
  */
 template <typename Predicate, typename Pipe = ml::ToList> struct FilterIds {
   template <typename... Ts>
-  using f = ml::f<ml::DelayedEval<Implementations::Filter, sizeof...(Ts)>, Predicate,
-                            Pipe, ml::Get<1>, Ts...>;
+  using f = ml::f<ml::DelayedEval<Implementations::Filter, sizeof...(Ts)>,
+                  Predicate, Pipe, ml::Get<1>, Ts...>;
 };
 } // namespace ml
 #endif

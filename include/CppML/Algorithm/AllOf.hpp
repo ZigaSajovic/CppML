@@ -18,8 +18,8 @@ namespace ml {
 template <typename Predicate, typename Pipe = ml::Identity> struct AllOf {
   template <typename... Ts>
   using f =
-      ml::Invoke<Pipe, ml::Bool<(ml::Invoke<ml::FindIfNot<Predicate>,
-                                            Ts...>::value == sizeof...(Ts))>>;
+      ml::f<Pipe, ml::Bool<(ml::f<ml::FindIfNot<Predicate>, Ts...>::value ==
+                            sizeof...(Ts))>>;
 };
 } // namespace ml
 #endif

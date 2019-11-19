@@ -17,8 +17,8 @@ template <typename F, typename Pipe = ToList> struct Map {
   template <typename... Ts>
   using f =
       ml::f<ml::DelayedEval<Pipe, sizeof...(Ts)>,
-                      typename ml::Implementations::IfElse<(sizeof...(Ts) < 100000)>::template f<
-                          F, void>::template f<Ts>...>;
+            typename ml::Implementations::IfElse<(sizeof...(Ts) < 100000)>::
+                template f<F, void>::template f<Ts>...>;
 };
 } // namespace ml
 #endif

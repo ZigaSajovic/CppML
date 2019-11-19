@@ -13,5 +13,5 @@ namespace ml {
  * void_t for template templates
  */
 template <template <class...> class...> using void_tt = void;
-}
+} // namespace ml
 #endif

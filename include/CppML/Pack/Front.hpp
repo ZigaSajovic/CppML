@@ -23,7 +23,7 @@ struct Front {
  */
 template <typename Pipe = ml::Identity> struct Front {
   template <typename... Ts>
-  using f = ml::DelayedEval<Implementations::Front, sizeof...(Ts), Pipe, Ts...>;
+  using f = ml::f<ml::DelayedEval<Implementations::Front, sizeof...(Ts)>, Pipe, Ts...>;
 };
 } // namespace ml
 #endif

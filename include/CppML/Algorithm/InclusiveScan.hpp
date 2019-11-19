@@ -18,7 +18,7 @@ namespace Implementations {
 namespace Detail {
 struct InclusiveScan {
   template <typename I, typename F, typename Pipe, typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+  using f = ml::f<ml::DelayedEval<Pipe, sizeof...(Ts)>, Ts...>;
 };
 } // namespace Detail
 template <bool Continue> struct InclusiveScan {
@@ -31,7 +31,7 @@ template <bool Continue> struct InclusiveScan {
 template <> struct InclusiveScan<false> {
   template <typename I, typename F, typename Pipe, typename Result,
             typename... Ts>
-  using f = ml::DelayedEval<Detail::InclusiveScan, sizeof...(Ts), I, F, Pipe,
+  using f = ml::f<ml::DelayedEval<Detail::InclusiveScan, sizeof...(Ts)>, I, F, Pipe,
                             Ts..., Result>;
 };
 } // namespace Implementations

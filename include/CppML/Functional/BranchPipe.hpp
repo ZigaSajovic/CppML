@@ -17,10 +17,13 @@ namespace ml {
 template <typename Predicate, typename IfPipe, typename ElsePipe>
 struct BranchPipe {
   template <typename... Ts>
-  using f = ml::DelayedEval<
-      ml::f<ml::IfElse<ml::DelayedEval<Predicate, sizeof...(Ts), Ts...>>,
-            IfPipe, ElsePipe>,
-      sizeof...(Ts), Ts...>;
+  using f =
+      ml::f<ml::DelayedEval<
+                ml::f<ml::IfElse<ml::f<
+                          ml::DelayedEval<Predicate, sizeof...(Ts)>, Ts...>>,
+                      IfPipe, ElsePipe>,
+                sizeof...(Ts)>,
+            Ts...>;
 };
 } // namespace ml
 #endif

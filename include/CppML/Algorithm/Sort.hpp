@@ -28,9 +28,9 @@ template <bool Continue> struct Sort {
                          ml::FindIf<                    //
                              ml::PartialR<              //
                                  Compare,               //
-                                 ml::DelayedEval<       //
+                                 ml::f<ml::DelayedEval<       //
                                      ml::Get<I::value>, //
-                                     sizeof...(Ts),     //
+                                     sizeof...(Ts)>,     //
                                      Ts...>>>,          //
                          Ts...                          //
                          >::value +
@@ -42,7 +42,7 @@ template <bool Continue> struct Sort {
 
 template <> struct Sort<false> {
   template <typename I, typename Pipe, typename Compare, typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+  using f = ml::f<ml::DelayedEval<Pipe, sizeof...(Ts)>, Ts...>;
 };
 }; // namespace Implementations
 /*

@@ -18,8 +18,9 @@ template <typename, class U, class T, class... Ts>
 struct IfValidOr_impl : R<U> {};
 
 template <class U, class F, typename... Ts>
-struct IfValidOr_impl<VoidT<ml::DelayedEval<F, sizeof...(Ts), Ts...>>, U, F,
-                      Ts...> : R<ml::DelayedEval<F, sizeof...(Ts), Ts...>> {};
+struct IfValidOr_impl<VoidT<ml::f<ml::DelayedEval<F, sizeof...(Ts)>, Ts...>>, U,
+                      F, Ts...>
+    : R<ml::f<ml::DelayedEval<F, sizeof...(Ts)>, Ts...>> {};
 }; // namespace Implementations
 /*
  * IfValidOr:

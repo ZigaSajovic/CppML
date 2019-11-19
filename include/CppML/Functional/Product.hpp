@@ -15,9 +15,9 @@ namespace ml {
 namespace Implementations {
 template <typename Pipe, typename... Fs> struct Product {
   template <typename... Ts>
-  using f = ml::DelayedEval<
-      Pipe, sizeof...(Ts),
-      ml::DelayedEval<Fs, (sizeof...(Ts) + sizeof...(Fs)), Ts...>...>;
+  using f = ml::f<ml::DelayedEval<
+      Pipe, sizeof...(Ts)>,
+      ml::f<ml::DelayedEval<Fs, (sizeof...(Ts) + sizeof...(Fs))>, Ts...>...>;
 };
 } // namespace Implementations
 /*

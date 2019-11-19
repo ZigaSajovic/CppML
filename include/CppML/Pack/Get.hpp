@@ -18,8 +18,8 @@ namespace ml {
  */
 template <int N, typename Pipe = ml::Identity> struct Get {
   template <typename... Ts>
-  using f =
-      ml::DelayedEval<ml::Pivot<N, ml::Front<Pipe>>, sizeof...(Ts), Ts...>;
+  using f = ml::f<ml::DelayedEval<ml::Pivot<N, ml::Front<Pipe>>, sizeof...(Ts)>,
+                  Ts...>;
 };
 } // namespace ml
 #endif

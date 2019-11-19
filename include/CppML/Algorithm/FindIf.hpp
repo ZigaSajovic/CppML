@@ -29,10 +29,10 @@ struct FindIfPipeOn {
 template <bool Continue> struct FindIf {
   template <typename I, typename Pipe, typename Predicate, typename T,
             typename... Ts>
-  using f = ml::DelayedEval<
+  using f = ml::f<ml::DelayedEval<
       ml::Invoke<ml::Implementations::IfElse<ml::Invoke<Predicate, T>::value>,
                  Detail::FindIfPipeOn, FindIf<(sizeof...(Ts) > 0)>>,
-      sizeof...(Ts), ml::Int<I::value + 1>, Pipe, Predicate, Ts...>;
+      sizeof...(Ts)>, ml::Int<I::value + 1>, Pipe, Predicate, Ts...>;
 };
 
 template <> struct FindIf<false> {

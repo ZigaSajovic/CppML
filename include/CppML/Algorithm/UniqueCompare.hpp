@@ -12,7 +12,7 @@ namespace ml {
 template <typename Comparator, typename Pipe = ml::ToList>
 struct UniqueCompare {
   template <typename... Ts>
-  using f = ml::DelayedEval<Implementations::Unique, sizeof...(Ts), Comparator,
+  using f = ml::f<ml::DelayedEval<Implementations::Unique, sizeof...(Ts)>, Comparator,
                             Pipe, Ts...>;
 };
 } // namespace ml

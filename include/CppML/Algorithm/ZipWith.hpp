@@ -42,7 +42,7 @@ struct ZipStart {
 
 struct ZipForward {
   template <typename Pipe, template <class...> class With, typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+  using f = ml::f<ml::DelayedEval<Pipe, sizeof...(Ts)>, Ts...>;
 };
 
 } // namespace Implementations

@@ -22,8 +22,8 @@ template <typename, class T, class... Ts>
 struct IsValid_impl : ml::Bool<false> {};
 
 template <class T, typename... Ts>
-struct IsValid_impl<ml::VoidT<ml::DelayedEval<T, sizeof...(Ts), Ts...>>, T,
-                    Ts...> : ml::Bool<true> {};
+struct IsValid_impl<ml::VoidT<ml::f<ml::DelayedEval<T, sizeof...(Ts)>, Ts...>>,
+                    T, Ts...> : ml::Bool<true> {};
 }; // namespace Implementations
 
 /*

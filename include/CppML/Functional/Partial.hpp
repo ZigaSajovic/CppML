@@ -14,7 +14,7 @@ namespace ml {
  */
 template <typename F, typename... Ts> struct Partial {
   template <typename... Us>
-  using f = DelayedEval<F, (sizeof...(Us) + sizeof...(Ts)), Ts..., Us...>;
+  using f = ml::f<DelayedEval<F, (sizeof...(Us) + sizeof...(Ts))>, Ts..., Us...>;
 };
 } // namespace ml
 #endif

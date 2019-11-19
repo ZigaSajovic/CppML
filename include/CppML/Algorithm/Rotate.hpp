@@ -26,24 +26,24 @@ namespace ml {
 template <int First, int Middle, int Last, typename Pipe = ml::ToList>
 struct Rotate {
   template <typename... Ts>
-  using f = ml::DelayedEval<
+  using f = ml::f<ml::DelayedEval<
       ml::Drop<
           First,
           ml::Head<Last - First,
                    ml::Pivot<
                        Middle - First,
-                       ml::DelayedEval<
-                           ml::Head<First, ml::Curry<ml::DelayedEval<
+                       ml::f<ml::DelayedEval<
+                           ml::Head<First, ml::Curry<ml::f<ml::DelayedEval<
                                                ml::Drop<Last, ml::CurryR<Pipe>>,
-                                               sizeof...(Ts), Ts...>>>,
-                           sizeof...(Ts), Ts...>>>>,
-      sizeof...(Ts), Ts...>;
+                                               sizeof...(Ts)>, Ts...>>>,
+                           sizeof...(Ts)>, Ts...>>>>,
+      sizeof...(Ts)>, Ts...>;
 };
 
 template <int First, int Last, typename Pipe>
 struct Rotate<First, First, Last, Pipe> {
   template <typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+  using f = ml::f<ml::DelayedEval<Pipe, sizeof...(Ts)>, Ts...>;
 };
 } // namespace ml
 #endif

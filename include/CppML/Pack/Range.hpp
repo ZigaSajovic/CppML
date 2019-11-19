@@ -16,16 +16,18 @@ template <bool shouldContinue, typename Pipe> struct RangeBase;
 
 template <typename Pipe> struct RangeBase<true, Pipe> {
   template <typename From, typename To, typename Step, typename... Us>
-  using f = ml::DelayedEval<
-      RangeBase<(Step::value > 0 ? From::value + Step::value < To::value
-                                 : To::value < From::value + Step::value),
-                Pipe>,
-      sizeof...(Us), Int<From::value + Step::value>, To, Step, Us..., From>;
+  using f = ml::f<
+      ml::DelayedEval<
+          RangeBase<(Step::value > 0 ? From::value + Step::value < To::value
+                                     : To::value < From::value + Step::value),
+                    Pipe>,
+          sizeof...(Us)>,
+      Int<From::value + Step::value>, To, Step, Us..., From>;
 };
 
 template <typename Pipe> struct RangeBase<false, Pipe> {
   template <typename From, typename To, typename step, typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), Ts...>;
+  using f = ml::f<ml::DelayedEval<Pipe, sizeof...(Ts)>, Ts...>;
 };
 }; // namespace Implementations
 /*

@@ -12,9 +12,9 @@ namespace ml {
  * # DelayedEval:
  * Delays a call, so compiler knows the number of arguments.
  */
-template <typename F, int n, typename... Ts>
-using DelayedEval = typename ml::Implementations::IfElse<(
-    sizeof...(Ts) < 10000)>::template f<F, void>::template f<Ts...>;
+template <typename F, int N>
+using DelayedEval =
+    typename ml::Implementations::IfElse<(N < 10000)>::template f<F, void>;
 
 namespace Implementations {
 template <bool> struct DelayTemplateEval {

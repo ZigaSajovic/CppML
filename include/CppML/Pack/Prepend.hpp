@@ -15,7 +15,7 @@ namespace ml {
  */
 template <typename T, typename Pipe = ml::ToList> struct Prepend {
   template <typename... Ts>
-  using f = ml::DelayedEval<Pipe, sizeof...(Ts), T, Ts...>;
+  using f = ml::f<ml::DelayedEval<Pipe, sizeof...(Ts)>, T, Ts...>;
 };
 } // namespace ml
 #endif

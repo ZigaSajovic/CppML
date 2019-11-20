@@ -40,7 +40,7 @@ cmake ..
 make install
 ```
 
-Please see the [`Installation Guide`](./docs/installation/index.md) for additional details and options.
+or simply [`embed it into your project`](./docs/installation/index.md/#project-embedding) (e.g. via `git submodules`). Please see the [`Installation Guide`](./docs/installation/index.md) for additional details.
 
 ### Tutorial
 

@@ -8,7 +8,6 @@
 #define CPPML_IF_ELSE_HPP
 #include "../Vocabulary/Value.hpp"
 #include "./Identity.hpp"
-#include "./Invoke.hpp"
 namespace ml {
 
 namespace Implementations {
@@ -23,12 +22,12 @@ template <> struct IfElse<false> {
 /*
  * IfElse:
  * An If Else type block.
- *
  */
 template <typename T, typename Pipe = ml::Identity> struct IfElse;
 template <bool B, typename Pipe> struct IfElse<Bool<B>, Pipe> {
   template <typename T, typename U>
-  using f = ml::f<Pipe, ml::f<Implementations::IfElse<B>, T, U>>;
+  using f = typename Pipe::template f<
+      typename Implementations::IfElse<B>::template f<T, U>>;
 };
 }; // namespace ml
 #endif

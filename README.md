@@ -75,4 +75,4 @@ Complete [`User documentation`](./docs/index.md) can be found in the [`docs/`](.
 | [`TypeTraits`](./docs/reference/index.md#typetraits) | Insights into types (e.g. [`IsSame`](./docs/reference/TypeTraits/IsSame.md), [`IsClass`](./docs/reference/TypeTraits/IsClass.md), etc.)            |
 | [`Vocabulary`](./docs/reference/index.md#vocabulary) | Vocabulary types of `CppML`   (e.g. [`ListT`](./docs/reference/Vocabulary/ListT.md), [`Value`](./docs/reference/Vocabulary/Value.md), etc.)        |
 
-Please see the complete [`CppML reference`](./docs/reference/index.md).
+Please see the complete [`CppML reference`](./docs/reference/index.md), for additonal details.

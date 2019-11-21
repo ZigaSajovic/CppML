@@ -48,7 +48,7 @@ Please see the [`Tutorial of the CppML language`](./tutorial/index.md).
 | [`TypeTraits`](./reference/index.md#typetraits) | Insights into types (e.g. [`IsSame`](./reference/TypeTraits/IsSame.md), [`IsClass`](./reference/TypeTraits/IsClass.md), etc.)            |
 | [`Vocabulary`](./reference/index.md#vocabulary) | Vocabulary types of `CppML`   (e.g. [`ListT`](./reference/Vocabulary/ListT.md), [`Value`](./reference/Vocabulary/Value.md), etc.)        |
 
-The complete `CppML reference` can be found [here](./reference/index.md).
+Please see the complete [`CppML reference`](./reference/index.md).
 
 ### Structure
 

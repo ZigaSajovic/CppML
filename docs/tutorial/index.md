@@ -49,6 +49,24 @@
 
 `CppML` is a metalanguage for `C++`. It was designed to simplify the process of creating intricate classes, by letting the programmer design them through expressions that feel like algorithms in a functional language. It strives to be easy to write and easy to read, while being efficient. It does so by providing [`compositional pipelines`](#pipe) through which [`parameter packs`](#parameter-pack) can flow without instantiating new types. Our goal is to give library developers programmatic control over the creation of class hierarchies with metaprograms that shape their structure and behaviour through metafunctional logic. This way constructions of complex designs are easily encoded in **concise** and **readable** functional **expressions**.
 
+An illustrative example is [`generating a tagged hierarchy of classes`](#use-case-a-generator-of-tagged-class-hierarchies), which is used by some implementations of a `tuple`. We want a metafunction `MakeBase`, where e.g. `MakeBase<T0, T1, T2, T3>` is equivalent to:
+
+```c++
+Elem<Tag<ml::Int<0>, T0>,
+     Elem<Tag<ml::Int<1>, T1>,
+          Elem<Tag<ml::Int<2>, T2>, Elem<Tag<ml::Int<3>, T3>>>>>;
+```
+
+Using `CppML` we can express `MakeBase` as a simple metaprogram:
+
+```c++
+template <typename... Ts>
+using MakeBase = ml::f<
+    ml::ZipWith<Tag, ml::Map<ml::Curry<ml::F<Elem>>, ml::F<ml::Compose>>>::f<
+        ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>,
+    EmptyBase>;
+```
+
 ---
 
 In this tutorial, we will go over the design of the `CppML` language and explore its prominent features in depth. You will learn about [`compositional pipelines`](#pipe) and the flow of [`parameter packs`](#parameter-pack) through them. You will learn about the structure of [`metafunctions`](#metafunction), how to understand their [`metafunction type`](#metafunction-type), and how they [`integrate with pipelines`](#using-pipes).

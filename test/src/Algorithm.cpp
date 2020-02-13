@@ -4,8 +4,8 @@
 #include "./Algorithm/CountIf.hpp"
 #include "./Algorithm/Filter.hpp"
 #include "./Algorithm/FilterIds.hpp"
-#include "./Algorithm/FindIf.hpp"
-#include "./Algorithm/FindIfNot.hpp"
+#include "./Algorithm/FindIdIf.hpp"
+#include "./Algorithm/FindIdIfNot.hpp"
 #include "./Algorithm/GroupBy.hpp"
 #include "./Algorithm/GroupIdsBy.hpp"
 #include "./Algorithm/InclusiveScan.hpp"
@@ -31,8 +31,8 @@ int main() {
   CountIfTest::run();
   FilterIdsTest::run();
   FilterTest::run();
-  FindIfNotTest::run();
-  FindIfTest::run();
+  FindIdIfNotTest::run();
+  FindIdIfTest::run();
   GroupByTest::run();
   GroupIdsByTest::run();
   InclusiveScanTest::run();

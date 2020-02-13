@@ -6,7 +6,7 @@
  **/
 #ifndef CPPML_ALL_OF_HPP
 #define CPPML_ALL_OF_HPP
-#include "../Algorithm/FindIfNot.hpp"
+#include "../Algorithm/FindIdIfNot.hpp"
 #include "../Functional/Identity.hpp"
 #include "../Functional/Invoke.hpp"
 #include "../Vocabulary/Value.hpp"
@@ -18,7 +18,7 @@ namespace ml {
 template <typename Predicate, typename Pipe = ml::Identity> struct AllOf {
   template <typename... Ts>
   using f =
-      ml::f<Pipe, ml::Bool<(ml::f<ml::FindIfNot<Predicate>, Ts...>::value ==
+      ml::f<Pipe, ml::Bool<(ml::f<ml::FindIdIfNot<Predicate>, Ts...>::value ==
                             sizeof...(Ts))>>;
 };
 } // namespace ml

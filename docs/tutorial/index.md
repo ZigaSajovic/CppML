@@ -1137,8 +1137,8 @@ We provide a detailed [`CppML reference`](../reference/index.md), which also con
 | [`CountIf`](../reference/Algorithm/CountIf.md)                 | Counts `Ts...` for which the `Predicate` holds.                | `Ts... -> Bool<t>`              |
 | [`Filter`](../reference/Algorithm/Filter.md)                   | Filters `Ts...`, for which the `Predicate` holds.              | `Ts... -> Us...`                |
 | [`FilterIds`](../reference/Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.   | `Ts... -> Int<Is>...`           |
-| [`FindIf`](../reference/Algorithm/FindIf.md)                   | Index of `Ts...` for which the `Predicate` holds.              | `Ts... -> Int<I>`               |
-| [`FindIfNot`](../reference/Algorithm/FindIfNot.md)             | Index of `Ts...` for which the `Predicate` does not hold.      | `Ts... -> Int<I>`               |
+| [`FindIdIf`](../reference/Algorithm/FindIdIf.md)               | Index of `Ts...` for which the `Predicate` holds.              | `Ts... -> Int<I>`               |
+| [`FindIdIfNot`](../reference/Algorithm/FindIdIfNot.md)         | Index of `Ts...` for which the `Predicate` does not hold.      | `Ts... -> Int<I>`               |
 | [`GroupBy`](../reference/Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                  | `Ts... -> ListT<Us...>...`      |
 | [`InclusiveScan`](./Algorithm/InclusiveScan.md)                | Inclusive scan under the binary `F`.                           | `Ts... -> T0, F(T0, T1), ...`   |
 | [`MaxElement`](../reference/Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                     | `Ts... -> U`                    |
@@ -1276,11 +1276,11 @@ using MakeBase = ml::f<
     ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>;
 ```
 
-We will also need a metafunction that will compute the inverse permutation for an index `I`, which will allow us to internally redirect users indexing. This is done by locating the index of `I` in the permutation (using [`ml::FindIf`](../reference/Algorithm/FindIf.md). Assuming access to `Permutation` indexes `Is...` (inside the `TupleBase`, this is done by
+We will also need a metafunction that will compute the inverse permutation for an index `I`, which will allow us to internally redirect users indexing. This is done by locating the index of `I` in the permutation (using [`ml::FindIdIf`](../reference/Algorithm/FindIdIf.md). Assuming access to `Permutation` indexes `Is...` (inside the `TupleBase`, this is done by
 
 ```c++
 template <typename I>
-using Index = ml::f<ml::FindIf<ml::Partial<ml::IsSame<>, I>>, Is...>;
+using Index = ml::f<ml::FindIdIf<ml::Partial<ml::IsSame<>, I>>, Is...>;
 ```
 
 #### TupleBase interface
@@ -1316,7 +1316,7 @@ public:
   TupleBase(Us &&... us) // delegate constructor
       : TupleBase{ml::_{}, std::forward_as_tuple(static_cast<Us &&>(us)...)} {}
   template <typename I> // Compute the inverse index
-  using f = ml::f<ml::FindIf<ml::Partial<ml::IsSame<>, I>>, ml::Int<Is>...>;
+  using f = ml::f<ml::FindIdIf<ml::Partial<ml::IsSame<>, I>>, ml::Int<Is>...>;
   template <int I, typename... Us>
   friend decltype(auto) get(TupleBase<Us...> &tup);
 };

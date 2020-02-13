@@ -6,7 +6,7 @@
  **/
 #ifndef CPPML_SORT_HPP
 #define CPPML_SORT_HPP
-#include "../Algorithm/FindIf.hpp"
+#include "../Algorithm/FindIdIf.hpp"
 #include "../Arithmetic/Not.hpp"
 #include "../Functional/Compose.hpp"
 #include "../Functional/Invoke.hpp"
@@ -25,7 +25,7 @@ template <bool Continue> struct Sort {
   using f =
       ml::Invoke<ml::Rotate<                                  //
                      ml::Invoke<                              //
-                         ml::FindIf<                          //
+                         ml::FindIdIf<                        //
                              ml::PartialR<                    //
                                  Compare,                     //
                                  ml::f<ml::DelayedEval<       //

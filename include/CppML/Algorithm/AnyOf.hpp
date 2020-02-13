@@ -8,7 +8,7 @@
 #define CPPML_ANY_OF_HPP
 #include "../Functional/Identity.hpp"
 #include "../Vocabulary/Value.hpp"
-#include "./FindIf.hpp"
+#include "./FindIdIf.hpp"
 namespace ml {
 /*
  * AnyOf:
@@ -17,7 +17,7 @@ namespace ml {
 template <typename Predicate, typename Pipe = ml::Identity> struct AnyOf {
   template <typename... Ts>
   using f =
-      ml::Invoke<Pipe, ml::Bool<(ml::Invoke<ml::FindIf<Predicate>,
+      ml::Invoke<Pipe, ml::Bool<(ml::Invoke<ml::FindIdIf<Predicate>,
                                             Ts...>::value < sizeof...(Ts))>>;
 };
 } // namespace ml

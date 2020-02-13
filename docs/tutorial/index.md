@@ -1276,7 +1276,7 @@ using MakeBase = ml::f<
     ml::Range<>::f<0, sizeof...(Ts)>, ml::ListT<Ts...>>;
 ```
 
-We will also need a metafunction that will compute the inverse permutation for an index `I`, which will allow us to internally redirect users indexing. This is done by locating the index of `I` in the permutation (using [`ml::FindIdIf`](../reference/Algorithm/FindIdIf.md). Assuming access to `Permutation` indexes `Is...` (inside the `TupleBase`, this is done by
+We will also need a metafunction that will compute the inverse permutation for an index `I`, which will allow us to internally redirect users indexing. This is done by locating the index of `I` in the permutation (using [`ml::FindIdIf`](../reference/Algorithm/FindIdIf.md)). Assuming access to `Permutation` indexes `Is...` (inside the `TupleBase`), this is done by
 
 ```c++
 template <typename I>

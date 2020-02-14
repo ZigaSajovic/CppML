@@ -38,6 +38,8 @@ Find the algorithm of your interest in the table below. Each of them has it own 
 | [`FilterIds`](./Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.     | `Ts... -> Int<Is>...`           |
 | [`FindIdIf`](./Algorithm/FindIdIf.md)               | Index of `Ts...` for which the `Predicate` holds.                | `Ts... -> Int<I>`               |
 | [`FindIdIfNot`](./Algorithm/FindIdIfNot.md)         | Index of `Ts...` for which the `Predicate` does not hold.        | `Ts... -> Int<I>`               |
+| [`FindIf`](./Algorithm/FindIf.md)                   | Element of `Ts...` for which the `Predicate` holds.              | `Ts... -> T`                    |
+| [`FindIfNot`](./Algorithm/FindIfNot.md)             | Element of `Ts...` for which the `Predicate` does not hold.      | `Ts... -> T`                    |
 | [`GroupBy`](./Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                    | `Ts... -> ListT<Us...>...`      |
 | [`GroupIdsBy`](./Algorithm/GroupIdsBy.md)           | Groups indexes of `Ts...`, given their (`T`'s) image under `By`. | `Ts... -> ListT<Int<Is>...>...` |
 | [`InclusiveScan`](./Algorithm/InclusiveScan.md)     | Inclusive scan under the binary `F`.                             | `Ts... -> T0, F(T0, T1), ...`   |

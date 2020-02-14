@@ -1139,6 +1139,8 @@ We provide a detailed [`CppML reference`](../reference/index.md), which also con
 | [`FilterIds`](../reference/Algorithm/FilterIds.md)             | Filters indexes of `Ts...`, for which the `Predicate` holds.   | `Ts... -> Int<Is>...`           |
 | [`FindIdIf`](../reference/Algorithm/FindIdIf.md)               | Index of `Ts...` for which the `Predicate` holds.              | `Ts... -> Int<I>`               |
 | [`FindIdIfNot`](../reference/Algorithm/FindIdIfNot.md)         | Index of `Ts...` for which the `Predicate` does not hold.      | `Ts... -> Int<I>`               |
+| [`FindIf`](./Algorithm/FindIf.md)                              | Element of `Ts...` for which the `Predicate` holds.            | `Ts... -> T`                    |
+| [`FindIfNot`](./Algorithm/FindIfNot.md)                        | Element of `Ts...` for which the `Predicate` does not hold.    | `Ts... -> T`                    |
 | [`GroupBy`](../reference/Algorithm/GroupBy.md)                 | Groups `Ts...`, given their image under `By`.                  | `Ts... -> ListT<Us...>...`      |
 | [`InclusiveScan`](./Algorithm/InclusiveScan.md)                | Inclusive scan under the binary `F`.                           | `Ts... -> T0, F(T0, T1), ...`   |
 | [`MaxElement`](../reference/Algorithm/MaxElement.md)           | Get maximal element, given a `Comparator`.                     | `Ts... -> U`                    |

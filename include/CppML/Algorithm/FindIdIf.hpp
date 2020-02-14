@@ -10,6 +10,8 @@
 #include "../Functional/Identity.hpp"
 #include "../Functional/IfElse.hpp"
 #include "../Functional/Invoke.hpp"
+#include "../Pack/Get.hpp"
+#include "../Vocabulary/None.hpp"
 #include "../Vocabulary/Value.hpp"
 
 namespace ml {
@@ -21,26 +23,28 @@ namespace Detail {
 /*
  * This is used to short circuit when found.
  */
-struct FindIdIfPipeOn {
-  template <typename I, typename Pipe, typename... Ts>
-  using f = ml::Invoke<Pipe, ml::Int<I::value - 1>>;
+struct FindIfPipeOn {
+  template <typename Prev, typename I, typename Getter, typename Pipe,
+            typename... Ts>
+  using f = ml::Invoke<Pipe, ml::f<Getter, Prev, ml::Int<I::value - 1>>>;
 };
 }; // namespace Detail
-template <bool Continue> struct FindIdIf {
-  template <typename I, typename Pipe, typename Predicate, typename T,
-            typename... Ts>
+template <bool Continue> struct FindIf {
+  template <typename Prev, typename I, typename Getter, typename Pipe,
+            typename Predicate, typename T, typename... Ts>
   using f =
       ml::f<ml::DelayedEval<
                 ml::Invoke<ml::Implementations::IfElse<
                                ml::Invoke<Predicate, T>::value>,
-                           Detail::FindIdIfPipeOn, FindIdIf<(sizeof...(Ts) > 0)>>,
+                           Detail::FindIfPipeOn, FindIf<(sizeof...(Ts) > 0)>>,
                 sizeof...(Ts)>,
-            ml::Int<I::value + 1>, Pipe, Predicate, Ts...>;
+            T, ml::Int<I::value + 1>, Getter, Pipe, Predicate, Ts...>;
 };
 
-template <> struct FindIdIf<false> {
-  template <typename I, typename Pipe, typename Predicate>
-  using f = ml::Invoke<Pipe, I>;
+template <> struct FindIf<false> {
+  template <typename Prev, typename I, typename Getter, typename Pipe,
+            typename Predicate>
+  using f = ml::Invoke<Pipe, ml::f<Getter, ml::None, I>>;
 };
 }; // namespace Implementations
 
@@ -51,8 +55,8 @@ template <> struct FindIdIf<false> {
 template <typename Predicate, typename Pipe = ml::Identity> struct FindIdIf {
   template <typename... Ts>
   using f =
-      ml::Invoke<Implementations::FindIdIf<static_cast<bool>(sizeof...(Ts) > 0)>,
-                 ml::Int<0>, Pipe, Predicate, Ts...>;
+      ml::Invoke<Implementations::FindIf<static_cast<bool>(sizeof...(Ts) > 0)>,
+                 ml::None, ml::Int<0>, ml::Get<1>, Pipe, Predicate, Ts...>;
 };
 } // namespace ml
 #endif

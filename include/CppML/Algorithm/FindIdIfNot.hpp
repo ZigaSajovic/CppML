@@ -17,9 +17,9 @@ namespace ml {
  */
 template <typename Predicate, typename Pipe = ml::Identity> struct FindIdIfNot {
   template <typename... Ts>
-  using f =
-      ml::f<Implementations::FindIdIf<static_cast<bool>(sizeof...(Ts) > 0)>,
-            ml::Int<0>, Pipe, ml::Compose<ml::Not<>, Predicate>, Ts...>;
+  using f = ml::f<Implementations::FindIf<static_cast<bool>(sizeof...(Ts) > 0)>,
+                  ml::None, ml::Int<0>, ml::Get<1>, Pipe,
+                  ml::Compose<ml::Not<>, Predicate>, Ts...>;
 };
 } // namespace ml
 #endif

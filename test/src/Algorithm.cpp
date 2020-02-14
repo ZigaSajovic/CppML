@@ -6,6 +6,8 @@
 #include "./Algorithm/FilterIds.hpp"
 #include "./Algorithm/FindIdIf.hpp"
 #include "./Algorithm/FindIdIfNot.hpp"
+#include "./Algorithm/FindIf.hpp"
+#include "./Algorithm/FindIfNot.hpp"
 #include "./Algorithm/GroupBy.hpp"
 #include "./Algorithm/GroupIdsBy.hpp"
 #include "./Algorithm/InclusiveScan.hpp"
@@ -33,6 +35,8 @@ int main() {
   FilterTest::run();
   FindIdIfNotTest::run();
   FindIdIfTest::run();
+  FindIfNotTest::run();
+  FindIfTest::run();
   GroupByTest::run();
   GroupIdsByTest::run();
   InclusiveScanTest::run();
